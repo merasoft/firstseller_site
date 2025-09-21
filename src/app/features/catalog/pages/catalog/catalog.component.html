@@ -22,59 +22,6 @@
         </a>
       </nav>
 
-      <!-- Page Header -->
-      <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-          <!-- Title & Count -->
-          <div>
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ pageTitle }}</h1>
-            <p class="text-gray-600">{{ totalProducts }} товаров в наличии</p>
-          </div>
-
-          <!-- Controls -->
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <!-- Sort -->
-            <div class="flex items-center gap-2">
-              <label class="text-sm font-medium text-gray-700 whitespace-nowrap">Сортировка:</label>
-              <select
-                [(ngModel)]="selectedSort"
-                class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-[160px]"
-              >
-                <option *ngFor="let option of sortOptions" [value]="option.value">
-                  {{ option.label }}
-                </option>
-              </select>
-            </div>
-
-            <!-- Items per page -->
-            <div class="flex items-center gap-2">
-              <label class="text-sm font-medium text-gray-700 whitespace-nowrap">Показать:</label>
-              <select
-                [(ngModel)]="productsPerPage"
-                class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              >
-                <option value="24">24</option>
-                <option value="48">48</option>
-                <option value="96">96</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Filters -->
-      <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Популярные фильтры</h3>
-        <div class="flex flex-wrap gap-2">
-          <button
-            *ngFor="let filter of quickFilters"
-            class="px-4 py-2 bg-gray-100 hover:bg-primary-100 border border-gray-200 hover:border-primary-300 rounded-full text-sm font-medium transition-all duration-200 hover:text-primary-700"
-          >
-            {{ filter }}
-          </button>
-        </div>
-      </div>
-
       <!-- Main Content Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
@@ -186,6 +133,61 @@
 
         <!-- Products Grid -->
         <main class="lg:col-span-3">
+
+
+          <!-- Page Header -->
+          <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              <!-- Title & Count -->
+              <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ pageTitle }}</h1>
+                <p class="text-gray-600">{{ totalProducts }} товаров в наличии</p>
+              </div>
+
+              <!-- Controls -->
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <!-- Sort -->
+                <div class="flex items-center gap-2">
+                  <label class="text-sm font-medium text-gray-700 whitespace-nowrap">Сортировка:</label>
+                  <select
+                    [(ngModel)]="selectedSort"
+                    class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-[160px]"
+                  >
+                    <option *ngFor="let option of sortOptions" [value]="option.value">
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Items per page -->
+                <div class="flex items-center gap-2">
+                  <label class="text-sm font-medium text-gray-700 whitespace-nowrap">Показать:</label>
+                  <select
+                    [(ngModel)]="productsPerPage"
+                    class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  >
+                    <option value="24">24</option>
+                    <option value="48">48</option>
+                    <option value="96">96</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Filters -->
+          <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Популярные фильтры</h3>
+            <div class="flex flex-wrap gap-2">
+              <button
+                *ngFor="let filter of quickFilters"
+                class="px-4 py-2 bg-gray-100 hover:bg-primary-100 border border-gray-200 hover:border-primary-300 rounded-full text-sm font-medium transition-all duration-200 hover:text-primary-700"
+              >
+                {{ filter }}
+              </button>
+            </div>
+          </div>
+
           <!-- Products Grid Container -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
 
