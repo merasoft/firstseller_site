@@ -1,0 +1,48 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Смартфонлар",
+      "slug": "smartphones",
+      "icon": "smartphone",
+      "subcategories": [
+        { "id": 11, "name": "Samsung Galaxy", "slug": "samsung", "count": 45 },
+        { "id": 12, "name": "iPhone", "slug": "iphone", "count": 23 },
+        { "id": 13, "name": "Honor", "slug": "honor", "count": 34 }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Ноутбуклар",
+      "slug": "laptops",
+      "icon": "laptop",
+      "subcategories": [
+        { "id": 21, "name": "Gaming ноутбуклар", "slug": "gaming", "count": 32 },
+        { "id": 22, "name": "Ишчи ноутбуклар", "slug": "business", "count": 28 },
+        { "id": 23, "name": "MacBook", "slug": "macbook", "count": 15 }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Телевизорлар",
+      "slug": "tv",
+      "icon": "tv",
+      "subcategories": [
+        { "id": 31, "name": "Smart TV", "slug": "smart-tv", "count": 45 },
+        { "id": 32, "name": "4K UHD", "slug": "4k", "count": 38 },
+        { "id": 33, "name": "QLED", "slug": "qled", "count": 23 }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Маиший техника",
+      "slug": "appliances",
+      "icon": "home",
+      "subcategories": [
+        { "id": 41, "name": "Холодильниклар", "slug": "fridges", "count": 25 },
+        { "id": 42, "name": "Кир ювиш", "slug": "washing", "count": 18 },
+        { "id": 43, "name": "Пылесослар", "slug": "vacuum", "count": 22 }
+      ]
+    }
+  ]
+}

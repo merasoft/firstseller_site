@@ -1,0 +1,55 @@
+[
+  {
+    "id": 1,
+    "name": "Смартфонлар",
+    "slug": "smartphones",
+    "description": "Eng oxirgi model smartfonlar - Samsung, iPhone, Honor",
+    "image": "/assets/images/categories/smartphones.jpg",
+    "icon": "smartphone",
+    "iconColor": "#10b981",
+    "productCount": 156,
+    "isPopular": true,
+    "hasDiscount": true,
+    "discountText": "30% гача чегирма",
+    "children": [
+      {
+        "id": 11,
+        "name": "Samsung Galaxy",
+        "slug": "samsung-galaxy",
+        "productCount": 45,
+        "discount": "22%"
+      },
+      {
+        "id": 12,
+        "name": "iPhone",
+        "slug": "iphone",
+        "productCount": 23,
+        "discount": "15%"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Маиший техника",
+    "slug": "home-appliances",
+    "description": "Уй учун барча керакли техникалар",
+    "image": "/assets/images/categories/appliances.jpg",
+    "icon": "home",
+    "iconColor": "#059669",
+    "productCount": 89,
+    "isPopular": true,
+    "hasDiscount": true,
+    "discountText": "25% гача чегирма"
+  },
+  {
+    "id": 3,
+    "name": "Компьютерлар",
+    "slug": "computers",
+    "description": "Ноутбуклар, компьютерлар ва аксессуарлар",
+    "image": "/assets/images/categories/computers.jpg",
+    "icon": "laptop",
+    "iconColor": "#047857",
+    "productCount": 67,
+    "isPopular": false
+  }
+]

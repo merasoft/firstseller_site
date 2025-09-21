@@ -1,0 +1,58 @@
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-12">Наши преимущества</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div
+        *ngFor="let advantage of advantages"
+        class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+        [class.ring-2]="advantage.isHighlighted"
+        [class.ring-primary-400]="advantage.isHighlighted"
+        [class.bg-primary-50]="advantage.isHighlighted"
+      >
+        <!-- Icon -->
+        <div class="mb-4">
+          <div
+            class="w-12 h-12 rounded-lg flex items-center justify-center"
+            [class.bg-primary-100]="advantage.isHighlighted"
+            [class.bg-cyan-100]="!advantage.isHighlighted"
+          >
+            <svg
+              class="w-6 h-6"
+              [class.text-primary-600]="advantage.isHighlighted"
+              [class.text-cyan-600]="!advantage.isHighlighted"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                [attr.d]="getIconPath(advantage.icon)"
+              ></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Title -->
+        <h3
+          class="text-lg font-semibold mb-3"
+          [class.text-primary-900]="advantage.isHighlighted"
+          [class.text-gray-900]="!advantage.isHighlighted"
+        >
+          {{ advantage.title }}
+        </h3>
+
+        <!-- Description -->
+        <p
+          class="text-sm leading-relaxed"
+          [class.text-primary-700]="advantage.isHighlighted"
+          [class.text-gray-600]="!advantage.isHighlighted"
+        >
+          {{ advantage.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

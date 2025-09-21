@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.mega-menu-dropdown {
+  animation: fadeInDown 0.3s ease-out;
+  transform-origin: top left;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Smooth hover transitions
+.category-item {
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateX(4px);
+  }
+}
+
+// Loading spinner
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,40 @@
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Hover effects
+.group:hover {
+  transform: translateY(-2px);
+}
+
+// Smooth slider animation
+.transition-transform {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Navigation buttons hover
+button:hover {
+  transform: scale(1.05);
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+  .w-1\/6 {
+    width: 25%; // 4 items on tablet
+  }
+}
+
+@media (max-width: 768px) {
+  .w-1\/6 {
+    width: 50%; // 2 items on mobile
+  }
+}
+
+@media (max-width: 640px) {
+  .w-1\/6 {
+    width: 100%; // 1 item on small mobile
+  }
+}

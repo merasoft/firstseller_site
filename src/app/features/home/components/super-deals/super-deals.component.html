@@ -1,0 +1,106 @@
+<section class="py-8 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center space-x-4">
+        <h2 class="text-2xl font-bold text-gray-900">Супер цена</h2>
+        <div class="bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+          🔥 Чегирмалар
+        </div>
+      </div>
+      <a href="#" class="text-primary-600 hover:text-primary-700 font-medium flex items-center space-x-1">
+        <span>Все товары</span>
+        <svg class="h-4 w-4" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- Slider Container -->
+    <div class="relative">
+      <!-- Navigation Arrows -->
+      <button
+        (click)="prevSlide()"
+        class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 z-10 bg-white shadow-lg rounded-full p-3 hover:shadow-xl transition-all duration-200 border border-gray-200"
+      >
+        <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <button
+        (click)="nextSlide()"
+        class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 z-10 bg-white shadow-lg rounded-full p-3 hover:shadow-xl transition-all duration-200 border border-gray-200"
+      >
+        <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      <!-- Slider Content -->
+      <div class="overflow-hidden rounded-2xl bg-gradient-to-r from-primary-500 to-primary-700 p-6">
+        <div
+          class="flex transition-transform duration-500 ease-in-out"
+          [style.transform]="getSliderTransform()"
+        >
+          <div
+            *ngFor="let deal of superDeals"
+            class="w-1/6 flex-shrink-0 px-2"
+          >
+            <!-- Deal Card -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 group">
+              <!-- Product Image -->
+              <div class="relative p-4 bg-gray-50">
+                <img
+                  [src]="deal.image"
+                  [alt]="deal.name"
+                  class="w-full h-32 object-contain group-hover:scale-105 transition-transform duration-300"
+                >
+
+                <!-- Discount Badge -->
+                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-lg text-sm font-bold">
+                  {{ deal.discount }}%
+                </div>
+              </div>
+
+              <!-- Product Info -->
+              <div class="p-4">
+                <!-- Product Name -->
+                <h3 class="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
+                  {{ deal.name }}
+                </h3>
+
+                <!-- Rating -->
+                <div class="flex items-center mb-3">
+                  <div class="flex text-yellow-400 text-sm">
+                    <span *ngFor="let star of [1,2,3,4,5]">
+                      {{ star <= deal.rating ? '★' : '☆' }}
+                    </span>
+                  </div>
+                  <span class="text-xs text-gray-500 ml-1">({{ deal.reviewCount }})</span>
+                </div>
+
+                <!-- Prices -->
+                <div class="mb-3">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-xs text-gray-400 line-through">
+                      {{ formatPrice(deal.oldPrice) }} сум
+                    </span>
+                  </div>
+                  <div class="text-lg font-bold text-primary-600">
+                    {{ formatPrice(deal.newPrice) }} сум
+                  </div>
+                </div>
+
+                <!-- End Date -->
+                <div class="bg-green-500 text-white text-center py-2 rounded-lg text-sm font-medium">
+                  {{ deal.endDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

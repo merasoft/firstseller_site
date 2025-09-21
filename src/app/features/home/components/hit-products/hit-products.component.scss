@@ -1,0 +1,156 @@
+// src/app/features/home/components/hit-products/hit-products.component.scss
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+  max-height: 2.8em;
+}
+
+// Hover animations
+.group:hover {
+  .product-image {
+    transform: scale(1.05);
+  }
+}
+
+// Button hover effects
+button {
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Star rating animation
+.star-rating {
+  .star {
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #fbbf24;
+    }
+  }
+}
+
+// Badge animations
+.badge {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+// Card hover shadow
+.product-card {
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+// Price styles
+.price-section {
+  .old-price {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: currentColor;
+    }
+  }
+}
+
+// Monthly payment highlight
+.monthly-payment {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #f59e0b;
+
+  &:hover {
+    background: linear-gradient(135deg, #fde68a 0%, #fbbf24 100%);
+  }
+}
+
+// Button styles
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+
+  &:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  }
+}
+
+.btn-cart {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+
+  &:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .product-card {
+    padding: 0.75rem;
+  }
+
+  .product-name {
+    font-size: 0.75rem;
+    min-height: 2rem;
+  }
+
+  .price {
+    font-size: 1rem;
+  }
+
+  .btn {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .xl\\:grid-cols-5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// Loading animation
+.loading {
+  .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

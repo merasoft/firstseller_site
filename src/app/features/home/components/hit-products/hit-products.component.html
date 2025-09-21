@@ -1,0 +1,128 @@
+<!-- src/app/features/home/components/hit-products/hit-products.component.html -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-3xl font-bold text-gray-900">ХИТ ПРОДАЖ</h2>
+      <a href="/catalog" class="text-primary-600 hover:text-primary-700 font-medium flex items-center gap-2">
+        Все товары
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+      <div
+        *ngFor="let product of products"
+        class="bg-white border border-gray-200 rounded-2xl p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative group"
+      >
+        <!-- Badge -->
+        <div *ngIf="product.badge || product.isTop" class="absolute top-3 left-3 z-10">
+          <span
+            *ngIf="product.badge"
+            class="bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-md"
+          >
+            {{ product.badge }}
+          </span>
+          <span
+            *ngIf="product.isTop && !product.badge"
+            class="bg-gray-800 text-white text-xs font-semibold px-2 py-1 rounded-md"
+          >
+            ТОП
+          </span>
+        </div>
+
+        <!-- Favorite Button -->
+        <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors">
+          <svg class="w-4 h-4 text-gray-400 hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+          </svg>
+        </button>
+
+        <!-- Compare Button -->
+        <button class="absolute top-12 right-3 z-10 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors">
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+        </button>
+
+        <!-- Product Image -->
+        <div class="aspect-square mb-4 rounded-xl overflow-hidden bg-gray-50 flex items-center justify-center">
+          <img
+            [src]="product.image"
+            [alt]="product.name"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          >
+          <!-- SVG Placeholder if image fails -->
+          <div *ngIf="!product.image" class="w-16 h-16 text-gray-400">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm2 2h8v2H8V8zm0 4h8v2H8v-2z"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="space-y-3">
+          <!-- Product Name -->
+          <h3 class="text-sm font-medium text-gray-900 line-clamp-2 min-h-[2.5rem]">
+            {{ product.name }}
+          </h3>
+
+          <!-- Rating -->
+          <div class="flex items-center gap-2">
+            <div class="flex items-center">
+              <span
+                *ngFor="let star of getStars(product.rating); index as i"
+                class="w-4 h-4"
+                [class.text-yellow-400]="star"
+                [class.text-gray-300]="!star"
+              >
+                ★
+              </span>
+            </div>
+            <span class="text-xs text-gray-500">{{ product.reviewsCount }} отзыва</span>
+          </div>
+
+          <!-- Price -->
+          <div class="space-y-1">
+            <div class="flex items-baseline gap-2">
+              <span *ngIf="product.oldPrice" class="text-sm text-gray-400 line-through">
+                {{ formatPrice(product.oldPrice) }} сум
+              </span>
+            </div>
+            <div class="text-xl font-bold text-primary-600">
+              {{ formatPrice(product.price) }} сум
+            </div>
+          </div>
+
+          <!-- Monthly Payment -->
+          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-2 text-center">
+            <div class="text-orange-600 font-semibold text-sm">
+              {{ formatPrice(product.monthlyPayment) }} сум × {{ product.installmentMonths }} мес
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="space-y-2 pt-2">
+            <button
+              (click)="onBuyOneClick(product)"
+              class="w-full bg-primary-600 text-white py-2.5 rounded-xl font-medium hover:bg-primary-700 transition-colors text-sm"
+            >
+              Купить в один клик
+            </button>
+            <button
+              (click)="onAddToCart(product)"
+              class="w-full bg-green-500 text-white py-2.5 rounded-xl font-medium hover:bg-green-600 transition-colors text-sm flex items-center justify-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m-2.4 8l1.6 8h12.8m-6.4-8v8m4-8v8"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

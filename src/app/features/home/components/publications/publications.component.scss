@@ -1,0 +1,163 @@
+// src/app/features/home/components/publications/publications.component.scss
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Publication card animations
+.publication-card {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+// Image hover effects
+.group {
+  &:hover {
+    img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Category tabs
+.category-tab {
+  transition: all 0.3s ease;
+
+  &.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+  }
+
+  &:not(.active) {
+    &:hover {
+      background-color: #f3f4f6;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// Card content styling
+.card-content {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+// Category badge
+.category-badge {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Gradient overlay
+.gradient-overlay {
+  background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+// Load more button
+.load-more-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+  .lg\\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .md\\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .publication-card {
+    height: 16rem; // 64 * 0.25rem = 16rem for h-64
+  }
+
+  .card-content {
+    padding: 1rem;
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .category-tabs {
+    gap: 0.5rem;
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    gap: 1rem;
+  }
+
+  .publication-card {
+    height: 14rem;
+  }
+
+  .card-content {
+    h3 {
+      font-size: 0.875rem;
+      line-height: 1.25;
+    }
+  }
+}
+
+// Fixed height cards
+.h-80 {
+  height: 20rem;
+}
+
+// Ensure all cards are same height
+.publications-grid {
+  .publication-card {
+    height: 20rem;
+
+    @media (max-width: 768px) {
+      height: 16rem;
+    }
+
+    @media (max-width: 640px) {
+      height: 14rem;
+    }
+  }
+}
