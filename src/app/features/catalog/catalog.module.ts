@@ -10,12 +10,8 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
 @NgModule({
   declarations: [
     CatalogComponent,
-    ProductDetailComponent  // ✅ Добавить новый компонент
+    ProductDetailComponent, // ✅ Добавить новый компонент
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    CatalogRoutingModule
-  ]
+  imports: [CommonModule, SharedModule, CatalogRoutingModule],
 })
-export class CatalogModule { }
+export class CatalogModule {}

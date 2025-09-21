@@ -8,21 +8,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    FooterComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule
-  ],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-    CommonModule,
-    FormsModule,
-    RouterModule
-  ]
+  declarations: [HeaderComponent, FooterComponent],
+  imports: [CommonModule, FormsModule, RouterModule],
+  exports: [HeaderComponent, FooterComponent, CommonModule, FormsModule, RouterModule],
 })
-export class SharedModule { }
+export class SharedModule {}

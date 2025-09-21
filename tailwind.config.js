@@ -1,85 +1,83 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{html,ts}",
-  ],
+  content: ['./src/**/*.{html,ts}'],
   theme: {
     extend: {
       colors: {
         // Асосий яшил палитра
-        'primary': {
-          50: '#ecfdf5',    // Eng ochiq yashil
-          100: '#d1fae5',   // Juda ochiq
-          200: '#a7f3d0',   // Ochiq
-          300: '#6ee7b7',   // O'rtacha ochiq
-          400: '#34d399',   // O'rtacha
-          500: '#10b981',   // Asosiy brand rangi
-          600: '#059669',   // Quyuqroq
-          700: '#047857',   // Quyuq
-          800: '#065f46',   // Juda quyuq
-          900: '#064e3b',   // Eng quyuq
+        primary: {
+          50: '#ecfdf5', // Eng ochiq yashil
+          100: '#d1fae5', // Juda ochiq
+          200: '#a7f3d0', // Ochiq
+          300: '#6ee7b7', // O'rtacha ochiq
+          400: '#34d399', // O'rtacha
+          500: '#10b981', // Asosiy brand rangi
+          600: '#059669', // Quyuqroq
+          700: '#047857', // Quyuq
+          800: '#065f46', // Juda quyuq
+          900: '#064e3b', // Eng quyuq
         },
 
         // Qo'shimcha ranglar
-        'secondary': {
-          500: '#06b6d4',   // Turkuaz
+        secondary: {
+          500: '#06b6d4', // Turkuaz
           600: '#0891b2',
           700: '#0e7490',
         },
 
-        'accent': {
-          orange: '#f97316',  // Chegirmalar uchun
-          red: '#ef4444',     // Sale uchun
-          yellow: '#eab308',  // Diqqat uchun
-          blue: '#3b82f6',    // Info uchun
+        accent: {
+          orange: '#f97316', // Chegirmalar uchun
+          red: '#ef4444', // Sale uchun
+          yellow: '#eab308', // Diqqat uchun
+          blue: '#3b82f6', // Info uchun
         },
 
         // Gradient ranglar
-        'gradient': {
+        gradient: {
           'green-light': '#ecfdf5',
           'green-dark': '#065f46',
-          'eco': '#22c55e',
-          'nature': '#16a34a',
+          eco: '#22c55e',
+          nature: '#16a34a',
         },
 
         // Status ranglar
-        'success': '#10b981',
-        'warning': '#f59e0b',
-        'error': '#ef4444',
-        'info': '#3b82f6',
+        success: '#10b981',
+        warning: '#f59e0b',
+        error: '#ef4444',
+        info: '#3b82f6',
 
         // Matn ranglari
-        'text': {
-          'primary': '#064e3b',
-          'secondary': '#065f46',
-          'muted': '#6b7280',
-          'light': '#9ca3af',
-        }
+        text: {
+          primary: '#064e3b',
+          secondary: '#065f46',
+          muted: '#6b7280',
+          light: '#9ca3af',
+        },
       },
 
       fontFamily: {
-        'sans': ['Inter', 'system-ui', 'sans-serif'],
-        'display': ['Poppins', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Poppins', 'sans-serif'],
       },
 
       spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '128': '32rem',
+        18: '4.5rem',
+        88: '22rem',
+        128: '32rem',
       },
 
       borderRadius: {
-        'xl': '1rem',
+        xl: '1rem',
         '2xl': '1.5rem',
         '3xl': '2rem',
       },
 
       boxShadow: {
-        'green': '0 4px 14px 0 rgba(16, 185, 129, 0.2)',
+        green: '0 4px 14px 0 rgba(16, 185, 129, 0.2)',
         'green-lg': '0 10px 25px -3px rgba(16, 185, 129, 0.3)',
-        'soft': '0 2px 8px 0 rgba(0, 0, 0, 0.08)',
-        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-        'hover': '0 10px 25px -3px rgba(0, 0, 0, 0.1)',
+        soft: '0 2px 8px 0 rgba(0, 0, 0, 0.08)',
+        card: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+        hover: '0 10px 25px -3px rgba(0, 0, 0, 0.1)',
       },
 
       animation: {
@@ -105,9 +103,9 @@ module.exports = {
         pulseGreen: {
           '0%, 100%': { boxShadow: '0 0 0 0 rgba(16, 185, 129, 0.7)' },
           '70%': { boxShadow: '0 0 0 10px rgba(16, 185, 129, 0)' },
-        }
-      }
+        },
+      },
     },
   },
   plugins: [],
-}
+};

@@ -18,7 +18,7 @@ interface Product {
   selector: 'app-hit-products',
   standalone: false,
   templateUrl: './hit-products.component.html',
-  styleUrls: ['./hit-products.component.scss']
+  styleUrls: ['./hit-products.component.scss'],
 })
 export class HitProductsComponent {
   products: Product[] = [
@@ -32,7 +32,7 @@ export class HitProductsComponent {
       installmentMonths: 4,
       rating: 5,
       reviewsCount: 2,
-      badge: 'СКИДКА'
+      badge: 'СКИДКА',
     },
     {
       id: 2,
@@ -44,7 +44,7 @@ export class HitProductsComponent {
       installmentMonths: 12,
       rating: 5,
       reviewsCount: 0,
-      badge: 'СКИДКА'
+      badge: 'СКИДКА',
     },
     {
       id: 3,
@@ -55,7 +55,7 @@ export class HitProductsComponent {
       installmentMonths: 12,
       rating: 3,
       reviewsCount: 6,
-      isTop: true
+      isTop: true,
     },
     {
       id: 4,
@@ -66,7 +66,7 @@ export class HitProductsComponent {
       installmentMonths: 4,
       rating: 3,
       reviewsCount: 3,
-      isTop: true
+      isTop: true,
     },
     {
       id: 5,
@@ -77,7 +77,7 @@ export class HitProductsComponent {
       installmentMonths: 12,
       rating: 5,
       reviewsCount: 1,
-      isTop: true
+      isTop: true,
     },
     {
       id: 6,
@@ -89,7 +89,7 @@ export class HitProductsComponent {
       installmentMonths: 12,
       rating: 4,
       reviewsCount: 8,
-      badge: 'СУПЕР ЦЕНА'
+      badge: 'СУПЕР ЦЕНА',
     },
     {
       id: 7,
@@ -101,7 +101,7 @@ export class HitProductsComponent {
       installmentMonths: 12,
       rating: 5,
       reviewsCount: 1,
-      badge: 'СУПЕР ЦЕНА'
+      badge: 'СУПЕР ЦЕНА',
     },
     {
       id: 8,
@@ -113,7 +113,7 @@ export class HitProductsComponent {
       installmentMonths: 12,
       rating: 5,
       reviewsCount: 3,
-      badge: 'СУПЕР ЦЕНА'
+      badge: 'СУПЕР ЦЕНА',
     },
     {
       id: 9,
@@ -123,7 +123,7 @@ export class HitProductsComponent {
       monthlyPayment: 66400,
       installmentMonths: 4,
       rating: 5,
-      reviewsCount: 0
+      reviewsCount: 0,
     },
     {
       id: 10,
@@ -135,13 +135,15 @@ export class HitProductsComponent {
       installmentMonths: 4,
       rating: 5,
       reviewsCount: 1,
-      badge: 'СУПЕР ЦЕНА'
-    }
+      badge: 'СУПЕР ЦЕНА',
+    },
   ];
 
   // Generate star array for rating display
   getStars(rating: number): boolean[] {
-    return Array(5).fill(false).map((_, i) => i < rating);
+    return Array(5)
+      .fill(false)
+      .map((_, i) => i < rating);
   }
 
   // Format price with spaces

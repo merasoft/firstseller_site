@@ -9,10 +9,7 @@
     "discountPercentage": 22,
     "installmentPrice": 866985,
     "installmentMonths": 12,
-    "images": [
-      "/assets/images/products/samsung-s25-1.webp",
-      "/assets/images/products/samsung-s25-2.webp"
-    ],
+    "images": ["/assets/images/products/samsung-s25-1.webp", "/assets/images/products/samsung-s25-2.webp"],
     "mainImage": "/assets/images/products/samsung-s25-1.webp",
     "categoryId": 1,
     "category": "Смартфонлар",

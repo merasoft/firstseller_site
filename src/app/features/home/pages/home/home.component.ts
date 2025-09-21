@@ -1,13 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   standalone: false,
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, OnDestroy {
-
   currentSlide = 0;
   totalSlides = 3;
   autoSlideInterval: any;
@@ -113,5 +112,4 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.startAutoSlide();
   }
-
 }

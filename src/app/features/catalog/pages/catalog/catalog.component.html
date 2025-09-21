@@ -6,7 +6,6 @@
   <!-- Main Content -->
   <main class="flex-1 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
       <!-- Breadcrumbs -->
       <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
         <a
@@ -15,8 +14,7 @@
           class="hover:text-primary-600 transition-colors duration-200"
           [class.text-gray-900]="last"
           [class.font-medium]="last"
-          [class.cursor-default]="last"
-        >
+          [class.cursor-default]="last">
           {{ crumb.name }}
           <span *ngIf="!last" class="mx-2 text-gray-400">›</span>
         </a>
@@ -24,19 +22,13 @@
 
       <!-- Main Content Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-
         <!-- Filters Sidebar -->
         <aside class="lg:col-span-1">
           <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-6">
             <!-- Filter Header -->
             <div class="flex items-center justify-between mb-6">
               <h3 class="text-lg font-semibold text-gray-900">Фильтры</h3>
-              <button
-                (click)="clearFilters()"
-                class="text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors"
-              >
-                Сбросить
-              </button>
+              <button (click)="clearFilters()" class="text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors"> Сбросить </button>
             </div>
 
             <!-- Price Filter -->
@@ -58,8 +50,7 @@
                       [(ngModel)]="filters[0].currentMin"
                       (change)="onPriceRangeChange()"
                       class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                      placeholder="0"
-                    />
+                      placeholder="0" />
                   </div>
                   <div>
                     <label class="block text-xs text-gray-500 mb-1">До</label>
@@ -68,18 +59,12 @@
                       [(ngModel)]="filters[0].currentMax"
                       (change)="onPriceRangeChange()"
                       class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                      placeholder="∞"
-                    />
+                      placeholder="∞" />
                   </div>
                 </div>
 
                 <!-- Apply Button -->
-                <button
-                  (click)="onPriceRangeChange()"
-                  class="w-full bg-primary-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors"
-                >
-                  Применить
-                </button>
+                <button (click)="onPriceRangeChange()" class="w-full bg-primary-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors"> Применить </button>
 
                 <!-- Price Range Slider -->
                 <div class="relative pt-2">
@@ -88,23 +73,17 @@
                     [min]="filters[0].min"
                     [max]="filters[0].max"
                     [(ngModel)]="filters[0].currentMin"
-                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                  />
+                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider" />
                 </div>
               </div>
             </div>
 
             <!-- Other Filters -->
-            <div
-              *ngFor="let filter of filters.slice(1)"
-              class="border-b border-gray-200 pb-6 mb-6 last:border-b-0 last:mb-0"
-            >
+            <div *ngFor="let filter of filters.slice(1)" class="border-b border-gray-200 pb-6 mb-6 last:border-b-0 last:mb-0">
               <h4 class="font-medium text-gray-900 mb-4 flex items-center justify-between cursor-pointer">
                 <span>{{ filter.name }}</span>
                 <div class="flex items-center gap-2">
-                  <span class="text-sm text-primary-600 font-medium" *ngIf="getCheckedCount(filter) > 0">
-                    ({{ getCheckedCount(filter) }})
-                  </span>
+                  <span class="text-sm text-primary-600 font-medium" *ngIf="getCheckedCount(filter) > 0"> ({{ getCheckedCount(filter) }}) </span>
                   <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                   </svg>
@@ -112,29 +91,22 @@
               </h4>
 
               <div class="space-y-3 max-h-64 overflow-y-auto scrollable">
-                <label
-                  *ngFor="let option of filter.options"
-                  class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors group"
-                >
+                <label *ngFor="let option of filter.options" class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors group">
                   <input
                     type="checkbox"
                     [checked]="option.checked"
                     (change)="onFilterChange(filter.id, option.id)"
-                    class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500 focus:ring-offset-0"
-                  />
+                    class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500 focus:ring-offset-0" />
                   <span class="ml-3 text-sm text-gray-700 flex-1 group-hover:text-gray-900">{{ option.name }}</span>
                   <span class="text-xs text-gray-500 group-hover:text-gray-600">({{ option.count }})</span>
                 </label>
               </div>
             </div>
-
           </div>
         </aside>
 
         <!-- Products Grid -->
         <main class="lg:col-span-3">
-
-
           <!-- Page Header -->
           <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -149,10 +121,7 @@
                 <!-- Sort -->
                 <div class="flex items-center gap-2">
                   <label class="text-sm font-medium text-gray-700 whitespace-nowrap">Сортировка:</label>
-                  <select
-                    [(ngModel)]="selectedSort"
-                    class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-[160px]"
-                  >
+                  <select [(ngModel)]="selectedSort" class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-[160px]">
                     <option *ngFor="let option of sortOptions" [value]="option.value">
                       {{ option.label }}
                     </option>
@@ -162,10 +131,7 @@
                 <!-- Items per page -->
                 <div class="flex items-center gap-2">
                   <label class="text-sm font-medium text-gray-700 whitespace-nowrap">Показать:</label>
-                  <select
-                    [(ngModel)]="productsPerPage"
-                    class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  >
+                  <select [(ngModel)]="productsPerPage" class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                     <option value="24">24</option>
                     <option value="48">48</option>
                     <option value="96">96</option>
@@ -181,8 +147,7 @@
             <div class="flex flex-wrap gap-2">
               <button
                 *ngFor="let filter of quickFilters"
-                class="px-4 py-2 bg-gray-100 hover:bg-primary-100 border border-gray-200 hover:border-primary-300 rounded-full text-sm font-medium transition-all duration-200 hover:text-primary-700"
-              >
+                class="px-4 py-2 bg-gray-100 hover:bg-primary-100 border border-gray-200 hover:border-primary-300 rounded-full text-sm font-medium transition-all duration-200 hover:text-primary-700">
                 {{ filter }}
               </button>
             </div>
@@ -190,21 +155,13 @@
 
           <!-- Products Grid Container -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-
             <!-- Product Card -->
-            <article
-              *ngFor="let product of products"
-              class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
-            >
+            <article *ngFor="let product of products" class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
               <!-- Product Link Container -->
               <a [routerLink]="['/catalog/product', product.id]" class="block">
-
                 <!-- Badge -->
                 <div *ngIf="product.badge" class="absolute top-4 left-4 z-10">
-                  <span
-                    class="inline-block text-xs font-bold px-2.5 py-1 rounded-md text-white shadow-sm"
-                    [ngClass]="getBadgeClasses(product.badgeType)"
-                  >
+                  <span class="inline-block text-xs font-bold px-2.5 py-1 rounded-md text-white shadow-sm" [ngClass]="getBadgeClasses(product.badgeType)">
                     {{ product.badge }}
                   </span>
                 </div>
@@ -215,18 +172,13 @@
                     [src]="product.images[product.currentImageIndex]"
                     [alt]="product.name"
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
+                    loading="lazy" />
 
                   <!-- Image Navigation (Show on hover) -->
-                  <div
-                    *ngIf="product.images.length > 1"
-                    class="absolute inset-0 flex items-center justify-between p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  >
+                  <div *ngIf="product.images.length > 1" class="absolute inset-0 flex items-center justify-between p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <button
                       (click)="previousImage(product); $event.preventDefault(); $event.stopPropagation()"
-                      class="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg"
-                    >
+                      class="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg">
                       <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                       </svg>
@@ -234,8 +186,7 @@
 
                     <button
                       (click)="nextImage(product); $event.preventDefault(); $event.stopPropagation()"
-                      class="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg"
-                    >
+                      class="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg">
                       <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                       </svg>
@@ -243,16 +194,12 @@
                   </div>
 
                   <!-- Image Indicators -->
-                  <div
-                    *ngIf="product.images.length > 1"
-                    class="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1.5"
-                  >
+                  <div *ngIf="product.images.length > 1" class="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1.5">
                     <button
                       *ngFor="let image of product.images; let i = index"
                       (click)="setImage(product, i); $event.preventDefault(); $event.stopPropagation()"
                       class="w-2 h-2 rounded-full transition-all duration-200"
-                      [class.bg-white]="i === product.currentImageIndex"
-                    ></button>
+                      [class.bg-white]="i === product.currentImageIndex"></button>
                   </div>
                 </div>
 
@@ -266,39 +213,21 @@
                   <!-- Rating -->
                   <div class="flex items-center gap-2">
                     <div class="flex items-center">
-                      <span
-                        *ngFor="let star of getStars(product.rating)"
-                        class="w-4 h-4 text-yellow-400"
-                      >
-                        ★
-                      </span>
-                      <span
-                        *ngFor="let star of getStars(5 - product.rating)"
-                        class="w-4 h-4 text-gray-300"
-                      >
-                        ★
-                      </span>
+                      <span *ngFor="let star of getStars(product.rating)" class="w-4 h-4 text-yellow-400"> ★ </span>
+                      <span *ngFor="let star of getStars(5 - product.rating)" class="w-4 h-4 text-gray-300"> ★ </span>
                     </div>
-                    <span class="text-xs text-gray-500">
-                      ({{ product.reviewsCount }} {{ product.reviewsCount === 1 ? 'отзыв' : 'отзыва' }})
-                    </span>
+                    <span class="text-xs text-gray-500"> ({{ product.reviewsCount }} {{ product.reviewsCount === 1 ? 'отзыв' : 'отзыва' }}) </span>
                   </div>
 
                   <!-- Price -->
                   <div class="space-y-1">
-                    <div *ngIf="product.oldPrice" class="text-sm text-gray-500 line-through">
-                      {{ formatPrice(product.oldPrice) }} сум
-                    </div>
-                    <div class="text-xl font-bold text-gray-900">
-                      {{ formatPrice(product.price) }} сум
-                    </div>
+                    <div *ngIf="product.oldPrice" class="text-sm text-gray-500 line-through"> {{ formatPrice(product.oldPrice) }} сум </div>
+                    <div class="text-xl font-bold text-gray-900"> {{ formatPrice(product.price) }} сум </div>
                   </div>
 
                   <!-- Monthly Payment -->
                   <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-3 text-center">
-                    <div class="text-orange-700 font-semibold text-sm">
-                      {{ formatPrice(product.monthlyPayment) }} сум × {{ product.installmentMonths }} мес
-                    </div>
+                    <div class="text-orange-700 font-semibold text-sm"> {{ formatPrice(product.monthlyPayment) }} сум × {{ product.installmentMonths }} мес </div>
                     <div class="text-xs text-orange-600 mt-1">Рассрочка без переплат</div>
                   </div>
                 </div>
@@ -313,20 +242,23 @@
                     <button
                       (click)="onAddToFavorites(product)"
                       class="w-10 h-10 bg-gray-100 hover:bg-red-50 rounded-lg flex items-center justify-center transition-colors group/fav"
-                      title="В избранное"
-                    >
+                      title="В избранное">
                       <svg class="w-5 h-5 text-gray-500 group-hover/fav:text-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                       </svg>
                     </button>
 
-                    <button
-                      (click)="onAddToCompare(product)"
-                      class="w-10 h-10 bg-gray-100 hover:bg-blue-50 rounded-lg flex items-center justify-center transition-colors group/comp"
-                      title="Сравнить"
-                    >
+                    <button (click)="onAddToCompare(product)" class="w-10 h-10 bg-gray-100 hover:bg-blue-50 rounded-lg flex items-center justify-center transition-colors group/comp" title="Сравнить">
                       <svg class="w-5 h-5 text-gray-500 group-hover/comp:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                       </svg>
                     </button>
                   </div>
@@ -342,15 +274,13 @@
                 <div class="grid grid-cols-2 gap-2">
                   <button
                     (click)="onBuyOneClick(product)"
-                    class="bg-primary-600 hover:bg-primary-700 text-white py-2.5 px-4 rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02]"
-                  >
+                    class="bg-primary-600 hover:bg-primary-700 text-white py-2.5 px-4 rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02]">
                     Купить
                   </button>
 
                   <button
                     (click)="onAddToCart(product)"
-                    class="bg-green-500 hover:bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02] flex items-center justify-center gap-1"
-                  >
+                    class="bg-green-500 hover:bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02] flex items-center justify-center gap-1">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m-2.4 8l1.6 8h12.8m-6.4-8v8m4-8v8"></path>
                     </svg>
@@ -365,10 +295,7 @@
           <nav class="flex items-center justify-center" aria-label="Pagination">
             <div class="flex items-center gap-2">
               <!-- Previous Button -->
-              <button
-                class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled
-              >
+              <button class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
@@ -385,9 +312,7 @@
               </div>
 
               <!-- Next Button -->
-              <button
-                class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-              >
+              <button class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
                 Следующая
                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

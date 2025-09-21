@@ -1,29 +1,17 @@
 <div class="relative">
   <!-- Catalog Button -->
-  <button
-    (click)="toggleMenu()"
-    class="flex items-center space-x-2 bg-primary-500 text-white px-6 py-3 rounded-xl hover:bg-primary-600 transition-colors group"
-  >
+  <button (click)="toggleMenu()" class="flex items-center space-x-2 bg-primary-500 text-white px-6 py-3 rounded-xl hover:bg-primary-600 transition-colors group">
     <svg class="h-5 w-5" fill="none" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
     <span class="font-medium">Каталог товарлар</span>
-    <svg
-      class="h-4 w-4 transition-transform duration-200"
-      [class.rotate-180]="isMenuOpen"
-      fill="none"
-      stroke="currentColor"
-    >
+    <svg class="h-4 w-4 transition-transform duration-200" [class.rotate-180]="isMenuOpen" fill="none" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
   </button>
 
   <!-- Mega Menu Dropdown -->
-  <div
-    *ngIf="isMenuOpen"
-    class="absolute top-full left-0 w-screen max-w-5xl bg-white shadow-2xl rounded-2xl mt-2 z-50 border border-gray-100 mega-menu-dropdown"
-    style="min-height: 400px;"
-  >
+  <div *ngIf="isMenuOpen" class="absolute top-full left-0 w-screen max-w-5xl bg-white shadow-2xl rounded-2xl mt-2 z-50 border border-gray-100 mega-menu-dropdown" style="min-height: 400px">
     <!-- Loading State -->
     <div *ngIf="isLoading" class="flex items-center justify-center h-96">
       <div class="text-center">
@@ -39,17 +27,13 @@
         <div class="p-4">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">Категориялар</h3>
           <ul class="space-y-1">
-            <li
-              *ngFor="let category of catalogData.categories"
-              class="relative"
-            >
+            <li *ngFor="let category of catalogData.categories" class="relative">
               <button
                 (mouseenter)="setActiveCategory(category)"
                 [class.bg-primary-50]="activeCategory?.id === category.id"
                 [class.text-primary-600]="activeCategory?.id === category.id"
                 [class.border-primary-200]="activeCategory?.id === category.id"
-                class="w-full text-left px-4 py-3 rounded-xl hover:bg-primary-50 hover:text-primary-600 transition-all duration-200 border border-transparent group flex items-center justify-between"
-              >
+                class="w-full text-left px-4 py-3 rounded-xl hover:bg-primary-50 hover:text-primary-600 transition-all duration-200 border border-transparent group flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                   <!-- Icon placeholder -->
                   <div class="w-6 h-6 bg-primary-100 rounded-lg flex items-center justify-center">
@@ -69,7 +53,9 @@
       <!-- Subcategories Content -->
       <div class="flex-1 p-6">
         <div *ngIf="activeCategory">
-          <h4 class="text-xl font-semibold text-gray-900 mb-6">{{ activeCategory.name }}</h4>
+          <h4 class="text-xl font-semibold text-gray-900 mb-6">
+            {{ activeCategory.name }}
+          </h4>
 
           <!-- Subcategories Grid -->
           <div class="grid grid-cols-2 gap-4">
@@ -77,8 +63,7 @@
               *ngFor="let subcategory of activeCategory.subcategories"
               href="#"
               (click)="closeMenu()"
-              class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
-            >
+              class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group">
               <span class="text-gray-700 group-hover:text-primary-600 font-medium">
                 {{ subcategory.name }}
               </span>
@@ -90,10 +75,7 @@
 
           <!-- View All Button -->
           <div class="mt-8 pt-6 border-t border-gray-200">
-            <button
-              (click)="closeMenu()"
-              class="w-full bg-primary-500 text-white py-3 px-6 rounded-xl hover:bg-primary-600 transition-colors font-semibold"
-            >
+            <button (click)="closeMenu()" class="w-full bg-primary-500 text-white py-3 px-6 rounded-xl hover:bg-primary-600 transition-colors font-semibold">
               {{ activeCategory.name }} - Ҳаммасини кўриш
             </button>
           </div>
@@ -105,20 +87,11 @@
     <div *ngIf="!isLoading && !catalogData" class="flex items-center justify-center h-96">
       <div class="text-center">
         <p class="text-red-500 mb-4">Маълумотларни юклашда хато</p>
-        <button
-          (click)="loadCatalogData()"
-          class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600"
-        >
-          Қайта уриниш
-        </button>
+        <button (click)="loadCatalogData()" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600"> Қайта уриниш </button>
       </div>
     </div>
   </div>
 
   <!-- Backdrop -->
-  <div
-    *ngIf="isMenuOpen"
-    (click)="onBackdropClick($event)"
-    class="fixed inset-0 bg-black bg-opacity-25 z-40"
-  ></div>
+  <div *ngIf="isMenuOpen" (click)="onBackdropClick($event)" class="fixed inset-0 bg-black bg-opacity-25 z-40"></div>
 </div>

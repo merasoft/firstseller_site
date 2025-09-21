@@ -7,27 +7,27 @@ const routes: Routes = [
   {
     // /catalog - все товары
     path: '',
-    component: CatalogComponent
+    component: CatalogComponent,
   },
   {
     // /catalog/product/samsung-galaxy-s25 - страница товара
     path: 'product/:id',
-    component: ProductDetailComponent
+    component: ProductDetailComponent,
   },
   {
     // /catalog/smartphones - категория
     path: ':category',
-    component: CatalogComponent
+    component: CatalogComponent,
   },
   {
     // /catalog/smartphones/apple - подкатегория
     path: ':category/:subcategory',
-    component: CatalogComponent
-  }
+    component: CatalogComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CatalogRoutingModule { }
+export class CatalogRoutingModule {}
