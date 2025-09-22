@@ -20,7 +20,7 @@ interface Publication {
 export class PublicationsComponent implements OnInit {
   activeCategory: string = 'Все';
 
-  categories: string[] = ['Все', 'Обзоры', 'Новости', 'Все публикации'];
+  categories: string[] = ['Все', 'Обзоры', 'Новости'];
 
   publications: Publication[] = [
     {

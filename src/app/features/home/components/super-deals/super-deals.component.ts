@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Carousel } from 'primeng/carousel';
 
 interface SuperDeal {
   id: number;
@@ -60,7 +61,7 @@ export class SuperDealsComponent implements OnInit {
     {
       id: 4,
       name: 'Смартфон Xiaomi Redmi 15C 8/256GB Black',
-      image: '/assets/images/products/xiaomi-redmi15c.jpg',
+      image: '/assets/images/products/xiaomi-redmi15c.webp',
       oldPrice: 2029000,
       newPrice: 1789000,
       discount: 12,
@@ -72,7 +73,7 @@ export class SuperDealsComponent implements OnInit {
     {
       id: 5,
       name: 'Смартфон Xiaomi Redmi 14C 8/256GB Black',
-      image: '/assets/images/products/xiaomi-redmi14c.jpg',
+      image: '/assets/images/products/xiaomi-redmi14c.webp',
       oldPrice: 1979000,
       newPrice: 1539000,
       discount: 23,
@@ -84,7 +85,7 @@ export class SuperDealsComponent implements OnInit {
     {
       id: 6,
       name: 'Телевизор Samsung Smart TV 43 Crystal UHD',
-      image: '/assets/images/products/samsung-tv.jpg',
+      image: '/assets/images/products/samsung-tv.webp',
       oldPrice: 1819000,
       newPrice: 1489000,
       discount: 18,
@@ -96,7 +97,7 @@ export class SuperDealsComponent implements OnInit {
     {
       id: 7,
       name: 'Пылесос робот Xiaomi Mi Robot Vacuum',
-      image: '/assets/images/products/xiaomi-vacuum.jpg',
+      image: '/assets/images/products/xiaomi-vacuum.webp',
       oldPrice: 2500000,
       newPrice: 1999000,
       discount: 20,
@@ -107,41 +108,36 @@ export class SuperDealsComponent implements OnInit {
     },
   ];
 
-  currentSlide = 0;
-  itemsToShow = 6;
+  @ViewChild('carousel') carousel!: Carousel;
+
+  responsiveOptions = [
+    {
+      breakpoint: '1024px',
+      numVisible: 4,
+      numScroll: 1,
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 2,
+      numScroll: 1,
+    },
+    {
+      breakpoint: '640px',
+      numVisible: 1,
+      numScroll: 1,
+    },
+  ];
 
   ngOnInit() {
-    this.startAutoSlide();
+    // Component initialization
   }
 
   formatPrice(price: number): string {
     return price.toLocaleString('uz-UZ');
   }
 
-  nextSlide() {
-    if (this.currentSlide < this.superDeals.length - this.itemsToShow) {
-      this.currentSlide++;
-    } else {
-      this.currentSlide = 0;
-    }
-  }
-
-  prevSlide() {
-    if (this.currentSlide > 0) {
-      this.currentSlide--;
-    } else {
-      this.currentSlide = Math.max(0, this.superDeals.length - this.itemsToShow);
-    }
-  }
-
-  startAutoSlide() {
-    setInterval(() => {
-      this.nextSlide();
-    }, 5000); // 5 секунд автомат слайд
-  }
-
-  getSliderTransform(): string {
-    const translateX = -(this.currentSlide * (100 / this.itemsToShow));
-    return `translateX(${translateX}%)`;
+  onDealClick(deal: SuperDeal) {
+    console.log('Deal clicked:', deal);
+    // Handle deal click - navigate to product detail page
   }
 }

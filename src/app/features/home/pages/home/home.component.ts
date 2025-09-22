@@ -1,4 +1,20 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+interface CarouselSlide {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  buttonText: string;
+  buttonAction: string;
+  backgroundColor: string;
+  gradientFrom: string;
+  gradientTo: string;
+  iconType: 'phone' | 'laptop' | 'tv';
+  textColor: string;
+  accentColor: string;
+}
 
 @Component({
   selector: 'app-home',
@@ -7,109 +23,77 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  currentSlide = 0;
-  totalSlides = 3;
-  autoSlideInterval: any;
+  carouselSlides: CarouselSlide[] = [
+    {
+      id: 1,
+      title: 'Samsung Galaxy',
+      subtitle: 'S25 FE',
+      description: '866,985 сум/ойдан муддатли тўлов',
+      buttonText: 'Харид қилиш',
+      buttonAction: 'buy',
+      backgroundColor: 'bg-gradient-to-r from-gray-900 via-gray-800 to-black',
+      gradientFrom: 'from-black',
+      gradientTo: 'to-transparent',
+      iconType: 'phone',
+      textColor: 'text-white',
+      accentColor: 'text-primary-400',
+    },
+    {
+      id: 2,
+      title: 'Gaming',
+      subtitle: 'Ноутбуклар',
+      description: 'RTX 4060 видеокарта билан',
+      buttonText: 'Каталог',
+      buttonAction: 'catalog',
+      backgroundColor: 'bg-gradient-to-br from-blue-600 via-purple-600 to-purple-800',
+      gradientFrom: 'from-blue-600',
+      gradientTo: 'to-purple-800',
+      iconType: 'laptop',
+      textColor: 'text-white',
+      accentColor: 'text-blue-300',
+    },
+    {
+      id: 3,
+      title: 'Smart TV',
+      subtitle: '4K UHD',
+      description: '65" гача ҳажмларда',
+      buttonText: 'Кўриш',
+      buttonAction: 'view',
+      backgroundColor: 'bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600',
+      gradientFrom: 'from-indigo-600',
+      gradientTo: 'to-pink-600',
+      iconType: 'tv',
+      textColor: 'text-white',
+      accentColor: 'text-purple-300',
+    },
+  ];
+
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    this.startAutoSlide();
-    this.initializeCarousel();
+    // Component initialization if needed
   }
 
   ngOnDestroy() {
-    if (this.autoSlideInterval) {
-      clearInterval(this.autoSlideInterval);
+    // Cleanup if needed
+  }
+
+  onCarouselSlideClick(slide: CarouselSlide) {
+    console.log('Slide clicked:', slide);
+    // Handle slide click actions based on slide.buttonAction
+    switch (slide.buttonAction) {
+      case 'buy':
+        // Navigate to purchase page or product detail
+        this.router.navigate(['/catalog/smartphones']);
+        break;
+      case 'catalog':
+        // Navigate to catalog
+        this.router.navigate(['/catalog']);
+        break;
+      case 'view':
+        // Navigate to TV category
+        this.router.navigate(['/catalog/tv-audio']);
+        break;
     }
-  }
-
-  initializeCarousel() {
-    // DOM загрузка кутиш учун
-    setTimeout(() => {
-      this.setupCarouselEvents();
-    }, 100);
-  }
-
-  setupCarouselEvents() {
-    // Dots events
-    const dots = document.querySelectorAll('.carousel-dot');
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        this.goToSlide(index);
-      });
-    });
-
-    // Navigation arrows
-    const prevBtn = document.querySelector('.carousel-prev');
-    const nextBtn = document.querySelector('.carousel-next');
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        this.previousSlide();
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        this.nextSlide();
-      });
-    }
-  }
-
-  startAutoSlide() {
-    this.autoSlideInterval = setInterval(() => {
-      this.nextSlide();
-    }, 5000); // Har 5 soniyada avtomatik o'tish
-  }
-
-  goToSlide(slideIndex: number) {
-    this.currentSlide = slideIndex;
-    this.updateCarousel();
-    this.restartAutoSlide();
-  }
-
-  nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
-    this.updateCarousel();
-  }
-
-  previousSlide() {
-    this.currentSlide = this.currentSlide === 0 ? this.totalSlides - 1 : this.currentSlide - 1;
-    this.updateCarousel();
-  }
-
-  updateCarousel() {
-    const slides = document.querySelectorAll('.carousel-slide');
-    const dots = document.querySelectorAll('.carousel-dot');
-
-    // Slidelarni yangilash
-    slides.forEach((slide, index) => {
-      if (index === this.currentSlide) {
-        slide.classList.remove('opacity-0');
-        slide.classList.add('opacity-100');
-      } else {
-        slide.classList.remove('opacity-100');
-        slide.classList.add('opacity-0');
-      }
-    });
-
-    // Dotslarni yangilash
-    dots.forEach((dot, index) => {
-      if (index === this.currentSlide) {
-        dot.classList.add('active');
-        dot.classList.remove('bg-white/50');
-        dot.classList.add('bg-white');
-      } else {
-        dot.classList.remove('active');
-        dot.classList.remove('bg-white');
-        dot.classList.add('bg-white/50');
-      }
-    });
-  }
-
-  restartAutoSlide() {
-    if (this.autoSlideInterval) {
-      clearInterval(this.autoSlideInterval);
-    }
-    this.startAutoSlide();
   }
 }
