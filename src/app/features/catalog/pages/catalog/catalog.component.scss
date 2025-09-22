@@ -113,20 +113,20 @@
   .p-checkbox {
     @apply flex items-center justify-center;
 
-    .p-checkbox-box {
-      @apply w-4 h-4 border-2 border-gray-300 rounded transition-all duration-200;
-
-      &.p-highlight {
-        @apply bg-primary-600 border-primary-600;
-      }
+    &-box {
+      @apply w-5 h-5 border-2 border-gray-300 rounded transition-all duration-200;
 
       &:hover {
         @apply border-primary-400;
       }
     }
 
-    .p-checkbox-icon {
-      @apply text-white text-xs;
+    &.p-highlight &-box {
+      @apply bg-primary-600 border-primary-600;
+    }
+
+    &-icon {
+      @apply text-white w-4 h-4;
     }
   }
 

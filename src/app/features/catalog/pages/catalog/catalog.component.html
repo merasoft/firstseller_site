@@ -71,18 +71,18 @@
                   <div class="flex items-center justify-between w-full">
                     <div class="flex items-center gap-3">
                       <span class="text-sm font-semibold text-gray-900">{{ filter.name }}</span>
-                      <span *ngIf="getCheckedCount(filter) > 0" class="bg-primary-100 text-primary-800 px-2 py-1 rounded-full text-xs font-medium">
+                      <div *ngIf="getCheckedCount(filter) > 0" class="w-5 h-5 flex items-center justify-center bg-primary-100 text-primary-800 rounded text-xs font-medium">
                         {{ getCheckedCount(filter) }}
-                      </span>
+                      </div>
                     </div>
                   </div>
                 </p-accordion-header>
                 <p-accordion-content class="mb-4 group-last:mb-0">
                   <div class="pt-4">
                     <div class="space-y-1 pr-1 max-h-64 overflow-y-auto filter-options">
-                      <div *ngFor="let option of filter.options" class="filter-option">
-                        <p-checkbox [inputId]="filter.id + '_' + option.id" [(ngModel)]="option.checked" [binary]="true" (onChange)="onFilterChange(filter.id, option.id)" />
-                        <label [for]="filter.id + '_' + option.id" class="ml-3 text-sm cursor-pointer flex-1 flex items-center justify-between">
+                      <div *ngFor="let option of filter.options" class="filter-option" [ngClass]="{ '!bg-primary-50': option.checked }" (click)="option.checked = !option.checked; applyFilters()">
+                        <p-checkbox #filter_box [inputId]="filter.id + '_' + option.id" [(ngModel)]="option.checked" [binary]="true" />
+                        <label [for]="filter.id + '_' + option.id" class="ml-3 text-sm cursor-pointer flex-1 flex items-center justify-between" (click)="$event.preventDefault()">
                           <span class="text-gray-700">{{ option.name }}</span>
                           <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">{{ option.count }}</span>
                         </label>

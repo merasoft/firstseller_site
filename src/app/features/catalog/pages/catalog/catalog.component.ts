@@ -277,14 +277,18 @@ export class CatalogComponent implements OnInit {
 
   // Filter functions
   onFilterChange(filterId: string, optionId?: string): void {
-    const filter = this.filters.find((f) => f.id === filterId);
-    if (filter && filter.options && optionId) {
-      const option = filter.options.find((o) => o.id === optionId);
-      if (option) {
-        option.checked = !option.checked;
-        this.applyFilters();
+    this.filters = this.filters.map((f) => {
+      if (f.id === filterId && f.type === 'checkbox' && optionId) {
+        const options = f.options?.map((o) => {
+          if (o.id === optionId) {
+            return { ...o, checked: !o.checked };
+          }
+          return o;
+        });
+        return { ...f, options };
       }
-    }
+      return f;
+    });
   }
 
   onPriceRangeChange(event: any): void {
