@@ -163,3 +163,35 @@
 .p-popover-content {
   @apply p-0;
 }
+
+.custom-paginator {
+  .p-paginator {
+    @apply p-2;
+
+    &-current {
+      @apply mr-auto;
+    }
+
+    &-rpp-dropdown {
+      @apply w-14 py-0.5;
+    }
+  }
+}
+
+.filter-accordion {
+  .p-accordion {
+    &header {
+      @apply px-3 py-2;
+    }
+
+    &content-content {
+      @apply p-0;
+    }
+  }
+}
+
+.p-slider {
+  &-handle {
+    margin-top: -9px !important;
+  }
+}

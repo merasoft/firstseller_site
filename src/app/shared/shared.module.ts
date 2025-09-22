@@ -5,21 +5,27 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 // PrimeNG Imports
+import { AccordionModule } from 'primeng/accordion';
 import { BadgeModule } from 'primeng/badge';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { MegaMenuModule } from 'primeng/megamenu';
 import { MenuModule } from 'primeng/menu';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { PaginatorModule } from 'primeng/paginator';
 import { PopoverModule } from 'primeng/popover';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
+import { SelectModule } from 'primeng/select';
 import { SidebarModule } from 'primeng/sidebar';
 import { SliderModule } from 'primeng/slider';
 import { TagModule } from 'primeng/tag';
@@ -30,24 +36,31 @@ import { HeaderComponent } from './components/header/header.component';
 import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
 
 const PRIMENG_MODULES = [
-  ButtonModule,
-  InputTextModule,
-  CardModule,
+  AccordionModule,
   BadgeModule,
-  TagModule,
+  BreadcrumbModule,
+  ButtonModule,
+  CardModule,
   CarouselModule,
-  DataViewModule,
-  RatingModule,
-  DropdownModule,
-  SliderModule,
   CheckboxModule,
-  RadioButtonModule,
+  DataViewModule,
+  DropdownModule,
+  InputNumberModule,
+  InputTextModule,
   MenuModule,
   MegaMenuModule,
-  ProgressSpinnerModule,
-  TooltipModule,
+  MultiSelectModule,
   OverlayPanelModule,
+  PaginatorModule,
+  PopoverModule,
+  ProgressSpinnerModule,
+  RadioButtonModule,
+  RatingModule,
+  SelectModule,
   SidebarModule,
+  SliderModule,
+  TagModule,
+  TooltipModule,
   PopoverModule,
 ];
 

@@ -1,5 +1,6 @@
 // src/app/features/catalog/pages/catalog/catalog.component.ts
 import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 interface Product {
   id: number;
@@ -29,6 +30,7 @@ interface Filter {
   max?: number;
   currentMin?: number;
   currentMax?: number;
+  range?: [number, number];
 }
 
 interface FilterOption {
@@ -47,6 +49,10 @@ interface FilterOption {
 export class CatalogComponent implements OnInit {
   pageTitle = 'Смартфоны';
   totalProducts = 518;
+
+  // PrimeNG Breadcrumb
+  breadcrumbItems: MenuItem[] = [];
+  home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
 
   breadcrumbs = [
     { name: 'Главная', url: '/' },
@@ -75,8 +81,7 @@ export class CatalogComponent implements OnInit {
       type: 'range',
       min: 569000,
       max: 52314918,
-      currentMin: 569000,
-      currentMax: 52314918,
+      range: [569000, 52314918],
     },
     {
       id: 'brand',
@@ -245,7 +250,8 @@ export class CatalogComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    // Initialize component
+    // Initialize PrimeNG breadcrumbs
+    this.breadcrumbItems = [{ label: 'Телефоны и гаджеты', routerLink: '/category/phones' }, { label: 'Телефоны', routerLink: '/category/phones/mobile' }, { label: 'Смартфоны' }];
   }
 
   // Handle image navigation for products
@@ -281,7 +287,14 @@ export class CatalogComponent implements OnInit {
     }
   }
 
-  onPriceRangeChange(): void {
+  onPriceRangeChange(event: any): void {
+    if (event == null || typeof event === 'number') {
+      this.filters[0].range = [this.filters[0].currentMin!, this.filters[0].currentMax!];
+    } else if (typeof event === 'object' && Array.isArray(event.values) && event.values.length === 2) {
+      this.filters[0].currentMin = event.values[0];
+      this.filters[0].currentMax = event.values[1];
+    }
+
     this.applyFilters();
   }
 
@@ -298,6 +311,7 @@ export class CatalogComponent implements OnInit {
       if (filter.type === 'range') {
         filter.currentMin = filter.min;
         filter.currentMax = filter.max;
+        filter.range = [filter.min!, filter.max!];
       }
     });
     this.applyFilters();
