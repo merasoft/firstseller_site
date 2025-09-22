@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { providePrimeNG } from 'primeng/config';
+import Lara from '@primeng/themes/lara';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,8 +12,27 @@ import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, MainLayoutComponent],
-  imports: [BrowserModule, AppRoutingModule, SharedModule, FormsModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule, // Required for PrimeNG animations
+    AppRoutingModule,
+    SharedModule,
+    FormsModule,
+  ],
+  providers: [
+    providePrimeNG({
+      theme: {
+        preset: Lara,
+        options: {
+          darkModeSelector: '.dark-mode',
+          cssLayer: {
+            name: 'primeng',
+            order: 'base, primeng, utilities components',
+          },
+        },
+      },
+    }),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

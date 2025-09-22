@@ -1,0 +1,6 @@
+// Use utility classes from global styles
+// Component-specific styles only when needed
+
+:host {
+  @apply block;
+}

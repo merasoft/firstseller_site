@@ -1,5 +1,5 @@
 // src/app/shared/components/header/header.component.ts
-import { Component } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  @ViewChild('menu') menu: any;
+
   searchQuery: string = '';
 
   constructor(private router: Router) {}
@@ -91,13 +93,13 @@ export class HeaderComponent {
     }
   }
 
-  onCatalogToggle(): void {
-    this.router.navigate(['/catalog']);
+  onCatalogToggle(event: any): void {
+    this.menu.toggleMenu(event);
   }
 
-  onNavItemClick(item: any): void {
+  onNavItemClick(event: any, item: any): void {
     if (item.action === 'catalog') {
-      this.onCatalogToggle();
+      this.onCatalogToggle(event);
     } else if (item.link) {
       this.router.navigate([item.link]);
     }

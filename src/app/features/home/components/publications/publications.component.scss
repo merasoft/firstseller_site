@@ -1,26 +1,8 @@
-// src/app/features/home/components/publications/publications.component.scss
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+// Use utility classes from global styles instead of duplicating
+// Most animations and styles now handled by Tailwind utility classes
 
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-// Publication card animations
-.publication-card {
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  }
+:host {
+  @apply block;
 }
 
 // Image hover effects
