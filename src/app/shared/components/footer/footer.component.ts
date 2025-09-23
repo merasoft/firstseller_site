@@ -5,10 +5,9 @@ import { Component } from '@angular/core';
   selector: 'app-footer',
   standalone: false,
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
-
   // Footer links sections
   footerSections = [
     {
@@ -18,8 +17,8 @@ export class FooterComponent {
         { name: 'Етказиб бериш', url: '/delivery' },
         { name: 'Тўлов усуллари', url: '/payment' },
         { name: 'Кафолат', url: '/warranty' },
-        { name: 'Алоқа', url: '/contact' }
-      ]
+        { name: 'Алоқа', url: '/contact' },
+      ],
     },
     {
       title: 'Категориялар',
@@ -28,9 +27,9 @@ export class FooterComponent {
         { name: 'Ноутбуклар', url: '/catalog/laptops' },
         { name: 'Телевизорлар', url: '/catalog/tv' },
         { name: 'Маиший техника', url: '/catalog/appliances' },
-        { name: 'Аксессуарлар', url: '/catalog/accessories' }
-      ]
-    }
+        { name: 'Аксессуарлар', url: '/catalog/accessories' },
+      ],
+    },
   ];
 
   // Social media links
@@ -39,26 +38,26 @@ export class FooterComponent {
       name: 'Facebook',
       icon: 'facebook',
       url: 'https://facebook.com/firstseller',
-      color: 'bg-blue-600'
+      color: 'bg-blue-600',
     },
     {
       name: 'Telegram',
       icon: 'telegram',
       url: 'https://t.me/firstseller',
-      color: 'bg-blue-500'
+      color: 'bg-blue-500',
     },
     {
       name: 'Instagram',
       icon: 'instagram',
       url: 'https://instagram.com/firstseller',
-      color: 'bg-pink-600'
+      color: 'bg-pink-600',
     },
     {
       name: 'YouTube',
       icon: 'youtube',
       url: 'https://youtube.com/firstseller',
-      color: 'bg-red-600'
-    }
+      color: 'bg-red-600',
+    },
   ];
 
   // App download links
@@ -66,13 +65,13 @@ export class FooterComponent {
     {
       name: 'App Store',
       image: '/assets/images/app-store.png',
-      url: 'https://apps.apple.com/app/firstseller'
+      url: 'https://apps.apple.com/app/firstseller',
     },
     {
       name: 'Google Play',
       image: '/assets/images/google-play.png',
-      url: 'https://play.google.com/store/apps/details?id=uz.firstseller'
-    }
+      url: 'https://play.google.com/store/apps/details?id=uz.firstseller',
+    },
   ];
 
   currentYear = new Date().getFullYear();

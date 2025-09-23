@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build:dev": "ng build --configuration development && firebase deploy",
+    "build:prod": "ng build --configuration production",
+    "build:both": "ng build --configuration development && firebase deploy && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -18,13 +20,15 @@
     "@angular/platform-browser": "^19.1.0",
     "@angular/platform-browser-dynamic": "^19.1.0",
     "@angular/router": "^19.1.0",
+    "@primeng/themes": "^19.1.4",
     "@splidejs/splide": "^4.1.4",
     "@types/lodash": "^4.17.20",
     "aos": "^2.3.4",
     "lodash": "^4.17.21",
     "lucide-angular": "^0.544.0",
+    "primeicons": "^7.0.0",
+    "primeng": "^19.1.4",
     "rxjs": "~7.8.0",
-    "swiper": "^12.0.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

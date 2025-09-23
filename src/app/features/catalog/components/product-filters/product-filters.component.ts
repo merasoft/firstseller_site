@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-product-filters',
   standalone: false,
   templateUrl: './product-filters.component.html',
-  styleUrl: './product-filters.component.scss'
+  styleUrl: './product-filters.component.scss',
 })
-export class ProductFiltersComponent {
-
-}
+export class ProductFiltersComponent {}

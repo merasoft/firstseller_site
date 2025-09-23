@@ -1,124 +1,58 @@
-<div class="relative">
-  <!-- Catalog Button -->
-  <button
-    (click)="toggleMenu()"
-    class="flex items-center space-x-2 bg-primary-500 text-white px-6 py-3 rounded-xl hover:bg-primary-600 transition-colors group"
-  >
-    <svg class="h-5 w-5" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-    <span class="font-medium">Каталог товарлар</span>
-    <svg
-      class="h-4 w-4 transition-transform duration-200"
-      [class.rotate-180]="isMenuOpen"
-      fill="none"
-      stroke="currentColor"
-    >
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
-  </button>
+<p-popover #menu (onHide)="isMenuOpen = false">
+  <div class="flex">
+    <ul *ngIf="!isLoading && catalogData">
+      <li
+        *ngFor="let category of catalogData.categories"
+        (mouseenter)="setActiveCategory(category)"
+        class="relative hover:bg-gray-100 border-b last:border-b-0 border-b-gray-200 border-l-2 border-l-transparent py-2 px-4 cursor-pointer"
+        [ngClass]="{ '!border-l-primary-500 ': activeCategory?.id === category.id }">
+        <button class="w-full text-left transition-all duration-200 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <i [class]="category.icon" class="text-lg"></i>
+            <span class="font-medium">{{ category.name }}</span>
+          </div>
+          <i class="pi pi-angle-right text-sm"></i>
+        </button>
+      </li>
+    </ul>
 
-  <!-- Mega Menu Dropdown -->
-  <div
-    *ngIf="isMenuOpen"
-    class="absolute top-full left-0 w-screen max-w-5xl bg-white shadow-2xl rounded-2xl mt-2 z-50 border border-gray-100 mega-menu-dropdown"
-    style="min-height: 400px;"
-  >
-    <!-- Loading State -->
-    <div *ngIf="isLoading" class="flex items-center justify-center h-96">
-      <div class="text-center">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
-        <p class="text-gray-500">Юкланмоқда...</p>
-      </div>
-    </div>
-
-    <!-- Menu Content -->
-    <div *ngIf="!isLoading && catalogData" class="flex">
-      <!-- Categories Sidebar -->
-      <div class="w-64 bg-gray-50 rounded-l-2xl border-r border-gray-200">
-        <div class="p-4">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">Категориялар</h3>
-          <ul class="space-y-1">
-            <li
-              *ngFor="let category of catalogData.categories"
-              class="relative"
-            >
-              <button
-                (mouseenter)="setActiveCategory(category)"
-                [class.bg-primary-50]="activeCategory?.id === category.id"
-                [class.text-primary-600]="activeCategory?.id === category.id"
-                [class.border-primary-200]="activeCategory?.id === category.id"
-                class="w-full text-left px-4 py-3 rounded-xl hover:bg-primary-50 hover:text-primary-600 transition-all duration-200 border border-transparent group flex items-center justify-between"
-              >
-                <div class="flex items-center space-x-3">
-                  <!-- Icon placeholder -->
-                  <div class="w-6 h-6 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <div class="w-4 h-4 bg-primary-500 rounded-sm"></div>
-                  </div>
-                  <span class="font-medium text-sm">{{ category.name }}</span>
-                </div>
-                <svg class="h-4 w-4 text-gray-400 group-hover:text-primary-600" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </li>
-          </ul>
-        </div>
+    <div *ngIf="activeCategory" class="p-8 border-l border-l-gray-200">
+      <!-- Category Header -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ activeCategory.name }}</h2>
+        <p class="text-gray-600">Ознакомьтесь с нашим широким ассортиментом продукции {{ activeCategory.name.toLowerCase() }}</p>
       </div>
 
-      <!-- Subcategories Content -->
-      <div class="flex-1 p-6">
-        <div *ngIf="activeCategory">
-          <h4 class="text-xl font-semibold text-gray-900 mb-6">{{ activeCategory.name }}</h4>
-
-          <!-- Subcategories Grid -->
-          <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-4 gap-8">
+        <!-- Subcategories Column -->
+        <div class="col-span-2">
+          <h4 class="text-lg font-semibold text-gray-900 mb-4">Покупать по категориям</h4>
+          <div class="grid grid-cols-2 gap-3">
             <a
               *ngFor="let subcategory of activeCategory.subcategories"
-              href="#"
-              (click)="closeMenu()"
-              class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors group"
-            >
-              <span class="text-gray-700 group-hover:text-primary-600 font-medium">
+              [routerLink]="['/catalog', subcategory.slug]"
+              class="flex items-center justify-between gap-3 p-3 rounded-lg transition-colors group border border-gray-100 hover:border-primary-200">
+              <span class="text-gray-700 group-hover:text-primary-700 font-medium text-sm">
                 {{ subcategory.name }}
               </span>
-              <span class="text-sm text-gray-400 bg-gray-100 px-2 py-1 rounded-full">
+              <span class="w-7 h-7 flex items-center justify-center text-xs font-bold text-gray-700 bg-gray-100 group-hover:bg-green-600 group-hover:text-white rounded-full">
                 {{ subcategory.count }}
               </span>
             </a>
           </div>
+        </div>
+      </div>
 
-          <!-- View All Button -->
-          <div class="mt-8 pt-6 border-t border-gray-200">
-            <button
-              (click)="closeMenu()"
-              class="w-full bg-primary-500 text-white py-3 px-6 rounded-xl hover:bg-primary-600 transition-colors font-semibold"
-            >
-              {{ activeCategory.name }} - Ҳаммасини кўриш
-            </button>
+      <!-- Bottom Banner -->
+      <div class="mt-8 p-6 bg-gradient-to-r from-primary-50 to-primary-100 rounded-2xl">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Специальные предложения</h3>
+            <p class="text-gray-600">Получите скидку до 30% на избранные товары</p>
           </div>
+          <button (click)="viewAllCategory(activeCategory)" class="bg-primary-500 text-white px-6 py-3 rounded-xl hover:bg-primary-600 transition-colors font-semibold"> Все товары </button>
         </div>
       </div>
     </div>
-
-    <!-- Error State -->
-    <div *ngIf="!isLoading && !catalogData" class="flex items-center justify-center h-96">
-      <div class="text-center">
-        <p class="text-red-500 mb-4">Маълумотларни юклашда хато</p>
-        <button
-          (click)="loadCatalogData()"
-          class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600"
-        >
-          Қайта уриниш
-        </button>
-      </div>
-    </div>
   </div>
-
-  <!-- Backdrop -->
-  <div
-    *ngIf="isMenuOpen"
-    (click)="onBackdropClick($event)"
-    class="fixed inset-0 bg-black bg-opacity-25 z-40"
-  ></div>
-</div>
+</p-popover>

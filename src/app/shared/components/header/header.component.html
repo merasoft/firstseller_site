@@ -6,7 +6,8 @@
       <div class="flex items-center justify-center gap-8">
         <div class="flex items-center gap-2">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+            <path
+              d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
           </svg>
           <span>Бепул йўналиш: +998 71 203 00 00</span>
         </div>
@@ -26,7 +27,6 @@
   <div class="bg-white shadow-sm border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-
         <!-- Logo -->
         <div class="flex items-center">
           <button (click)="onLogoClick()" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
@@ -43,37 +43,32 @@
         <!-- Search Bar -->
         <div class="flex-1 max-w-2xl mx-8">
           <div class="relative">
-            <input
-              type="text"
-              [(ngModel)]="searchQuery"
-              (keyup.enter)="onSearch()"
-              placeholder="Маҳсулотларни излаш..."
-              class="w-full pl-4 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-gray-50"
-            />
-            <button
-              (click)="onSearch()"
-              class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
-            >
-              Излаш
-            </button>
+            <input pInputText type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" placeholder="Маҳсулотларни излаш..." class="form-search" />
+            <p-button (onClick)="onSearch()" icon="pi pi-search text-sm" label="Излаш" styleClass="bg-primary-300 px-3 py-1 rounded-md absolute right-2 top-1/2 transform -translate-y-1/2" />
           </div>
         </div>
 
         <!-- User Actions -->
         <div class="flex items-center space-x-4">
-          <button
-            *ngFor="let action of userActions"
-            (click)="onUserActionClick(action)"
-            class="flex flex-col items-center gap-1 p-2 hover:bg-gray-100 rounded-lg transition-colors relative"
-          >
+          <button *ngFor="let action of userActions" (click)="onUserActionClick(action)" class="flex flex-col items-center gap-1 p-2 hover:bg-gray-100 rounded-lg transition-colors relative">
             <!-- Icon -->
             <div class="relative">
               <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <!-- Compare Icon -->
-                <path *ngIf="action.icon === 'compare'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                <path
+                  *ngIf="action.icon === 'compare'"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
 
                 <!-- Heart Icon -->
-                <path *ngIf="action.icon === 'heart'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                <path
+                  *ngIf="action.icon === 'heart'"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
 
                 <!-- Shopping Cart Icon -->
                 <path *ngIf="action.icon === 'shopping-cart'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m-2.4 8l1.6 8h12.8m-6.4-8v8m4-8v8"></path>
@@ -83,10 +78,7 @@
               </svg>
 
               <!-- Badge -->
-              <span
-                *ngIf="action.count > 0"
-                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
-              >
+              <span *ngIf="action.count > 0" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                 {{ action.count }}
               </span>
             </div>
@@ -100,58 +92,50 @@
   </div>
 
   <!-- Navigation Menu -->
-  <div class="bg-white border-b border-gray-200">
+  <div class="bg-white border-b border-gray-200 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between">
-
         <!-- Main Navigation -->
         <nav class="flex items-center space-x-8">
           <button
             *ngFor="let item of navItems"
-            (click)="onNavItemClick(item)"
+            (click)="onNavItemClick($event, item)"
             class="flex items-center gap-2 py-4 text-sm font-medium transition-colors relative"
-            [class.text-green-600]="item.isActive"
-            [class.text-gray-700]="!item.isActive && !item.isSpecial"
-            [class.text-red-500]="item.isSpecial"
-            [class.hover:text-green-600]="!item.isSpecial"
-            [class.hover:text-red-600]="item.isSpecial"
-          >
-            <!-- Menu Icon for Catalog -->
-            <svg
-              *ngIf="item.icon === 'menu'"
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
+            [ngClass]="{
+              'hover:bg-primary-100 px-3 !py-2 rounded-lg': item.action === 'catalog',
+              'bg-primary-100': item.action === 'catalog' && menu.isMenuOpen,
+              'text-green-600': item.isActive && item.action !== 'catalog',
+              'text-gray-700': !item.isActive && !item.isSpecial && item.action !== 'catalog',
+              'text-red-500': item.isSpecial,
+              'hover:text-green-600': !item.isSpecial && item.action !== 'catalog',
+              'hover:text-red-600': item.isSpecial
+            }">
+            <i *ngIf="item.action == 'catalog'" class="pi pi-th-large"></i>
 
-            <!-- Fire Icon for Special Items -->
-            <svg
-              *ngIf="item.isSpecial"
-              class="w-4 h-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path>
+            <svg *ngIf="item.isSpecial" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
+                clip-rule="evenodd"></path>
             </svg>
 
             {{ item.title }}
 
-            <!-- Dropdown Arrow -->
-            <svg
-              *ngIf="item.hasDropdown"
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <!-- Dropdown Arrow for catalog -->
+            <svg *ngIf="item.action === 'catalog'" class="w-4 h-4 transition-transform duration-200" [class.rotate-180]="menu.isMenuOpen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+
+            <!-- Regular dropdown arrow -->
+            <svg *ngIf="item.hasDropdown && item.action !== 'catalog'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
         </nav>
       </div>
     </div>
+
+    <!-- Mega Menu Component -->
+    <app-mega-menu #menu></app-mega-menu>
   </div>
 </header>

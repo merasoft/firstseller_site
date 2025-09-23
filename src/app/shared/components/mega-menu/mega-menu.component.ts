@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Popover } from 'primeng/popover';
 
 interface Subcategory {
   id: number;
@@ -19,47 +21,47 @@ interface CatalogData {
   categories: Category[];
 }
 
+interface FeaturedProduct {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  oldPrice?: number;
+  rating: number;
+  reviewCount: number;
+  categoryId: number;
+}
+
 @Component({
   selector: 'app-mega-menu',
   standalone: false,
   templateUrl: './mega-menu.component.html',
-  styleUrls: ['./mega-menu.component.scss']
+  styleUrls: ['./mega-menu.component.scss'],
 })
 export class MegaMenuComponent implements OnInit {
-  catalogData: CatalogData | null = null;
-  activeCategory: Category | null = null;
-  isMenuOpen = false;
-  isLoading = false;
+  @ViewChild('menu') menu!: Popover;
 
-  ngOnInit() {
-    this.loadCatalogData();
-  }
+  catalogData!: CatalogData;
+  activeCategory: Category | null = null;
+  featuredProducts: FeaturedProduct[] = [];
+  isLoading = false;
+  isMenuOpen = false;
+
+  constructor(private router: Router) {}
 
   async loadCatalogData() {
     try {
       this.isLoading = true;
-      console.log('JSON файлини юклаш бошланди...');
 
       const response = await fetch('/assets/data/catalog-menu.json');
-      console.log('Response status:', response.status);
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Юкланган маълумотлар:', data);
         this.catalogData = data;
-        console.log('Категориялар сони:', this.catalogData?.categories?.length);
       } else {
-        console.error('JSON файл топилмади, test маълумотлар ишлатилмоқда');
         this.setFallbackData();
       }
-
-      if (this.catalogData && this.catalogData.categories.length > 0) {
-        this.activeCategory = this.catalogData.categories[0];
-        console.log('Фаол категория:', this.activeCategory?.name);
-      }
-
     } catch (error) {
-      console.error('JSON юклашда хато:', error);
       this.setFallbackData();
     } finally {
       this.isLoading = false;
@@ -71,77 +73,65 @@ export class MegaMenuComponent implements OnInit {
       categories: [
         {
           id: 1,
-          name: "Смартфонлар",
-          slug: "smartphones",
-          icon: "smartphone",
+          name: 'Смартфонлар',
+          slug: 'smartphones',
+          icon: 'pi pi-mobile',
           subcategories: [
-            { id: 11, name: "Samsung Galaxy", slug: "samsung", count: 45 },
-            { id: 12, name: "iPhone", slug: "iphone", count: 23 },
-            { id: 13, name: "Honor", slug: "honor", count: 34 },
-            { id: 14, name: "Xiaomi", slug: "xiaomi", count: 28 }
-          ]
+            { id: 11, name: 'Samsung Galaxy', slug: 'samsung', count: 45 },
+            { id: 12, name: 'iPhone', slug: 'iphone', count: 23 },
+            { id: 13, name: 'Honor', slug: 'honor', count: 34 },
+            { id: 14, name: 'Xiaomi', slug: 'xiaomi', count: 28 },
+          ],
         },
         {
           id: 2,
-          name: "Ноутбуклар",
-          slug: "laptops",
-          icon: "laptop",
+          name: 'Ноутбуклар',
+          slug: 'laptops',
+          icon: 'fa-solid fa-laptop',
           subcategories: [
-            { id: 21, name: "Gaming ноутбуклар", slug: "gaming", count: 32 },
-            { id: 22, name: "Ишчи ноутбуклар", slug: "business", count: 28 },
-            { id: 23, name: "MacBook", slug: "macbook", count: 15 },
-            { id: 24, name: "Ультрабуклар", slug: "ultrabooks", count: 21 }
-          ]
+            { id: 21, name: 'Gaming ноутбуклар', slug: 'gaming', count: 32 },
+            { id: 22, name: 'Ишчи ноутбуклар', slug: 'business', count: 28 },
+            { id: 23, name: 'MacBook', slug: 'macbook', count: 15 },
+            { id: 24, name: 'Ультрабуклар', slug: 'ultrabooks', count: 21 },
+          ],
         },
         {
           id: 3,
-          name: "Телевизорлар",
-          slug: "tv",
-          icon: "tv",
+          name: 'Телевизорлар ва Мониторлар',
+          slug: 'tv',
+          icon: 'pi pi-desktop',
           subcategories: [
-            { id: 31, name: "Smart TV", slug: "smart-tv", count: 45 },
-            { id: 32, name: "4K UHD", slug: "4k", count: 38 },
-            { id: 33, name: "QLED", slug: "qled", count: 23 },
-            { id: 34, name: "OLED", slug: "oled", count: 17 }
-          ]
+            { id: 41, name: 'Smart TV', slug: 'smart-tv', count: 25 },
+            { id: 42, name: '4K UHD', slug: '4k', count: 18 },
+            { id: 43, name: 'QLED', slug: 'qled', count: 22 },
+            { id: 44, name: 'OLED', slug: 'oled', count: 16 },
+          ],
         },
         {
           id: 4,
-          name: "Маиший техника",
-          slug: "appliances",
-          icon: "home",
+          name: 'Аудио',
+          slug: 'audio',
+          icon: 'pi pi-headphones',
           subcategories: [
-            { id: 41, name: "Холодильниклар", slug: "fridges", count: 25 },
-            { id: 42, name: "Кир ювиш машиналари", slug: "washing", count: 18 },
-            { id: 43, name: "Пылесослар", slug: "vacuum", count: 22 },
-            { id: 44, name: "Микротўлқинли печлар", slug: "microwave", count: 16 }
-          ]
+            { id: 31, name: 'Наушниклар', slug: 'headphones', count: 45 },
+            { id: 32, name: 'Колонкалар', slug: 'speakers', count: 38 },
+            { id: 33, name: 'Soundbar', slug: 'soundbar', count: 23 },
+            { id: 34, name: 'Микрофонлар', slug: 'microphones', count: 17 },
+          ],
         },
         {
           id: 5,
-          name: "Аксессуарлар",
-          slug: "accessories",
-          icon: "headphones",
+          name: 'Аксессуарлар',
+          slug: 'accessories',
+          icon: 'pi pi-cog',
           subcategories: [
-            { id: 51, name: "Повербанклар", slug: "powerbanks", count: 35 },
-            { id: 52, name: "Зарядлаш кабеллари", slug: "cables", count: 42 },
-            { id: 53, name: "Наушниклар", slug: "headphones", count: 28 },
-            { id: 54, name: "Чехоллар", slug: "cases", count: 56 }
-          ]
+            { id: 51, name: 'Повербанклар', slug: 'powerbanks', count: 35 },
+            { id: 52, name: 'Зарядлаш кабеллари', slug: 'cables', count: 42 },
+            { id: 53, name: 'Чехоллар', slug: 'cases', count: 28 },
+            { id: 54, name: 'Ҳолдерлар', slug: 'holders', count: 56 },
+          ],
         },
-        {
-          id: 6,
-          name: "Ўйин консоллари",
-          slug: "gaming",
-          icon: "gamepad",
-          subcategories: [
-            { id: 61, name: "PlayStation 5", slug: "ps5", count: 8 },
-            { id: 62, name: "Xbox Series", slug: "xbox", count: 6 },
-            { id: 63, name: "Nintendo Switch", slug: "nintendo", count: 12 },
-            { id: 64, name: "Gaming аксессуарлар", slug: "gaming-acc", count: 24 }
-          ]
-        }
-      ]
+      ],
     };
 
     if (this.catalogData.categories.length > 0) {
@@ -151,40 +141,34 @@ export class MegaMenuComponent implements OnInit {
 
   setActiveCategory(category: Category) {
     this.activeCategory = category;
-    console.log('Танланган категория:', category.name);
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-    console.log('Menu ҳолати:', this.isMenuOpen ? 'очиқ' : 'ёпиқ');
+  navigateToProduct(product: FeaturedProduct) {
+    this.router.navigate(['/catalog/product', product.id]);
+  }
+
+  viewAllCategory(category: Category) {
+    this.router.navigate(['/catalog', category.slug]);
+  }
+
+  toggleMenu(event: any) {
+    this.menu.toggle(event);
+    this.isMenuOpen = this.menu.overlayVisible;
 
     if (this.isMenuOpen && !this.catalogData) {
       this.loadCatalogData();
     }
   }
 
-  closeMenu() {
-    this.isMenuOpen = false;
-    console.log('Menu ёпилди');
-  }
-
-  onBackdropClick(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.closeMenu();
-  }
-
   onSubcategoryClick(subcategory: Subcategory) {
-    console.log('Танланган подкатегория:', subcategory.name);
-    this.closeMenu();
-    // Bu yerda routing qo'shishingiz mumkin
-    // this.router.navigate(['/category', this.activeCategory?.slug, subcategory.slug]);
+    this.router.navigate(['/catalog', this.activeCategory?.slug, subcategory.slug]);
   }
 
   onViewAllClick() {
-    console.log('Ҳаммасини кўриш:', this.activeCategory?.name);
-    this.closeMenu();
-    // Bu yerda routing qo'shishingiz mumkin
-    // this.router.navigate(['/category', this.activeCategory?.slug]);
+    this.router.navigate(['/catalog', this.activeCategory?.slug]);
+  }
+
+  ngOnInit() {
+    this.loadCatalogData();
   }
 }

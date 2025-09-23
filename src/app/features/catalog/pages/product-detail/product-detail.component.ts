@@ -14,7 +14,7 @@ interface ProductVariant {
 
 interface ProductSpecification {
   category: string;
-  items: { name: string; value: string; }[];
+  items: { name: string; value: string }[];
 }
 
 interface InstallmentPlan {
@@ -29,10 +29,9 @@ interface InstallmentPlan {
   selector: 'app-product-detail',
   standalone: false,
   templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss']
+  styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
-
   productId: string = '';
   selectedImageIndex = 0;
   selectedVariant: any;
@@ -59,7 +58,7 @@ export class ProductDetailComponent implements OnInit {
       'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     ],
 
     variants: [
@@ -70,7 +69,7 @@ export class ProductDetailComponent implements OnInit {
         memory: '256 ГБ',
         price: 14046200,
         oldPrice: 15500000,
-        inStock: true
+        inStock: true,
       },
       {
         id: 'graphite-256',
@@ -79,7 +78,7 @@ export class ProductDetailComponent implements OnInit {
         memory: '256 ГБ',
         price: 14046200,
         oldPrice: 15500000,
-        inStock: true
+        inStock: true,
       },
       {
         id: 'silver-256',
@@ -88,7 +87,7 @@ export class ProductDetailComponent implements OnInit {
         memory: '256 ГБ',
         price: 14046200,
         oldPrice: 15500000,
-        inStock: true
+        inStock: true,
       },
       {
         id: 'navy-512',
@@ -97,8 +96,8 @@ export class ProductDetailComponent implements OnInit {
         memory: '512 ГБ',
         price: 16046200,
         oldPrice: 17500000,
-        inStock: true
-      }
+        inStock: true,
+      },
     ],
 
     description: `
@@ -115,8 +114,8 @@ export class ProductDetailComponent implements OnInit {
           { name: 'Тип телефона', value: 'Смартфон' },
           { name: 'Тип SIM-карты', value: 'nano-SIM / eSIM' },
           { name: 'Тип процессора', value: 'Qualcomm Snapdragon 8 Elite' },
-          { name: 'Количество ядер процессора', value: '8' }
-        ]
+          { name: 'Количество ядер процессора', value: '8' },
+        ],
       },
       {
         category: 'Дисплей',
@@ -124,8 +123,8 @@ export class ProductDetailComponent implements OnInit {
           { name: 'Диагональ экрана', value: '6.2"' },
           { name: 'Разрешение экрана', value: '2340x1080' },
           { name: 'Тип экрана', value: 'Dynamic AMOLED 2X' },
-          { name: 'Частота обновления', value: '120 Гц' }
-        ]
+          { name: 'Частота обновления', value: '120 Гц' },
+        ],
       },
       {
         category: 'Камера',
@@ -133,10 +132,10 @@ export class ProductDetailComponent implements OnInit {
           { name: 'Основная камера', value: '50 МП + 12 МП + 10 МП' },
           { name: 'Фронтальная камера', value: '12 МП' },
           { name: 'Запись видео', value: '8K при 24 к/с' },
-          { name: 'Стабилизация', value: 'Оптическая (OIS)' }
-        ]
-      }
-    ]
+          { name: 'Стабилизация', value: 'Оптическая (OIS)' },
+        ],
+      },
+    ],
   };
 
   breadcrumbs = [
@@ -144,14 +143,14 @@ export class ProductDetailComponent implements OnInit {
     { name: 'Электроника', url: '/catalog' },
     { name: 'Смартфоны и гаджеты', url: '/catalog/smartphones' },
     { name: 'Все смартфоны', url: '/catalog/smartphones' },
-    { name: 'Смартфон SAMSUNG Galaxy S25', url: '' }
+    { name: 'Смартфон SAMSUNG Galaxy S25', url: '' },
   ];
 
   installmentPlans: InstallmentPlan[] = [
     { id: '0-0-3', months: 3, monthlyPayment: 4682067, totalAmount: 14046200, interestRate: 0 },
     { id: '0-0-6', months: 6, monthlyPayment: 2341033, totalAmount: 14046200, interestRate: 0 },
     { id: '0-0-9', months: 9, monthlyPayment: 1560689, totalAmount: 14046200, interestRate: 0 },
-    { id: '0-0-12', months: 12, monthlyPayment: 1170517, totalAmount: 14046200, interestRate: 0 }
+    { id: '0-0-12', months: 12, monthlyPayment: 1170517, totalAmount: 14046200, interestRate: 0 },
   ];
 
   selectedInstallmentPlan = this.installmentPlans[3]; // 12 months by default
@@ -162,13 +161,13 @@ export class ProductDetailComponent implements OnInit {
     { id: 'reviews', name: 'Отзывы', active: false },
     { id: 'payment', name: 'Оплата', active: false },
     { id: 'delivery', name: 'Доставка', active: false },
-    { id: 'discounts', name: 'Скидки и бонусы', active: false }
+    { id: 'discounts', name: 'Скидки и бонусы', active: false },
   ];
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.productId = params['id'] || 'samsung-galaxy-s25';
       this.loadProduct();
     });
@@ -199,9 +198,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   updateSelectedVariant(): void {
-    this.selectedVariant = this.product.variants.find(v =>
-      v.color === this.selectedColor && v.memory === this.selectedMemory
-    ) || this.product.variants[0];
+    this.selectedVariant = this.product.variants.find((v) => v.color === this.selectedColor && v.memory === this.selectedMemory) || this.product.variants[0];
   }
 
   selectInstallmentPlan(plan: InstallmentPlan): void {
@@ -210,7 +207,7 @@ export class ProductDetailComponent implements OnInit {
 
   selectTab(tabId: string): void {
     this.activeTab = tabId;
-    this.tabs.forEach(tab => tab.active = tab.id === tabId);
+    this.tabs.forEach((tab) => (tab.active = tab.id === tabId));
   }
 
   increaseQuantity(): void {
@@ -227,7 +224,7 @@ export class ProductDetailComponent implements OnInit {
     console.log('Add to cart:', {
       product: this.product,
       variant: this.selectedVariant,
-      quantity: this.quantity
+      quantity: this.quantity,
     });
   }
 
@@ -235,7 +232,7 @@ export class ProductDetailComponent implements OnInit {
     console.log('Buy now:', {
       product: this.product,
       variant: this.selectedVariant,
-      quantity: this.quantity
+      quantity: this.quantity,
     });
   }
 
@@ -256,23 +253,23 @@ export class ProductDetailComponent implements OnInit {
   }
 
   getAvailableColors(): string[] {
-    return [...new Set(this.product.variants.map(v => v.color))];
+    return [...new Set(this.product.variants.map((v) => v.color))];
   }
 
   getAvailableMemory(): string[] {
-    return [...new Set(this.product.variants.map(v => v.memory))];
+    return [...new Set(this.product.variants.map((v) => v.memory))];
   }
 
   isColorAvailable(color: string): boolean {
-    return this.product.variants.some(v => v.color === color && v.memory === this.selectedMemory);
+    return this.product.variants.some((v) => v.color === color && v.memory === this.selectedMemory);
   }
 
   isMemoryAvailable(memory: string): boolean {
-    return this.product.variants.some(v => v.memory === memory && v.color === this.selectedColor);
+    return this.product.variants.some((v) => v.memory === memory && v.color === this.selectedColor);
   }
 
   getColorCode(color: string): string {
-    const variant = this.product.variants.find(v => v.color === color);
+    const variant = this.product.variants.find((v) => v.color === color);
     return variant?.colorCode || '#000000';
   }
 }

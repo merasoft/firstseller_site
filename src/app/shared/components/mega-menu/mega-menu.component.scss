@@ -1,43 +1,36 @@
 :host {
-  display: block;
-  position: relative;
+  @apply block relative;
 }
 
 .mega-menu-dropdown {
-  animation: fadeInDown 0.3s ease-out;
-  transform-origin: top left;
+  @apply animate-fade-in-down;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 50;
 }
 
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-// Smooth hover transitions
 .category-item {
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    transform: translateX(4px);
-  }
+  @apply transition-all duration-200 ease-in-out;
 }
 
-// Loading spinner
-.animate-spin {
-  animation: spin 1s linear infinite;
+.category-item:hover {
+  @apply bg-gray-50 text-primary-600;
+  border-left: 3px solid theme('colors.primary.600');
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.featured-product {
+  @apply transition-transform duration-200 ease-in-out;
+}
+
+.featured-product:hover {
+  @apply transform scale-105;
+}
+
+.product-image {
+  @apply transition-transform duration-300 ease-in-out;
+}
+
+.featured-product:hover .product-image {
+  @apply transform scale-110;
 }

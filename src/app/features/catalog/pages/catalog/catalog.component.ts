@@ -1,5 +1,6 @@
 // src/app/features/catalog/pages/catalog/catalog.component.ts
 import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 interface Product {
   id: number;
@@ -29,6 +30,7 @@ interface Filter {
   max?: number;
   currentMin?: number;
   currentMax?: number;
+  range?: [number, number];
 }
 
 interface FilterOption {
@@ -42,30 +44,31 @@ interface FilterOption {
   selector: 'app-catalog',
   standalone: false,
   templateUrl: './catalog.component.html',
-  styleUrls: ['./catalog.component.scss']
+  styleUrls: ['./catalog.component.scss'],
 })
 export class CatalogComponent implements OnInit {
   pageTitle = 'Смартфоны';
   totalProducts = 518;
 
+  // PrimeNG Breadcrumb
+  breadcrumbItems: MenuItem[] = [];
+  home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
+
   breadcrumbs = [
     { name: 'Главная', url: '/' },
     { name: 'Телефоны и гаджеты', url: '/category/phones' },
     { name: 'Телефоны', url: '/category/phones/mobile' },
-    { name: 'Смартфоны', url: '/category/phones/smartphones' }
+    { name: 'Смартфоны', url: '/category/phones/smartphones' },
   ];
 
-  quickFilters = [
-    'Samsung S25', 'Honor X9C', 'Honor', 'iPhone', 'Samsung Galaxy S25 Ultra',
-    'Samsung', 'Samsung Galaxy S24 Ultra', 'iPhone 16', 'iPhone 16 Pro Max', 'iPhone 17 Pro Max'
-  ];
+  quickFilters = ['Samsung S25', 'Honor X9C', 'Honor', 'iPhone', 'Samsung Galaxy S25 Ultra', 'Samsung', 'Samsung Galaxy S24 Ultra', 'iPhone 16', 'iPhone 16 Pro Max', 'iPhone 17 Pro Max'];
 
   sortOptions = [
     { value: 'popular', label: 'По популярности' },
     { value: 'price-asc', label: 'По цене ↑' },
     { value: 'price-desc', label: 'По цене ↓' },
     { value: 'rating', label: 'По рейтингу' },
-    { value: 'new', label: 'Новинки' }
+    { value: 'new', label: 'Новинки' },
   ];
 
   selectedSort = 'popular';
@@ -78,8 +81,7 @@ export class CatalogComponent implements OnInit {
       type: 'range',
       min: 569000,
       max: 52314918,
-      currentMin: 569000,
-      currentMax: 52314918
+      range: [569000, 52314918],
     },
     {
       id: 'brand',
@@ -94,8 +96,8 @@ export class CatalogComponent implements OnInit {
         { id: 'google', name: 'Google', count: 6, checked: false },
         { id: 'pixel', name: 'Pixel', count: 4, checked: false },
         { id: 'zte', name: 'ZTE', count: 9, checked: false },
-        { id: 'green-lion', name: 'Green Lion', count: 3, checked: false }
-      ]
+        { id: 'green-lion', name: 'Green Lion', count: 3, checked: false },
+      ],
     },
     {
       id: 'memory',
@@ -108,9 +110,9 @@ export class CatalogComponent implements OnInit {
         { id: '6gb', name: '6 ГБ', count: 78, checked: false },
         { id: '8gb', name: '8 ГБ', count: 156, checked: false },
         { id: '12gb', name: '12 ГБ', count: 89, checked: false },
-        { id: '16gb', name: '16 ГБ', count: 23, checked: false }
-      ]
-    }
+        { id: '16gb', name: '16 ГБ', count: 23, checked: false },
+      ],
+    },
   ];
 
   products: Product[] = [
@@ -120,7 +122,7 @@ export class CatalogComponent implements OnInit {
       images: [
         'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-        'https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        'https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
       ],
       currentImageIndex: 0,
       price: 3049000,
@@ -134,7 +136,7 @@ export class CatalogComponent implements OnInit {
       brand: 'Honor',
       memory: '8GB',
       processor: 'Snapdragon',
-      inStock: true
+      inStock: true,
     },
     {
       id: 2,
@@ -142,7 +144,7 @@ export class CatalogComponent implements OnInit {
       images: [
         'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
       ],
       currentImageIndex: 0,
       price: 13619000,
@@ -156,7 +158,7 @@ export class CatalogComponent implements OnInit {
       brand: 'Samsung',
       memory: '12GB',
       processor: 'Exynos',
-      inStock: true
+      inStock: true,
     },
     {
       id: 3,
@@ -164,7 +166,7 @@ export class CatalogComponent implements OnInit {
       images: [
         'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-        'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
       ],
       currentImageIndex: 0,
       price: 14379000,
@@ -178,7 +180,7 @@ export class CatalogComponent implements OnInit {
       brand: 'Samsung',
       memory: '12GB',
       processor: 'Exynos',
-      inStock: true
+      inStock: true,
     },
     {
       id: 4,
@@ -186,7 +188,7 @@ export class CatalogComponent implements OnInit {
       images: [
         'https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
       ],
       currentImageIndex: 0,
       price: 15289000,
@@ -200,7 +202,7 @@ export class CatalogComponent implements OnInit {
       brand: 'Vivo',
       memory: '12GB',
       processor: 'Snapdragon',
-      inStock: true
+      inStock: true,
     },
     {
       id: 5,
@@ -208,7 +210,7 @@ export class CatalogComponent implements OnInit {
       images: [
         'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-        'https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        'https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
       ],
       currentImageIndex: 0,
       price: 3959000,
@@ -222,7 +224,7 @@ export class CatalogComponent implements OnInit {
       brand: 'Honor',
       memory: '8GB',
       processor: 'Snapdragon',
-      inStock: true
+      inStock: true,
     },
     {
       id: 6,
@@ -230,7 +232,7 @@ export class CatalogComponent implements OnInit {
       images: [
         'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-        'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+        'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
       ],
       currentImageIndex: 0,
       price: 2339000,
@@ -243,12 +245,13 @@ export class CatalogComponent implements OnInit {
       brand: 'Samsung',
       memory: '6GB',
       processor: 'Exynos',
-      inStock: true
-    }
+      inStock: true,
+    },
   ];
 
   ngOnInit(): void {
-    // Initialize component
+    // Initialize PrimeNG breadcrumbs
+    this.breadcrumbItems = [{ label: 'Телефоны и гаджеты', routerLink: '/category/phones' }, { label: 'Телефоны', routerLink: '/category/phones/mobile' }, { label: 'Смартфоны' }];
   }
 
   // Handle image navigation for products
@@ -274,17 +277,28 @@ export class CatalogComponent implements OnInit {
 
   // Filter functions
   onFilterChange(filterId: string, optionId?: string): void {
-    const filter = this.filters.find(f => f.id === filterId);
-    if (filter && filter.options && optionId) {
-      const option = filter.options.find(o => o.id === optionId);
-      if (option) {
-        option.checked = !option.checked;
-        this.applyFilters();
+    this.filters = this.filters.map((f) => {
+      if (f.id === filterId && f.type === 'checkbox' && optionId) {
+        const options = f.options?.map((o) => {
+          if (o.id === optionId) {
+            return { ...o, checked: !o.checked };
+          }
+          return o;
+        });
+        return { ...f, options };
       }
-    }
+      return f;
+    });
   }
 
-  onPriceRangeChange(): void {
+  onPriceRangeChange(event: any): void {
+    if (event == null || typeof event === 'number') {
+      this.filters[0].range = [this.filters[0].currentMin!, this.filters[0].currentMax!];
+    } else if (typeof event === 'object' && Array.isArray(event.values) && event.values.length === 2) {
+      this.filters[0].currentMin = event.values[0];
+      this.filters[0].currentMax = event.values[1];
+    }
+
     this.applyFilters();
   }
 
@@ -294,13 +308,14 @@ export class CatalogComponent implements OnInit {
   }
 
   clearFilters(): void {
-    this.filters.forEach(filter => {
+    this.filters.forEach((filter) => {
       if (filter.options) {
-        filter.options.forEach(option => option.checked = false);
+        filter.options.forEach((option) => (option.checked = false));
       }
       if (filter.type === 'range') {
         filter.currentMin = filter.min;
         filter.currentMax = filter.max;
+        filter.range = [filter.min!, filter.max!];
       }
     });
     this.applyFilters();
@@ -329,7 +344,9 @@ export class CatalogComponent implements OnInit {
   }
 
   getStars(rating: number): boolean[] {
-    return Array(5).fill(false).map((_, i) => i < rating);
+    return Array(5)
+      .fill(false)
+      .map((_, i) => i < rating);
   }
 
   getBadgeClasses(badgeType?: string): string {
@@ -350,6 +367,6 @@ export class CatalogComponent implements OnInit {
   // Get count of checked options for filter
   getCheckedCount(filter: Filter): number {
     if (!filter.options) return 0;
-    return filter.options.filter(option => option.checked).length;
+    return filter.options.filter((option) => option.checked).length;
   }
 }

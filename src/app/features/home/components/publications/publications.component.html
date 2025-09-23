@@ -13,8 +13,7 @@
         [class.bg-gray-100]="activeCategory !== category"
         [class.text-gray-700]="activeCategory !== category"
         [class.hover:bg-primary-500]="activeCategory === category"
-        [class.hover:bg-gray-200]="activeCategory !== category"
-      >
+        [class.hover:bg-gray-200]="activeCategory !== category">
         {{ category }}
       </button>
     </div>
@@ -24,15 +23,10 @@
       <div
         *ngFor="let publication of filteredPublications"
         (click)="onPublicationClick(publication)"
-        class="relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer group h-80"
-      >
+        class="relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer group h-80">
         <!-- Background Image -->
         <div class="absolute inset-0">
-          <img
-            [src]="publication.image"
-            [alt]="publication.title"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          >
+          <img [src]="publication.image" [alt]="publication.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           <!-- Dark overlay -->
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
         </div>
@@ -66,9 +60,7 @@
 
     <!-- Load More Button -->
     <div class="text-center mt-12">
-      <button class="bg-primary-600 text-white px-8 py-3 rounded-xl font-medium hover:bg-primary-700 transition-colors">
-        Загрузить ещё
-      </button>
+      <button class="bg-primary-600 text-white px-8 py-3 rounded-xl font-medium hover:bg-primary-700 transition-colors"> Загрузить ещё </button>
     </div>
   </div>
 </section>
