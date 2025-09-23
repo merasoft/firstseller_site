@@ -1,25 +1,7 @@
 // src/app/features/catalog/pages/catalog/catalog.component.ts
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-
-interface Product {
-  id: number;
-  name: string;
-  images: string[];
-  currentImageIndex: number;
-  price: number;
-  oldPrice?: number;
-  monthlyPayment: number;
-  installmentMonths: number;
-  rating: number;
-  reviewsCount: number;
-  badge?: string;
-  badgeType?: 'discount' | 'super-price' | 'new' | 'top';
-  brand: string;
-  memory: string;
-  processor: string;
-  inStock: boolean;
-}
+import { Product } from '../../../../shared/models/product.model';
 
 interface Filter {
   id: string;
@@ -261,27 +243,6 @@ export class CatalogComponent implements OnInit {
     this.breadcrumbItems = [{ label: 'Телефоны и гаджеты', routerLink: '/category/phones' }, { label: 'Телефоны', routerLink: '/category/phones/mobile' }, { label: 'Смартфоны' }];
   }
 
-  // Handle image navigation for products
-  previousImage(product: Product): void {
-    if (product.currentImageIndex > 0) {
-      product.currentImageIndex--;
-    } else {
-      product.currentImageIndex = product.images.length - 1;
-    }
-  }
-
-  nextImage(product: Product): void {
-    if (product.currentImageIndex < product.images.length - 1) {
-      product.currentImageIndex++;
-    } else {
-      product.currentImageIndex = 0;
-    }
-  }
-
-  setImage(product: Product, index: number): void {
-    product.currentImageIndex = index;
-  }
-
   // Filter functions
   onFilterChange(filterId: string, optionId?: string): void {
     this.filters = this.filters.map((f) => {
@@ -326,53 +287,6 @@ export class CatalogComponent implements OnInit {
       }
     });
     this.applyFilters();
-  }
-
-  // Product actions
-  onBuyOneClick(product: Product): void {
-    console.log('Buy one click:', product.name);
-  }
-
-  onAddToCart(product: Product): void {
-    console.log('Add to cart:', product.name);
-  }
-
-  onAddToFavorites(product: Product): void {
-    console.log('Add to favorites:', product.name);
-  }
-
-  onAddToCompare(product: Product): void {
-    console.log('Add to compare:', product.name);
-  }
-
-  // Utility functions
-  formatPrice(price: number): string {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
-
-  getStars(rating: number): ('full' | 'empty' | 'half')[] {
-    return Array(5)
-      .fill(0)
-      .map((_, i) => {
-        if (rating >= i + 1) return 'full';
-        if (rating >= i + 0.5) return 'half';
-        return 'empty';
-      });
-  }
-
-  getBadgeClasses(badgeType?: string): string {
-    switch (badgeType) {
-      case 'discount':
-        return 'bg-orange-500 text-white';
-      case 'super-price':
-        return 'bg-orange-500 text-white';
-      case 'new':
-        return 'bg-red-500 text-white';
-      case 'top':
-        return 'bg-gray-800 text-white';
-      default:
-        return 'bg-gray-500 text-white';
-    }
   }
 
   // Get count of checked options for filter

@@ -35,6 +35,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 const PRIMENG_MODULES = [
   AccordionModule,
@@ -67,8 +68,8 @@ const PRIMENG_MODULES = [
 ];
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, MegaMenuComponent],
+  declarations: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent],
   imports: [CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
-  exports: [HeaderComponent, FooterComponent, MegaMenuComponent, CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
+  exports: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent, CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
 })
 export class SharedModule {}
