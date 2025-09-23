@@ -61,6 +61,11 @@ export class CatalogComponent implements OnInit {
     { name: 'Смартфоны', url: '/category/phones/smartphones' },
   ];
 
+  selectedFilters = [
+    { filter_id: 'brand', name: 'Бренд', values: ['Huawei', 'Pixel'] },
+    { filter_id: 'memory', name: 'Оперативная память', values: ['8GB', '16GB'] },
+  ];
+
   quickFilters = ['Samsung S25', 'Honor X9C', 'Honor', 'iPhone', 'Samsung Galaxy S25 Ultra', 'Samsung', 'Samsung Galaxy S24 Ultra', 'iPhone 16', 'iPhone 16 Pro Max', 'iPhone 17 Pro Max'];
 
   sortOptions = [
@@ -81,11 +86,13 @@ export class CatalogComponent implements OnInit {
       type: 'range',
       min: 569000,
       max: 52314918,
+      currentMin: 569000,
+      currentMax: 52314918,
       range: [569000, 52314918],
     },
     {
       id: 'brand',
-      name: 'Производитель',
+      name: 'Бренд',
       type: 'checkbox',
       options: [
         { id: 'tecno', name: 'TECNO', count: 14, checked: false },
@@ -129,7 +136,7 @@ export class CatalogComponent implements OnInit {
       oldPrice: 3599000,
       monthlyPayment: 371000,
       installmentMonths: 12,
-      rating: 5,
+      rating: 3.5,
       reviewsCount: 8,
       badge: 'СУПЕР ЦЕНА',
       badgeType: 'super-price',
@@ -151,8 +158,8 @@ export class CatalogComponent implements OnInit {
       oldPrice: 14879000,
       monthlyPayment: 1657000,
       installmentMonths: 12,
-      rating: 5,
-      reviewsCount: 5,
+      rating: 4,
+      reviewsCount: 49,
       badge: 'СУПЕР ЦЕНА',
       badgeType: 'super-price',
       brand: 'Samsung',
@@ -173,8 +180,8 @@ export class CatalogComponent implements OnInit {
       oldPrice: 15079000,
       monthlyPayment: 1749500,
       installmentMonths: 12,
-      rating: 5,
-      reviewsCount: 0,
+      rating: 4.8,
+      reviewsCount: 8,
       badge: 'СКИДКА',
       badgeType: 'discount',
       brand: 'Samsung',
@@ -196,7 +203,7 @@ export class CatalogComponent implements OnInit {
       monthlyPayment: 1860200,
       installmentMonths: 12,
       rating: 5,
-      reviewsCount: 0,
+      reviewsCount: 23,
       badge: 'СУПЕР ЦЕНА',
       badgeType: 'super-price',
       brand: 'Vivo',
@@ -217,8 +224,8 @@ export class CatalogComponent implements OnInit {
       oldPrice: 4709000,
       monthlyPayment: 481700,
       installmentMonths: 12,
-      rating: 5,
-      reviewsCount: 0,
+      rating: 3.7,
+      reviewsCount: 85,
       badge: 'СКИДКА',
       badgeType: 'discount',
       brand: 'Honor',
@@ -239,7 +246,7 @@ export class CatalogComponent implements OnInit {
       monthlyPayment: 284600,
       installmentMonths: 12,
       rating: 5,
-      reviewsCount: 0,
+      reviewsCount: 126,
       badge: 'НОВИНКА',
       badgeType: 'new',
       brand: 'Samsung',
@@ -343,10 +350,14 @@ export class CatalogComponent implements OnInit {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
 
-  getStars(rating: number): boolean[] {
+  getStars(rating: number): ('full' | 'empty' | 'half')[] {
     return Array(5)
-      .fill(false)
-      .map((_, i) => i < rating);
+      .fill(0)
+      .map((_, i) => {
+        if (rating >= i + 1) return 'full';
+        if (rating >= i + 0.5) return 'half';
+        return 'empty';
+      });
   }
 
   getBadgeClasses(badgeType?: string): string {

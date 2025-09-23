@@ -13,9 +13,7 @@
   }
 }
 
-// PrimeNG component overrides - minimal styling to match design
 ::ng-deep {
-  // Breadcrumb styling
   .p-breadcrumb {
     @apply bg-transparent border-none p-0;
 
@@ -151,31 +149,9 @@
     }
   }
 
-  // Paginator styling
-  .p-paginator {
-    @apply bg-white border-none p-4 justify-center;
-
-    .p-paginator-pages .p-paginator-page {
-      @apply mx-1 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100;
-
-      &.p-highlight {
-        @apply bg-primary-600 text-white border-primary-600;
-      }
-    }
-
-    .p-paginator-first,
-    .p-paginator-prev,
-    .p-paginator-next,
-    .p-paginator-last {
-      @apply mx-1 px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100;
-
-      &:disabled {
-        @apply opacity-50 cursor-not-allowed;
-      }
-    }
-
-    .p-paginator-current {
-      @apply text-sm text-gray-700;
+  .p-chip {
+    &-remove-icon {
+      @apply text-gray-600 hover:text-gray-800 transition-colors;
     }
   }
 }

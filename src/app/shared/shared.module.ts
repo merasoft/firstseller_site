@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChipModule } from 'primeng/chip';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -62,6 +63,7 @@ const PRIMENG_MODULES = [
   TagModule,
   TooltipModule,
   PopoverModule,
+  ChipModule,
 ];
 
 @NgModule({

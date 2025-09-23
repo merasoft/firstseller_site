@@ -166,14 +166,29 @@
 
 .custom-paginator {
   .p-paginator {
-    @apply p-2;
+    @apply bg-white border-none p-2 justify-end;
+
+    &-page {
+      @apply text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100;
+
+      &-selected {
+        @apply bg-primary-600 hover:bg-white text-white hover:text-primary-600 border-transparent hover:border-primary-600;
+      }
+    }
+
+    &-first,
+    &-prev,
+    &-next,
+    &-last {
+      @apply text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed;
+    }
 
     &-current {
-      @apply mr-auto;
+      @apply mr-auto text-sm text-gray-700;
     }
 
     &-rpp-dropdown {
-      @apply w-14 py-0.5;
+      @apply py-[3px];
     }
   }
 }
@@ -194,4 +209,10 @@
   &-handle {
     margin-top: -9px !important;
   }
+}
+
+.action-button {
+  @apply w-[34px] h-[34px] bg-gray-100 hover:bg-blue-50 shadow rounded-full flex items-center justify-center transition-colors;
+  backdrop-filter: blur(2px);
+  border: none;
 }
