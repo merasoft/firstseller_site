@@ -222,3 +222,15 @@
     margin-bottom: 70px;
   }
 }
+
+@media (max-width: 850px) {
+  .custom-paginator {
+    .p-paginator {
+      @apply p-4 justify-start;
+
+      &-current {
+        @apply block w-full mb-2;
+      }
+    }
+  }
+}

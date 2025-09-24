@@ -31,6 +31,7 @@ interface FilterOption {
 export class CatalogComponent implements OnInit {
   pageTitle = 'Смартфоны';
   totalProducts = 518;
+  filtersOpen = false;
 
   // PrimeNG Breadcrumb
   breadcrumbItems: MenuItem[] = [];

@@ -155,3 +155,41 @@
     }
   }
 }
+
+:host {
+  .filter-button {
+    @apply hidden px-4 py-1.5 text-sm text-gray-600 active:text-primary-700 bg-white border border-gray-300 active:border-primary-700 rounded-lg;
+
+    &.active {
+      @apply border-primary-700 text-primary-700;
+    }
+  }
+
+  @media (max-width: 850px) {
+    .filter-container {
+      @apply hidden;
+    }
+
+    .main-catalog-content {
+      @apply col-span-6;
+    }
+
+    .catalog-header {
+      @apply flex-col;
+    }
+
+    .filter-button {
+      @apply flex items-center gap-2;
+    }
+  }
+}
+
+::ng-deep {
+  .filter-drawer {
+    .p-drawer {
+      &-header {
+        @apply py-2;
+      }
+    }
+  }
+}
