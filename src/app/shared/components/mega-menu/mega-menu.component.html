@@ -44,3 +44,41 @@
     </div>
   </div>
 </p-popover>
+
+<p-drawer [(visible)]="isDialogOpen" [blockScroll]="true" position="full" styleClass="catalog-drawer">
+  <ng-template #header>
+    <h3 class="text-xl font-semibold text-gray-900">Все категории</h3>
+  </ng-template>
+  <ng-template #content>
+    <div class="pl-2 pr-6">
+      <div class="flex flex-col gap-4">
+        <div *ngFor="let cat of catalogData?.categories; trackBy: trackByCategory">
+          <button (click)="toggleAccordionPanel(cat.id)" class="w-full flex items-center justify-between text-sm text-gray-700 transition-colors">
+            <div class="flex items-center gap-2">
+              <i class="{{ cat.icon }}"></i>
+              <span>{{ cat.name }}</span>
+            </div>
+            <i class="text-xs transition-transform duration-200" [class]="isAccordionPanelOpen(cat.id) ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"></i>
+          </button>
+          <div class="overflow-hidden transition-all duration-300 ease-in-out" [class]="isAccordionPanelOpen(cat.id) ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'">
+            <div class="flex flex-col gap-2 ml-1 pl-5 pt-2 border-l-2 border-l-primary-500">
+              <a
+                [routerLink]="['/catalog', cat.slug]"
+                (click)="closeDrawer()"
+                class="w-fit text-sm text-gray-700 active:text-gray-900 relative inline-block after:absolute after:left-0 after:-bottom-[2px] after:h-[1px] after:bg-gray-900 after:w-0 after:transition-all after:duration-300 active:after:w-full">
+                Все товары
+              </a>
+              <a
+                *ngFor="let sub of cat.children"
+                [routerLink]="['/catalog', cat.slug, sub.slug]"
+                (click)="closeDrawer()"
+                class="w-fit text-sm text-gray-700 active:text-gray-900 relative inline-block after:absolute after:left-0 after:-bottom-[2px] after:h-[1px] after:bg-gray-900 after:w-0 after:transition-all after:duration-300 active:after:w-full">
+                <span> {{ sub.name }} </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-drawer>

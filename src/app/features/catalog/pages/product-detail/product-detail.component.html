@@ -3,7 +3,7 @@
   <app-header></app-header>
 
   <main class="flex-1 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <!-- Breadcrumbs -->
       <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
         <a *ngFor="let crumb of breadcrumbs; let last = last" [routerLink]="crumb.url" class="hover:text-primary-600 transition-colors" [class.text-gray-900]="last" [class.font-medium]="last">

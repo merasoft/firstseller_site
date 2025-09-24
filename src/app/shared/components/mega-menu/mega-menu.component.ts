@@ -40,6 +40,8 @@ export class MegaMenuComponent implements OnInit {
   featuredProducts: FeaturedProduct[] = [];
   isLoading = false;
   isMenuOpen = false;
+  isDialogOpen = false;
+  openPanels = new Set<number>();
 
   constructor(private router: Router) {}
 
@@ -341,8 +343,36 @@ export class MegaMenuComponent implements OnInit {
     }
   }
 
+  toggleDrawer() {
+    this.isDialogOpen = !this.isDialogOpen;
+
+    if (this.isDialogOpen && !this.catalogData) {
+      this.loadCatalogData();
+    }
+  }
+
   onSubcategoryClick(subcategory: Category) {
     this.router.navigate(['/catalog', this.activeCategory?.slug, subcategory.slug]);
+  }
+
+  trackByCategory(index: number, category: Category): number {
+    return category.id;
+  }
+
+  toggleAccordionPanel(categoryId: number) {
+    if (this.openPanels.has(categoryId)) {
+      this.openPanels.delete(categoryId);
+    } else {
+      this.openPanels.add(categoryId);
+    }
+  }
+
+  isAccordionPanelOpen(categoryId: number): boolean {
+    return this.openPanels.has(categoryId);
+  }
+
+  closeDrawer() {
+    this.isDialogOpen = false;
   }
 
   ngOnInit() {

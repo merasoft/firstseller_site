@@ -14,6 +14,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChipModule } from 'primeng/chip';
 import { DataViewModule } from 'primeng/dataview';
+import { DrawerModule } from 'primeng/drawer';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -65,6 +66,7 @@ const PRIMENG_MODULES = [
   TooltipModule,
   PopoverModule,
   ChipModule,
+  DrawerModule,
 ];
 
 @NgModule({

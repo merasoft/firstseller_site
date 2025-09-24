@@ -72,7 +72,7 @@
     </div>
 
     <!-- Product Info -->
-    <div class="p-4 space-y-2 flex-1 flex flex-col">
+    <div class="p-3 sm:p-4 space-y-2 flex-1 flex flex-col">
       <!-- Product Name -->
       <h3 class="text-sm font-medium text-gray-900 line-clamp-2 leading-tight group-hover:text-primary-600 transition-colors">
         {{ product.name }}
@@ -105,39 +105,38 @@
             </ng-container>
           </div>
         </div>
-        <span class="text-xs text-gray-500"> ({{ product.reviewsCount }} {{ product.reviewsCount === 1 ? 'отзыв' : 'отзыва' }}) </span>
+        <span class="text-xs text-gray-500">
+          ( {{ product.reviewsCount }} <span class="hidden sm:inline">{{ product.reviewsCount === 1 ? 'отзыв' : 'отзыва' }} </span>)
+        </span>
       </div>
 
       <!-- Price -->
       <div class="space-y-1 !mt-auto pt-2">
-        <div *ngIf="product.oldPrice" class="text-sm text-gray-500 line-through"> {{ formatPrice(product.oldPrice!) }} сум </div>
-        <div class="text-lg font-bold text-gray-900"> {{ formatPrice(product.price) }} сум </div>
+        <div *ngIf="product.oldPrice" class="text-xs sm:text-sm text-gray-500 line-through"> {{ formatPrice(product.oldPrice!) }} сум </div>
+        <div class="text-base sm:text-lg font-bold text-gray-900"> {{ formatPrice(product.price) }} сум </div>
       </div>
 
       <!-- Monthly Payment -->
       <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-md p-1 text-center">
-        <div class="text-orange-700 font-semibold text-sm"> {{ formatPrice(product.monthlyPayment) }} сум × {{ product.installmentMonths }} мес </div>
+        <div class="text-orange-700 font-normal sm:font-semibold text-[11px] sm:text-sm"> {{ formatPrice(product.monthlyPayment) }} сум × {{ product.installmentMonths }} мес </div>
       </div>
     </div>
   </a>
 
   <!-- Action Buttons (Outside of link) -->
-  <div class="px-4 pb-4 space-y-2">
+  <div class="px-3 pb-3 sm:px-4 sm:pb-4 space-y-2">
     <!-- Primary Actions -->
-    <div class="grid grid-cols-2 gap-2">
+    <div class="flex items-center gap-2">
       <button
         (click)="onBuyOneClick(product)"
-        class="bg-primary-600 hover:bg-primary-700 text-white py-2.5 px-4 rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02]">
+        class="flex-1 h-7 sm:h-9 bg-primary-600 hover:bg-primary-700 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02]">
         Купить
       </button>
 
       <button
         (click)="onAddToCart(product)"
-        class="bg-green-500 hover:bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02] flex items-center justify-center gap-1">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m-2.4 8l1.6 8h12.8m-6.4-8v8m4-8v8"></path>
-        </svg>
-        Корзина
+        class="w-10 h-7 sm:h-9 bg-green-500 hover:bg-green-600 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02] flex items-center justify-center gap-1">
+        <i class="pi pi-shopping-cart"></i>
       </button>
     </div>
   </div>

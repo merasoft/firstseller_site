@@ -21,6 +21,10 @@ interface SuperDeal {
   styleUrls: ['./super-deals.component.scss'],
 })
 export class SuperDealsComponent implements OnInit {
+  @ViewChild('carousel') carousel!: Carousel;
+
+  private _cachedStars: Map<number, ('full' | 'empty' | 'half')[]> = new Map();
+
   superDeals: SuperDeal[] = [
     {
       id: 1,
@@ -108,29 +112,18 @@ export class SuperDealsComponent implements OnInit {
     },
   ];
 
-  @ViewChild('carousel') carousel!: Carousel;
-
   responsiveOptions = [
     {
-      breakpoint: '1024px',
+      breakpoint: '1300px',
+      numVisible: 5,
+      numScroll: 1,
+    },
+    {
+      breakpoint: '1160px',
       numVisible: 4,
       numScroll: 1,
     },
-    {
-      breakpoint: '768px',
-      numVisible: 2,
-      numScroll: 1,
-    },
-    {
-      breakpoint: '640px',
-      numVisible: 1,
-      numScroll: 1,
-    },
   ];
-
-  ngOnInit() {
-    // Component initialization
-  }
 
   formatPrice(price: number): string {
     return price.toLocaleString('uz-UZ');
@@ -139,5 +132,26 @@ export class SuperDealsComponent implements OnInit {
   onDealClick(deal: SuperDeal) {
     console.log('Deal clicked:', deal);
     // Handle deal click - navigate to product detail page
+  }
+
+  getStars(rating: number): ('full' | 'empty' | 'half')[] {
+    // Use cached result to avoid creating new arrays on every call
+    if (!this._cachedStars.has(rating)) {
+      this._cachedStars.set(
+        rating,
+        Array(5)
+          .fill(0)
+          .map((_, i) => {
+            if (rating >= i + 1) return 'full';
+            if (rating >= i + 0.5) return 'half';
+            return 'empty';
+          })
+      );
+    }
+    return this._cachedStars.get(rating)!;
+  }
+
+  ngOnInit() {
+    // Component initialization
   }
 }
