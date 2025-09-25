@@ -57,22 +57,20 @@
 }
 
 // Responsive adjustments
-@media (max-width: 1024px) {
-  .custom-carousel {
-    @apply h-48;
+@media (max-width: 930px) {
+  .super-deals-carousel {
+    @apply hidden;
   }
 }
 
-@media (max-width: 768px) {
-  .custom-carousel {
-    @apply h-44;
+@media (min-width: 931px) {
+  .super-deals-grid {
+    @apply hidden;
   }
+}
 
-  ::ng-deep .p-carousel-item h2 {
-    @apply text-xl;
-  }
-
-  ::ng-deep .p-carousel-item p {
-    @apply text-sm;
+@media (max-width: 950px) {
+  .section-tag {
+    @apply hidden;
   }
 }

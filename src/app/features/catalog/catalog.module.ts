@@ -8,10 +8,7 @@ import { CatalogComponent } from './pages/catalog/catalog.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
 @NgModule({
-  declarations: [
-    CatalogComponent,
-    ProductDetailComponent, // ✅ Добавить новый компонент
-  ],
+  declarations: [CatalogComponent, ProductDetailComponent],
   imports: [CommonModule, SharedModule, CatalogRoutingModule],
 })
 export class CatalogModule {}

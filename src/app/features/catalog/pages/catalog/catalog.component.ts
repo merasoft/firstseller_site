@@ -1,25 +1,7 @@
 // src/app/features/catalog/pages/catalog/catalog.component.ts
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-
-interface Product {
-  id: number;
-  name: string;
-  images: string[];
-  currentImageIndex: number;
-  price: number;
-  oldPrice?: number;
-  monthlyPayment: number;
-  installmentMonths: number;
-  rating: number;
-  reviewsCount: number;
-  badge?: string;
-  badgeType?: 'discount' | 'super-price' | 'new' | 'top';
-  brand: string;
-  memory: string;
-  processor: string;
-  inStock: boolean;
-}
+import { Product } from '../../../../shared/models/product.model';
 
 interface Filter {
   id: string;
@@ -49,6 +31,7 @@ interface FilterOption {
 export class CatalogComponent implements OnInit {
   pageTitle = 'Смартфоны';
   totalProducts = 518;
+  filtersOpen = false;
 
   // PrimeNG Breadcrumb
   breadcrumbItems: MenuItem[] = [];
@@ -59,6 +42,11 @@ export class CatalogComponent implements OnInit {
     { name: 'Телефоны и гаджеты', url: '/category/phones' },
     { name: 'Телефоны', url: '/category/phones/mobile' },
     { name: 'Смартфоны', url: '/category/phones/smartphones' },
+  ];
+
+  selectedFilters = [
+    { filter_id: 'brand', name: 'Бренд', values: ['Huawei', 'Pixel'] },
+    { filter_id: 'memory', name: 'Оперативная память', values: ['8GB', '16GB'] },
   ];
 
   quickFilters = ['Samsung S25', 'Honor X9C', 'Honor', 'iPhone', 'Samsung Galaxy S25 Ultra', 'Samsung', 'Samsung Galaxy S24 Ultra', 'iPhone 16', 'iPhone 16 Pro Max', 'iPhone 17 Pro Max'];
@@ -81,11 +69,13 @@ export class CatalogComponent implements OnInit {
       type: 'range',
       min: 569000,
       max: 52314918,
+      currentMin: 569000,
+      currentMax: 52314918,
       range: [569000, 52314918],
     },
     {
       id: 'brand',
-      name: 'Производитель',
+      name: 'Бренд',
       type: 'checkbox',
       options: [
         { id: 'tecno', name: 'TECNO', count: 14, checked: false },
@@ -129,7 +119,7 @@ export class CatalogComponent implements OnInit {
       oldPrice: 3599000,
       monthlyPayment: 371000,
       installmentMonths: 12,
-      rating: 5,
+      rating: 3.5,
       reviewsCount: 8,
       badge: 'СУПЕР ЦЕНА',
       badgeType: 'super-price',
@@ -151,8 +141,8 @@ export class CatalogComponent implements OnInit {
       oldPrice: 14879000,
       monthlyPayment: 1657000,
       installmentMonths: 12,
-      rating: 5,
-      reviewsCount: 5,
+      rating: 4,
+      reviewsCount: 49,
       badge: 'СУПЕР ЦЕНА',
       badgeType: 'super-price',
       brand: 'Samsung',
@@ -173,8 +163,8 @@ export class CatalogComponent implements OnInit {
       oldPrice: 15079000,
       monthlyPayment: 1749500,
       installmentMonths: 12,
-      rating: 5,
-      reviewsCount: 0,
+      rating: 4.8,
+      reviewsCount: 8,
       badge: 'СКИДКА',
       badgeType: 'discount',
       brand: 'Samsung',
@@ -196,7 +186,7 @@ export class CatalogComponent implements OnInit {
       monthlyPayment: 1860200,
       installmentMonths: 12,
       rating: 5,
-      reviewsCount: 0,
+      reviewsCount: 23,
       badge: 'СУПЕР ЦЕНА',
       badgeType: 'super-price',
       brand: 'Vivo',
@@ -217,8 +207,8 @@ export class CatalogComponent implements OnInit {
       oldPrice: 4709000,
       monthlyPayment: 481700,
       installmentMonths: 12,
-      rating: 5,
-      reviewsCount: 0,
+      rating: 3.7,
+      reviewsCount: 85,
       badge: 'СКИДКА',
       badgeType: 'discount',
       brand: 'Honor',
@@ -239,7 +229,7 @@ export class CatalogComponent implements OnInit {
       monthlyPayment: 284600,
       installmentMonths: 12,
       rating: 5,
-      reviewsCount: 0,
+      reviewsCount: 126,
       badge: 'НОВИНКА',
       badgeType: 'new',
       brand: 'Samsung',
@@ -252,27 +242,6 @@ export class CatalogComponent implements OnInit {
   ngOnInit(): void {
     // Initialize PrimeNG breadcrumbs
     this.breadcrumbItems = [{ label: 'Телефоны и гаджеты', routerLink: '/category/phones' }, { label: 'Телефоны', routerLink: '/category/phones/mobile' }, { label: 'Смартфоны' }];
-  }
-
-  // Handle image navigation for products
-  previousImage(product: Product): void {
-    if (product.currentImageIndex > 0) {
-      product.currentImageIndex--;
-    } else {
-      product.currentImageIndex = product.images.length - 1;
-    }
-  }
-
-  nextImage(product: Product): void {
-    if (product.currentImageIndex < product.images.length - 1) {
-      product.currentImageIndex++;
-    } else {
-      product.currentImageIndex = 0;
-    }
-  }
-
-  setImage(product: Product, index: number): void {
-    product.currentImageIndex = index;
   }
 
   // Filter functions
@@ -319,49 +288,6 @@ export class CatalogComponent implements OnInit {
       }
     });
     this.applyFilters();
-  }
-
-  // Product actions
-  onBuyOneClick(product: Product): void {
-    console.log('Buy one click:', product.name);
-  }
-
-  onAddToCart(product: Product): void {
-    console.log('Add to cart:', product.name);
-  }
-
-  onAddToFavorites(product: Product): void {
-    console.log('Add to favorites:', product.name);
-  }
-
-  onAddToCompare(product: Product): void {
-    console.log('Add to compare:', product.name);
-  }
-
-  // Utility functions
-  formatPrice(price: number): string {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
-
-  getStars(rating: number): boolean[] {
-    return Array(5)
-      .fill(false)
-      .map((_, i) => i < rating);
-  }
-
-  getBadgeClasses(badgeType?: string): string {
-    switch (badgeType) {
-      case 'discount':
-        return 'bg-orange-500 text-white';
-      case 'super-price':
-        return 'bg-orange-500 text-white';
-      case 'new':
-        return 'bg-red-500 text-white';
-      case 'top':
-        return 'bg-gray-800 text-white';
-      default:
-        return 'bg-gray-500 text-white';
-    }
   }
 
   // Get count of checked options for filter

@@ -12,7 +12,9 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChipModule } from 'primeng/chip';
 import { DataViewModule } from 'primeng/dataview';
+import { DrawerModule } from 'primeng/drawer';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -34,6 +36,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 const PRIMENG_MODULES = [
   AccordionModule,
@@ -62,11 +65,13 @@ const PRIMENG_MODULES = [
   TagModule,
   TooltipModule,
   PopoverModule,
+  ChipModule,
+  DrawerModule,
 ];
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, MegaMenuComponent],
+  declarations: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent],
   imports: [CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
-  exports: [HeaderComponent, FooterComponent, MegaMenuComponent, CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
+  exports: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent, CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
 })
 export class SharedModule {}

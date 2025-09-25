@@ -1,6 +1,35 @@
-// Use utility classes from global styles
-// Component-specific styles only when needed
+::ng-deep {
+  .p-drawer {
+    &-header {
+      @apply px-4 border-b border-gray-200;
+    }
+    &-content {
+      @apply p-4;
+    }
+  }
+}
 
-:host {
-  @apply block;
+@media (max-width: 950px) {
+  .top-menu .searchbar,
+  .secondary-menu,
+  .topbar,
+  .action-cart,
+  .action-wishlist,
+  .action-account {
+    @apply hidden;
+  }
+
+  .hamburger-menu,
+  .searchbar-mobile,
+  .mobile-nav {
+    @apply block;
+  }
+
+  .logo-wrapper {
+    @apply justify-center;
+  }
+
+  .mobile-nav {
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+  }
 }

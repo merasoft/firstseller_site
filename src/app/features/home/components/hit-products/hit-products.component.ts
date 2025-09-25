@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../../../../shared/models/product.model';
 
-interface Product {
+interface HitProduct {
   id: number;
   name: string;
   image: string;
@@ -20,8 +21,8 @@ interface Product {
   templateUrl: './hit-products.component.html',
   styleUrls: ['./hit-products.component.scss'],
 })
-export class HitProductsComponent {
-  products: Product[] = [
+export class HitProductsComponent implements OnInit {
+  hitProducts: HitProduct[] = [
     {
       id: 1,
       name: 'Биграликда арзон! Яшамоқ + Япон зобити',
@@ -139,32 +140,36 @@ export class HitProductsComponent {
     },
   ];
 
-  // Generate star array for rating display
-  getStars(rating: number): boolean[] {
-    return Array(5)
-      .fill(false)
-      .map((_, i) => i < rating);
+  // Convert HitProducts to shared Product interface - use a property instead of getter
+  products: Product[] = [];
+
+  ngOnInit(): void {
+    this.products = this.hitProducts.map((hitProduct) => this.mapToProduct(hitProduct));
   }
 
-  // Format price with spaces
-  formatPrice(price: number): string {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  // TrackBy function to help Angular track items efficiently
+  trackByProductId(index: number, product: Product): number {
+    return product.id;
   }
 
-  onBuyOneClick(product: Product): void {
-    console.log('Купить в один клик:', product.name);
-    // Implement buy one click logic
-  }
-
-  onAddToCart(product: Product): void {
-    console.log('Добавить в корзину:', product.name);
-    // Implement add to cart logic
-  }
-
-  onImageError(event: Event): void {
-    const target = event.target as HTMLImageElement;
-    if (target) {
-      target.src = 'assets/images/placeholder.webp';
-    }
+  private mapToProduct(hitProduct: HitProduct): Product {
+    return {
+      id: hitProduct.id,
+      name: hitProduct.name,
+      images: [hitProduct.image], // Convert single image to array
+      currentImageIndex: 0,
+      price: hitProduct.price,
+      oldPrice: hitProduct.oldPrice,
+      monthlyPayment: hitProduct.monthlyPayment,
+      installmentMonths: hitProduct.installmentMonths,
+      rating: hitProduct.rating,
+      reviewsCount: hitProduct.reviewsCount,
+      badge: hitProduct.badge || (hitProduct.isTop ? 'ТОП' : undefined),
+      badgeType: hitProduct.badge ? 'discount' : hitProduct.isTop ? 'top' : undefined,
+      brand: '', // Default values for required fields
+      memory: '',
+      processor: '',
+      inStock: true,
+    };
   }
 }

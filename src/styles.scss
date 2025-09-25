@@ -9,6 +9,9 @@
   body {
     @apply font-sans bg-gray-50;
     font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -21,7 +24,6 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
-
   .line-clamp-3 {
     @apply overflow-hidden;
     display: -webkit-box;
@@ -98,7 +100,7 @@
   }
 
   .form-search {
-    @apply w-full pl-4 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-1 focus:ring-primary-400 focus:border-primary-400 bg-gray-50;
+    @apply w-full border border-gray-300 rounded-xl focus:ring-1 focus:ring-primary-400 focus:border-primary-400 bg-gray-50;
   }
 
   /* Badge Components */
@@ -166,14 +168,29 @@
 
 .custom-paginator {
   .p-paginator {
-    @apply p-2;
+    @apply bg-white border-none p-2 justify-end;
+
+    &-page {
+      @apply text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100;
+
+      &-selected {
+        @apply bg-primary-600 hover:bg-white text-white hover:text-primary-600 border-transparent hover:border-primary-600;
+      }
+    }
+
+    &-first,
+    &-prev,
+    &-next,
+    &-last {
+      @apply text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed;
+    }
 
     &-current {
-      @apply mr-auto;
+      @apply mr-auto text-sm text-gray-700;
     }
 
     &-rpp-dropdown {
-      @apply w-14 py-0.5;
+      @apply py-[3px];
     }
   }
 }
@@ -193,5 +210,27 @@
 .p-slider {
   &-handle {
     margin-top: -9px !important;
+  }
+}
+
+.p-button-label {
+  @apply font-medium;
+}
+
+@media (max-width: 950px) {
+  body {
+    margin-bottom: 70px;
+  }
+}
+
+@media (max-width: 850px) {
+  .custom-paginator {
+    .p-paginator {
+      @apply p-4 justify-start;
+
+      &-current {
+        @apply block w-full mb-2;
+      }
+    }
   }
 }

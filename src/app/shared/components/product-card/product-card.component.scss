@@ -1,0 +1,5 @@
+.action-button {
+  @apply w-[34px] h-[34px] bg-white/90 hover:bg-blue-50 shadow rounded-full flex items-center justify-center transition-colors;
+  backdrop-filter: blur(2px);
+  border: none;
+}
