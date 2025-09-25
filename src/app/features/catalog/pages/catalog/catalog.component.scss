@@ -47,7 +47,13 @@
     @apply bg-white border border-gray-300 rounded-lg;
 
     &-label {
-      @apply p-1.5 pr-0 text-sm;
+      @apply p-2 text-sm;
+    }
+    &.label-xs &-label {
+      @apply text-xs;
+    }
+    &.label-sm &-label {
+      @apply text-sm;
     }
 
     &-dropdown {
@@ -158,7 +164,7 @@
 
 :host {
   .filter-button {
-    @apply hidden px-4 py-1.5 text-sm text-gray-600 active:text-primary-700 bg-white border border-gray-300 active:border-primary-700 rounded-lg;
+    @apply hidden px-4 py-2 text-xs text-gray-600 active:text-primary-700 bg-white border border-gray-300 active:border-primary-700 rounded-lg;
 
     &.active {
       @apply border-primary-700 text-primary-700;
@@ -174,12 +180,26 @@
       @apply col-span-6;
     }
 
-    .catalog-header {
-      @apply flex-col;
-    }
-
     .filter-button {
       @apply flex items-center gap-2;
+    }
+
+    .prod-list-container {
+      @apply grid-cols-3;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .prod-list-container {
+      @apply grid-cols-2;
+    }
+
+    .catalog-header {
+      @apply gap-4;
+
+      &__title {
+        @apply flex-col items-start gap-2;
+      }
     }
   }
 }

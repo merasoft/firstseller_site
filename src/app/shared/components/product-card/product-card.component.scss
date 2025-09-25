@@ -3,3 +3,36 @@
   backdrop-filter: blur(2px);
   border: none;
 }
+
+// Mobile swipe enhancements
+.image-container {
+  touch-action: pan-y; // Allow vertical scrolling but handle horizontal gestures
+  user-select: none; // Prevent text selection during swipe
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  &.swiping {
+    transition: none; // Disable transitions during active swipe
+
+    img {
+      transition: none; // Also disable image transitions during swipe
+    }
+  }
+
+  // Smooth image transitions when not swiping
+  img {
+    transition: transform 0.3s ease-in-out;
+  }
+}
+
+// Mobile-specific image indicators
+@media (max-width: 768px) {
+  .image-indicators {
+    opacity: 1; // Always show on mobile
+    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.1);
+    padding: 4px 8px;
+    border-radius: 12px;
+  }
+}

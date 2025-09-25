@@ -67,15 +67,25 @@ export class HomeComponent implements OnInit, OnDestroy {
       accentColor: 'text-purple-300',
     },
   ];
+  top_categories: any = [];
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
-    // Component initialization if needed
+  async loadCategories() {
+    try {
+      const response = await fetch('/assets/data/categories.json');
+      if (response.ok) {
+        const data = await response.json();
+        this.top_categories = data.filter((cat: any) => cat.isPopular);
+      }
+    } catch (error) {
+      console.error('Error loading categories:', error);
+    }
   }
 
-  ngOnDestroy() {
-    // Cleanup if needed
+  getCategoryUrl(category: any) {
+    const slugs = [category.parentSlug, category.slug].filter(Boolean);
+    return ['/catalog', ...slugs];
   }
 
   onCarouselSlideClick(slide: CarouselSlide) {
@@ -95,5 +105,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.router.navigate(['/catalog/tv-audio']);
         break;
     }
+  }
+
+  ngOnInit() {
+    this.loadCategories();
+  }
+
+  ngOnDestroy() {
+    // Cleanup if needed
   }
 }

@@ -1,55 +1,248 @@
 [
   {
     "id": 1,
-    "name": "Смартфонлар",
-    "slug": "smartphones",
-    "description": "Eng oxirgi model smartfonlar - Samsung, iPhone, Honor",
-    "image": "/assets/images/categories/smartphones.webp",
-    "icon": "smartphone",
-    "iconColor": "#10b981",
-    "productCount": 156,
+    "name": "Ноутбуклар",
+    "slug": "laptops",
+    "parentSlug": "computers",
+    "description": "Gaming, ишчи ва ультрабуклар - барча турдаги ноутбуклар",
+    "image": "/assets/images/categories/computers.webp",
+    "productCount": 125,
     "isPopular": true,
-    "hasDiscount": true,
-    "discountText": "30% гача чегирма",
     "children": [
       {
         "id": 11,
-        "name": "Samsung Galaxy",
-        "slug": "samsung-galaxy",
-        "productCount": 45,
-        "discount": "22%"
+        "name": "Gaming ноутбуклар",
+        "slug": "gaming-laptops",
+        "productCount": 35
       },
       {
         "id": 12,
-        "name": "iPhone",
-        "slug": "iphone",
-        "productCount": 23,
-        "discount": "15%"
+        "name": "Ишчи ноутбуклар",
+        "slug": "business-laptops",
+        "productCount": 30
+      },
+      {
+        "id": 13,
+        "name": "MacBook",
+        "slug": "macbook",
+        "productCount": 25
+      },
+      {
+        "id": 14,
+        "name": "Ультрабуклар",
+        "slug": "ultrabooks",
+        "productCount": 20
       }
     ]
   },
   {
     "id": 2,
-    "name": "Маиший техника",
-    "slug": "home-appliances",
-    "description": "Уй учун барча керакли техникалар",
-    "image": "/assets/images/categories/appliances.webp",
-    "icon": "home",
-    "iconColor": "#059669",
-    "productCount": 89,
+    "name": "Велосипедлар",
+    "slug": "bicycles",
+    "parentSlug": "sports",
+    "description": "Горные ва шаҳар велосипедлари - спорт ва дам олиш учун",
+    "image": "/assets/images/categories/bicycles.webp",
+    "productCount": 35,
     "isPopular": true,
-    "hasDiscount": true,
-    "discountText": "25% гача чегирма"
+    "children": [
+      {
+        "id": 21,
+        "name": "Горные",
+        "slug": "mountain",
+        "productCount": 18
+      },
+      {
+        "id": 22,
+        "name": "Городские",
+        "slug": "city",
+        "productCount": 17
+      }
+    ]
   },
   {
     "id": 3,
-    "name": "Компьютерлар",
-    "slug": "computers",
-    "description": "Ноутбуклар, компьютерлар ва аксессуарлар",
-    "image": "/assets/images/categories/computers.webp",
-    "icon": "laptop",
-    "iconColor": "#047857",
-    "productCount": 67,
-    "isPopular": false
+    "name": "Телефонлар",
+    "slug": "phones",
+    "parentSlug": "phone-and-gadgets",
+    "description": "Eng oxirgi model smartfonlar - Samsung, iPhone, Xiaomi",
+    "image": "/assets/images/categories/smartphones.webp",
+    "productCount": 180,
+    "isPopular": true,
+    "children": [
+      {
+        "id": 31,
+        "name": "Samsung Galaxy",
+        "slug": "samsung",
+        "productCount": 45
+      },
+      {
+        "id": 32,
+        "name": "iPhone",
+        "slug": "iphone",
+        "productCount": 35
+      },
+      {
+        "id": 33,
+        "name": "Xiaomi",
+        "slug": "xiaomi",
+        "productCount": 30
+      },
+      {
+        "id": 34,
+        "name": "OnePlus",
+        "slug": "oneplus",
+        "productCount": 15
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Планшетлар",
+    "slug": "tablets",
+    "parentSlug": "phone-and-gadgets",
+    "description": "iPad, Samsung Galaxy Tab ва бошқа планшетлар",
+    "image": "/assets/images/categories/tablets.webp",
+    "productCount": 45,
+    "isPopular": true,
+    "children": [
+      {
+        "id": 41,
+        "name": "iPad",
+        "slug": "ipad",
+        "productCount": 18
+      },
+      {
+        "id": 42,
+        "name": "Samsung Galaxy Tab",
+        "slug": "galaxy-tab",
+        "productCount": 15
+      },
+      {
+        "id": 43,
+        "name": "Xiaomi Pad",
+        "slug": "xiaomi-pad",
+        "productCount": 12
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Ақлли соатлар",
+    "slug": "smartwatches",
+    "parentSlug": "phone-and-gadgets",
+    "description": "Apple Watch, Samsung Galaxy Watch ва фитнес браслетлар",
+    "image": "/assets/images/categories/smartwatches.webp",
+    "productCount": 65,
+    "isPopular": true,
+    "children": [
+      {
+        "id": 51,
+        "name": "Apple Watch",
+        "slug": "apple-watch",
+        "productCount": 20
+      },
+      {
+        "id": 52,
+        "name": "Samsung Galaxy Watch",
+        "slug": "samsung-watch",
+        "productCount": 18
+      },
+      {
+        "id": 53,
+        "name": "Xiaomi Mi Band",
+        "slug": "mi-band",
+        "productCount": 15
+      },
+      {
+        "id": 54,
+        "name": "Huawei Watch",
+        "slug": "huawei-watch",
+        "productCount": 12
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Колонкалар",
+    "slug": "speakers",
+    "parentSlug": "audio",
+    "description": "Bluetooth ва портатив колонкалар - юқори сифатли аудио",
+    "image": "/assets/images/categories/speakers.webp",
+    "productCount": 38,
+    "isPopular": true,
+    "children": [
+      {
+        "id": 61,
+        "name": "Bluetooth",
+        "slug": "bluetooth",
+        "productCount": 18
+      },
+      {
+        "id": 62,
+        "name": "Portable",
+        "slug": "portable",
+        "productCount": 20
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Маиший техника",
+    "slug": "appliances",
+    "parentSlug": "",
+    "description": "Уй учун барча керакли техникалар - кухня ва юв машиналари",
+    "image": "/assets/images/categories/appliances.webp",
+    "productCount": 210,
+    "isPopular": true,
+    "children": [
+      {
+        "id": 71,
+        "name": "Кухонная техника",
+        "slug": "kitchen",
+        "productCount": 85
+      },
+      {
+        "id": 72,
+        "name": "Стиральные машины",
+        "slug": "washing",
+        "productCount": 45
+      },
+      {
+        "id": 73,
+        "name": "Пылесосы",
+        "slug": "vacuum",
+        "productCount": 38
+      },
+      {
+        "id": 74,
+        "name": "Климатическая техника",
+        "slug": "climate",
+        "productCount": 42
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Парфюмерия",
+    "slug": "perfume",
+    "parentSlug": "beauty",
+    "description": "Эркаклар ва аёллар учун парфюмлар ва атирлар",
+    "image": "/assets/images/categories/perfume.webp",
+    "productCount": 38,
+    "isPopular": true,
+    "children": [
+      {
+        "id": 81,
+        "name": "Мужские",
+        "slug": "men",
+        "productCount": 18
+      },
+      {
+        "id": 82,
+        "name": "Женские",
+        "slug": "women",
+        "productCount": 20
+      }
+    ]
   }
 ]

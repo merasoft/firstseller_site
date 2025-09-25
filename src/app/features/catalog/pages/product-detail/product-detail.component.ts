@@ -141,7 +141,7 @@ export class ProductDetailComponent implements OnInit {
   breadcrumbs = [
     { name: 'Главная', url: '/' },
     { name: 'Электроника', url: '/catalog' },
-    { name: 'Смартфоны и гаджеты', url: '/catalog/smartphones' },
+    { name: 'Телефоны и гаджеты', url: '/catalog/smartphones' },
     { name: 'Все смартфоны', url: '/catalog/smartphones' },
     { name: 'Смартфон SAMSUNG Galaxy S25', url: '' },
   ];

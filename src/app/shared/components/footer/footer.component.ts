@@ -23,7 +23,7 @@ export class FooterComponent {
     {
       title: 'Категориялар',
       links: [
-        { name: 'Смартфонлар', url: '/catalog/smartphones' },
+        { name: 'Телефоны и гаджеты', url: '/catalog/smartphones' },
         { name: 'Ноутбуклар', url: '/catalog/laptops' },
         { name: 'Телевизорлар', url: '/catalog/tv' },
         { name: 'Маиший техника', url: '/catalog/appliances' },
