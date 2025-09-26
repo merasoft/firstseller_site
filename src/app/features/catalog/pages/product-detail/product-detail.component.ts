@@ -1,6 +1,7 @@
 // src/app/features/catalog/pages/product-detail/product-detail.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 
 interface ProductVariant {
   id: string;
@@ -32,6 +33,8 @@ interface InstallmentPlan {
   styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
+  private _cachedStars: Map<number, ('full' | 'empty' | 'half')[]> = new Map();
+
   productId: string = '';
   selectedImageIndex = 0;
   selectedVariant: any;
@@ -40,6 +43,10 @@ export class ProductDetailComponent implements OnInit {
   activeTab = 'description';
   quantity = 1;
 
+  // PrimeNG Breadcrumb
+  breadcrumbItems: MenuItem[] = [];
+  home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
+
   // Product data
   product = {
     id: 'samsung-galaxy-s25',
@@ -47,8 +54,8 @@ export class ProductDetailComponent implements OnInit {
     brand: 'Samsung',
     model: 'Galaxy S25',
     article: 'SM-S931BDBCS02',
-    rating: 0,
-    reviewsCount: 0,
+    rating: 4.56,
+    reviewsCount: 128,
     bonusPoints: 140462,
     isInStock: true,
     warranty: '1 год',
@@ -141,7 +148,7 @@ export class ProductDetailComponent implements OnInit {
   breadcrumbs = [
     { name: 'Главная', url: '/' },
     { name: 'Электроника', url: '/catalog' },
-    { name: 'Смартфоны и гаджеты', url: '/catalog/smartphones' },
+    { name: 'Телефоны и гаджеты', url: '/catalog/smartphones' },
     { name: 'Все смартфоны', url: '/catalog/smartphones' },
     { name: 'Смартфон SAMSUNG Galaxy S25', url: '' },
   ];
@@ -166,18 +173,6 @@ export class ProductDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) {}
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.productId = params['id'] || 'samsung-galaxy-s25';
-      this.loadProduct();
-    });
-
-    // Set initial variant
-    this.selectedVariant = this.product.variants[0];
-    this.selectedColor = this.selectedVariant.color;
-    this.selectedMemory = this.selectedVariant.memory;
-  }
-
   loadProduct(): void {
     // Load product data from API
     console.log('Loading product:', this.productId);
@@ -185,6 +180,10 @@ export class ProductDetailComponent implements OnInit {
 
   selectImage(index: number): void {
     this.selectedImageIndex = index;
+  }
+
+  onCarouselPageChange(event: any): void {
+    this.selectedImageIndex = event.page;
   }
 
   selectColor(color: string): void {
@@ -203,11 +202,6 @@ export class ProductDetailComponent implements OnInit {
 
   selectInstallmentPlan(plan: InstallmentPlan): void {
     this.selectedInstallmentPlan = plan;
-  }
-
-  selectTab(tabId: string): void {
-    this.activeTab = tabId;
-    this.tabs.forEach((tab) => (tab.active = tab.id === tabId));
   }
 
   increaseQuantity(): void {
@@ -271,5 +265,42 @@ export class ProductDetailComponent implements OnInit {
   getColorCode(color: string): string {
     const variant = this.product.variants.find((v) => v.color === color);
     return variant?.colorCode || '#000000';
+  }
+
+  getStars(rating: number): ('full' | 'empty' | 'half')[] {
+    // Use cached result to avoid creating new arrays on every call
+    if (!this._cachedStars.has(rating)) {
+      this._cachedStars.set(
+        rating,
+        Array(5)
+          .fill(0)
+          .map((_, i) => {
+            if (rating >= i + 1) return 'full';
+            if (rating >= i + 0.5) return 'half';
+            return 'empty';
+          })
+      );
+    }
+    return this._cachedStars.get(rating)!;
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.productId = params['id'] || 'samsung-galaxy-s25';
+      this.loadProduct();
+    });
+
+    // Initialize PrimeNG breadcrumbs
+    this.breadcrumbItems = [
+      { label: 'Электроника', routerLink: '/catalog' },
+      { label: 'Телефоны и гаджеты', routerLink: '/catalog/smartphones' },
+      { label: 'Все смартфоны', routerLink: '/catalog/smartphones' },
+      { label: this.product.name },
+    ];
+
+    // Set initial variant
+    this.selectedVariant = this.product.variants[0];
+    this.selectedColor = this.selectedVariant.color;
+    this.selectedMemory = this.selectedVariant.memory;
   }
 }

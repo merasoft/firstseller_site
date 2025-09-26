@@ -9,6 +9,25 @@
   }
 }
 
+:host ::ng-deep {
+  .active {
+    .p-button {
+      @apply bg-primary-200 text-gray-900;
+    }
+  }
+}
+
+@media (max-width: 1160px) {
+  .action-pay,
+  .action-track {
+    @apply hidden;
+  }
+
+  .hamburger-menu {
+    @apply block;
+  }
+}
+
 @media (max-width: 950px) {
   .top-menu .searchbar,
   .secondary-menu,
@@ -19,7 +38,6 @@
     @apply hidden;
   }
 
-  .hamburger-menu,
   .searchbar-mobile,
   .mobile-nav {
     @apply block;

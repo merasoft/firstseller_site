@@ -4,7 +4,7 @@
   <!-- New Compact Hero Section -->
   <app-super-deals></app-super-deals>
 
-  <section class="bg-gradient-to-br from-primary-50 to-primary-100 py-8">
+  <section class="bg-gradient-to-br py-8">
     <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex gap-6">
         <!-- Left Small Card - Special Offer -->
@@ -105,6 +105,20 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pt-8">
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-3 md:grid-cols-8 gap-3 sm:gap-6 lg:gap-4">
+        <a
+          *ngFor="let category of top_categories"
+          [routerLink]="getCategoryUrl(category)"
+          class="last:col-start-3 md:last:col-start-7 lg:last:col-start-8 col-span-1 md:col-span-2 lg:col-span-1 flex flex-col gap-2 p-2 items-center text-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
+          <img [src]="category.image" alt="{{ category.name }}" class="object-cover" />
+          <p class="text-sm font-medium text-gray-700 w-full line-clamp-2 text-ellipsis">{{ category.name }}</p>
+        </a>
       </div>
     </div>
   </section>

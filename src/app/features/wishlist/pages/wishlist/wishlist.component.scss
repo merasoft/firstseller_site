@@ -1,0 +1,34 @@
+// src/app/features/wishlist/pages/wishlist/wishlist.component.scss
+
+// Wishlist specific styles
+.wishlist-container {
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+// Empty state animation
+.empty-state-icon {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .wishlist-header {
+    .title {
+      font-size: 1.875rem;
+    }
+  }
+}

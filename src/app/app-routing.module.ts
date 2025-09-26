@@ -16,13 +16,22 @@ const routes: Routes = [
     loadChildren: () => import('./features/catalog/catalog.module').then((m) => m.CatalogModule),
   },
   {
+    path: 'wishlist',
+    loadChildren: () => import('./features/wishlist/wishlist.module').then((m) => m.WishlistModule),
+  },
+  {
     path: '**',
     redirectTo: '/home',
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      enableTracing: false,
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

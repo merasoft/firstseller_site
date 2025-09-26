@@ -40,7 +40,7 @@
                           [showButtons]="false"
                           placeholder="0"
                           [style]="{ width: '100%' }"
-                          inputStyleClass="text-sm">
+                          inputStyleClass="text-sm focus:!ring-1">
                         </p-inputNumber>
                       </div>
                       <div>
@@ -52,7 +52,7 @@
                           [showButtons]="false"
                           placeholder="∞"
                           [style]="{ width: '100%' }"
-                          inputStyleClass="text-sm">
+                          inputStyleClass="text-sm focus:!ring-1">
                         </p-inputNumber>
                       </div>
                     </div>
@@ -100,27 +100,27 @@
           <!-- Page Header -->
           <div class="flex flex-col">
             <!-- Title & Count -->
-            <div class="catalog-header flex items-start justify-between gap-4">
-              <div>
-                <h1 class="text-xl font-bold text-gray-900 mb-1">{{ pageTitle }}</h1>
-                <p class="text-sm text-gray-600">{{ totalProducts }} товаров в наличии</p>
+            <div class="catalog-header flex flex-col gap-2">
+              <div class="catalog-header__title flex items-center justify-between gap-4">
+                <h1 class="text-xl font-bold text-gray-900">{{ pageTitle }}</h1>
+                <div class="flex items-center gap-2">
+                  <p-select [(ngModel)]="selectedSort" [options]="sortOptions" optionLabel="label" optionValue="value" styleClass="min-w-[160px] label-xs" />
+                  <button class="" (click)="filtersOpen = true" class="filter-button" [ngClass]="{ active: filtersOpen }">
+                    <i class="pi pi-filter text-xs"></i>
+                    <span>Фильтры</span>
+                  </button>
+                </div>
               </div>
-              <div class="flex items-center gap-2">
-                <p-select [(ngModel)]="selectedSort" [options]="sortOptions" optionLabel="label" optionValue="value" [style]="{ 'min-width': '160px' }"> </p-select>
-                <button class="" (click)="filtersOpen = true" class="filter-button" [ngClass]="{ active: filtersOpen }">
-                  <i class="pi pi-filter text-sm"></i>
-                  <span>Фильтры</span>
-                </button>
-              </div>
-            </div>
 
-            <div class="flex flex-wrap gap-2 mt-5">
-              <button *ngIf="selectedFilters.length > 0" class="p-0 text-sm font-medium text-primary-600 hover:text-primary-800" (click)="clearFilters()"> Сбросить </button>
-              <ng-container *ngFor="let filter of selectedFilters">
-                <p-chip *ngFor="let label of filter.values" [removable]="true" class="px-3 py-1 text-sm font-semibold bg-transparent border border-gray-300">
-                  <span class="font-normal text-gray-600">{{ filter.name }}:</span> {{ label }}
-                </p-chip>
-              </ng-container>
+              <div class="flex items-center flex-wrap gap-2">
+                <p class="text-sm text-gray-600 mr-2">{{ totalProducts }} товаров в наличии</p>
+                <button class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 rounded-full border border-primary-700">Сбросить</button>
+                <ng-container *ngFor="let filter of selectedFilters">
+                  <p-chip *ngFor="let label of filter.values" [removable]="true" class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 border border-primary-700">
+                    <span class="font-normal text-gray-700">{{ filter.name }}:</span> {{ label }}
+                  </p-chip>
+                </ng-container>
+              </div>
             </div>
           </div>
 
@@ -135,7 +135,7 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          <div class="prod-list-container grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
             <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
           </div>
 
@@ -147,8 +147,8 @@
             [first]="0"
             [showCurrentPageReport]="true"
             currentPageReportTemplate="Показано {first} - {last} из {totalRecords} товаров"
-            [pageLinkSize]="4"
-            [showFirstLastIcon]="true"
+            [pageLinkSize]="mobileScreen ? 3 : 4"
+            [showFirstLastIcon]="!mobileScreen"
             firstIcon="pi pi-angle-double-left"
             lastIcon="pi pi-angle-double-right"
             previousIcon="pi pi-angle-left"
@@ -243,6 +243,11 @@
           </p-accordion-content>
         </p-accordion-panel>
       </p-accordion>
+
+      <div class="flex items-center justify-end gap-3 pt-4 mt-4 border-t border-t-gray-200">
+        <button type="button" class="text-xs px-4 py-2 rounded-md border border-gray-200" (click)="filtersOpen = false"> Отмена </button>
+        <button type="button" class="text-xs px-4 py-2 rounded-md bg-primary-600 text-white" (click)="applyFilters(); filtersOpen = false"> Применить </button>
+      </div>
     </div>
   </ng-template>
 </p-drawer>

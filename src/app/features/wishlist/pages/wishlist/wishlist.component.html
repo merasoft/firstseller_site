@@ -1,0 +1,59 @@
+<!-- src/app/features/wishlist/pages/wishlist/wishlist.component.html -->
+<div class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Main Content -->
+  <main class="flex-1 bg-gray-50">
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900">{{ pageTitle }}</h1>
+            <p class="mt-2 text-gray-600" *ngIf="wishlistProducts.length > 0">
+              {{ wishlistProducts.length }} товар{{ wishlistProducts.length === 1 ? '' : wishlistProducts.length < 5 ? 'а' : 'ов' }} в списке желаний
+            </p>
+          </div>
+
+          <!-- Clear Wishlist Button -->
+          <button *ngIf="wishlistProducts.length > 0" (click)="clearWishlist()" class="px-4 py-2 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors">
+            Очистить список
+          </button>
+        </div>
+      </div>
+
+      <!-- Wishlist Content -->
+      <div class="bg-white rounded-3xl shadow-sm p-8">
+        <!-- Empty State -->
+        <div *ngIf="wishlistProducts.length === 0" class="text-center py-16">
+          <div class="text-gray-400 mb-6">
+            <svg class="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Ваш список желаний пуст</h3>
+            <p class="text-gray-600 mb-6">Добавляйте понравившиеся товары, чтобы не потерять их</p>
+            <a routerLink="/catalog" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors">
+              Перейти к каталогу
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div *ngIf="wishlistProducts.length > 0" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <app-product-card *ngFor="let product of wishlistProducts; trackBy: trackByProductId" [product]="product"> </app-product-card>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>

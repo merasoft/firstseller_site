@@ -2,101 +2,103 @@
   "categories": [
     {
       "id": 1,
-      "name": "Смартфонлар",
-      "slug": "smartphones",
+      "name": "Телефоны и гаджеты",
+      "slug": "phone-and-gadgets",
       "icon": "pi pi-mobile",
-      "count": 130,
+      "count": 345,
       "children": [
         {
           "id": 11,
-          "name": "Samsung Galaxy",
-          "slug": "samsung",
-          "count": 45,
+          "name": "Телефоны",
+          "slug": "phones",
+          "count": 180,
           "children": [
-            { "id": 111, "name": "Galaxy S Series", "slug": "s-series", "count": 20, "children": [] },
-            { "id": 112, "name": "Galaxy A Series", "slug": "a-series", "count": 15, "children": [] },
-            { "id": 113, "name": "Galaxy Note Series", "slug": "note-series", "count": 10, "children": [] }
+            { "id": 111, "name": "Смартфонлар", "slug": "smartphones", "count": 45, "children": [] },
+            { "id": 112, "name": "iPhone", "slug": "iphone", "count": 35, "children": [] },
+            { "id": 113, "name": "Samsung Galaxy", "slug": "samsung", "count": 45, "children": [] },
+            { "id": 116, "name": "OnePlus", "slug": "oneplus", "count": 15, "children": [] },
+            { "id": 117, "name": "Google Pixel", "slug": "pixel", "count": 10, "children": [] }
           ]
         },
         {
           "id": 12,
-          "name": "iPhone",
-          "slug": "iphone",
-          "count": 23,
+          "name": "Ақлли соатлар ва браслетлар",
+          "slug": "smartwatches",
+          "count": 65,
           "children": [
-            { "id": 121, "name": "iPhone 14", "slug": "iphone-14", "count": 8, "children": [] },
-            { "id": 122, "name": "iPhone 13", "slug": "iphone-13", "count": 7, "children": [] },
-            { "id": 123, "name": "iPhone SE", "slug": "iphone-se", "count": 8, "children": [] }
+            { "id": 121, "name": "Apple Watch", "slug": "apple-watch", "count": 20, "children": [] },
+            { "id": 122, "name": "Samsung Galaxy Watch", "slug": "samsung-watch", "count": 18, "children": [] },
+            { "id": 123, "name": "Xiaomi Mi Band", "slug": "mi-band", "count": 15, "children": [] },
+            { "id": 124, "name": "Huawei Watch", "slug": "huawei-watch", "count": 12, "children": [] }
           ]
         },
         {
           "id": 13,
-          "name": "Honor",
-          "slug": "honor",
-          "count": 34,
+          "name": "Планшетлар",
+          "slug": "tablets",
+          "count": 45,
           "children": [
-            { "id": 131, "name": "Honor X Series", "slug": "x-series", "count": 14, "children": [] },
-            { "id": 132, "name": "Honor Magic Series", "slug": "magic-series", "count": 20, "children": [] }
+            { "id": 131, "name": "iPad", "slug": "ipad", "count": 18, "children": [] },
+            { "id": 132, "name": "Samsung Galaxy Tab", "slug": "galaxy-tab", "count": 15, "children": [] },
+            { "id": 133, "name": "Xiaomi Pad", "slug": "xiaomi-pad", "count": 12, "children": [] }
           ]
         },
         {
           "id": 14,
-          "name": "Xiaomi",
-          "slug": "xiaomi",
-          "count": 28,
+          "name": "Аксессуарлар",
+          "slug": "phone-accessories",
+          "count": 55,
           "children": [
-            { "id": 141, "name": "Redmi", "slug": "redmi", "count": 18, "children": [] },
-            { "id": 142, "name": "Mi", "slug": "mi", "count": 10, "children": [] }
+            { "id": 141, "name": "Наушники", "slug": "earphones", "count": 20, "children": [] },
+            { "id": 142, "name": "Чехлы для телефонов", "slug": "phone-cases", "count": 18, "children": [] },
+            { "id": 143, "name": "Зарядные устройства", "slug": "chargers", "count": 17, "children": [] }
           ]
         }
       ]
     },
     {
       "id": 2,
-      "name": "Ноутбуклар",
-      "slug": "laptops",
+      "name": "Компьютер техникаси",
+      "slug": "computers",
       "icon": "fa-solid fa-laptop",
-      "count": 96,
+      "count": 285,
       "children": [
         {
           "id": 21,
-          "name": "Gaming ноутбуклар",
-          "slug": "gaming",
-          "count": 32,
+          "name": "Ноутбуклар",
+          "slug": "laptops",
+          "count": 125,
           "children": [
-            { "id": 211, "name": "Asus ROG", "slug": "asus-rog", "count": 12, "children": [] },
-            { "id": 212, "name": "MSI Gaming", "slug": "msi-gaming", "count": 10, "children": [] },
-            { "id": 213, "name": "Acer Predator", "slug": "acer-predator", "count": 10, "children": [] }
+            { "id": 211, "name": "Gaming ноутбуклар", "slug": "gaming-laptops", "count": 35, "children": [] },
+            { "id": 212, "name": "Ишчи ноутбуклар", "slug": "business-laptops", "count": 30, "children": [] },
+            { "id": 213, "name": "MacBook", "slug": "macbook", "count": 25, "children": [] },
+            { "id": 214, "name": "Ультрабуклар", "slug": "ultrabooks", "count": 20, "children": [] },
+            { "id": 215, "name": "Студент ноутбуклар", "slug": "student-laptops", "count": 15, "children": [] }
           ]
         },
         {
           "id": 22,
-          "name": "Ишчи ноутбуклар",
-          "slug": "business",
-          "count": 28,
+          "name": "Настольные компьютеры",
+          "slug": "desktops",
+          "count": 68,
           "children": [
-            { "id": 221, "name": "Dell Latitude", "slug": "dell-latitude", "count": 14, "children": [] },
-            { "id": 222, "name": "HP ProBook", "slug": "hp-probook", "count": 14, "children": [] }
+            { "id": 221, "name": "Gaming PC", "slug": "gaming-pc", "count": 25, "children": [] },
+            { "id": 222, "name": "Офисные ПК", "slug": "office-pc", "count": 20, "children": [] },
+            { "id": 223, "name": "All-in-One", "slug": "all-in-one", "count": 15, "children": [] },
+            { "id": 224, "name": "Workstation", "slug": "workstation", "count": 8, "children": [] }
           ]
         },
         {
           "id": 23,
-          "name": "MacBook",
-          "slug": "macbook",
-          "count": 15,
+          "name": "Комплектующие",
+          "slug": "components",
+          "count": 92,
           "children": [
-            { "id": 231, "name": "MacBook Air", "slug": "macbook-air", "count": 7, "children": [] },
-            { "id": 232, "name": "MacBook Pro", "slug": "macbook-pro", "count": 8, "children": [] }
-          ]
-        },
-        {
-          "id": 24,
-          "name": "Ультрабуклар",
-          "slug": "ultrabooks",
-          "count": 21,
-          "children": [
-            { "id": 241, "name": "Lenovo Yoga", "slug": "lenovo-yoga", "count": 11, "children": [] },
-            { "id": 242, "name": "HP Spectre", "slug": "hp-spectre", "count": 10, "children": [] }
+            { "id": 231, "name": "Процессоры", "slug": "processors", "count": 22, "children": [] },
+            { "id": 232, "name": "Видеокарты", "slug": "graphics-cards", "count": 20, "children": [] },
+            { "id": 233, "name": "Материнские платы", "slug": "motherboards", "count": 18, "children": [] },
+            { "id": 234, "name": "Оперативная память", "slug": "ram", "count": 16, "children": [] },
+            { "id": 235, "name": "Жесткие диски", "slug": "storage", "count": 16, "children": [] }
           ]
         }
       ]
@@ -244,6 +246,244 @@
           "children": [
             { "id": 541, "name": "Car Holders", "slug": "car-holders", "count": 28, "children": [] },
             { "id": 542, "name": "Desk Holders", "slug": "desk-holders", "count": 28, "children": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Бытовая техника",
+      "slug": "appliances",
+      "icon": "pi pi-home",
+      "count": 210,
+      "children": [
+        {
+          "id": 61,
+          "name": "Кухонная техника",
+          "slug": "kitchen",
+          "count": 85,
+          "children": [
+            { "id": 611, "name": "Микроволновки", "slug": "microwaves", "count": 25, "children": [] },
+            { "id": 612, "name": "Холодильники", "slug": "refrigerators", "count": 30, "children": [] },
+            { "id": 613, "name": "Плиты", "slug": "stoves", "count": 20, "children": [] },
+            { "id": 614, "name": "Посудомойки", "slug": "dishwashers", "count": 10, "children": [] }
+          ]
+        },
+        {
+          "id": 62,
+          "name": "Стиральные машины",
+          "slug": "washing",
+          "count": 45,
+          "children": [
+            { "id": 621, "name": "Автомат", "slug": "automatic", "count": 35, "children": [] },
+            { "id": 622, "name": "Полуавтомат", "slug": "semi-automatic", "count": 10, "children": [] }
+          ]
+        },
+        {
+          "id": 63,
+          "name": "Пылесосы",
+          "slug": "vacuum",
+          "count": 38,
+          "children": [
+            { "id": 631, "name": "Робот-пылесосы", "slug": "robot-vacuum", "count": 18, "children": [] },
+            { "id": 632, "name": "Вертикальные", "slug": "upright", "count": 20, "children": [] }
+          ]
+        },
+        {
+          "id": 64,
+          "name": "Климатическая техника",
+          "slug": "climate",
+          "count": 42,
+          "children": [
+            { "id": 641, "name": "Кондиционеры", "slug": "air-conditioners", "count": 25, "children": [] },
+            { "id": 642, "name": "Обогреватели", "slug": "heaters", "count": 17, "children": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Спорт и Отдых",
+      "slug": "sports",
+      "icon": "pi pi-heart",
+      "count": 156,
+      "children": [
+        {
+          "id": 71,
+          "name": "Фитнес",
+          "slug": "fitness",
+          "count": 48,
+          "children": [
+            { "id": 711, "name": "Тренажёры", "slug": "equipment", "count": 25, "children": [] },
+            { "id": 712, "name": "Гантели", "slug": "dumbbells", "count": 23, "children": [] }
+          ]
+        },
+        {
+          "id": 72,
+          "name": "Велосипеды",
+          "slug": "bicycles",
+          "count": 35,
+          "children": [
+            { "id": 721, "name": "Горные", "slug": "mountain", "count": 18, "children": [] },
+            { "id": 722, "name": "Городские", "slug": "city", "count": 17, "children": [] }
+          ]
+        },
+        {
+          "id": 73,
+          "name": "Самокаты",
+          "slug": "scooters",
+          "count": 28,
+          "children": [
+            { "id": 731, "name": "Электросамокаты", "slug": "electric", "count": 16, "children": [] },
+            { "id": 732, "name": "Обычные", "slug": "regular", "count": 12, "children": [] }
+          ]
+        },
+        {
+          "id": 74,
+          "name": "Туризм",
+          "slug": "tourism",
+          "count": 45,
+          "children": [
+            { "id": 741, "name": "Палатки", "slug": "tents", "count": 22, "children": [] },
+            { "id": 742, "name": "Рюкзаки", "slug": "backpacks", "count": 23, "children": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Автотовары",
+      "slug": "automotive",
+      "icon": "pi pi-car",
+      "count": 189,
+      "children": [
+        {
+          "id": 81,
+          "name": "Автоэлектроника",
+          "slug": "electronics",
+          "count": 65,
+          "children": [
+            { "id": 811, "name": "Видеорегистраторы", "slug": "dashcam", "count": 28, "children": [] },
+            { "id": 812, "name": "Магнитолы", "slug": "stereo", "count": 22, "children": [] },
+            { "id": 813, "name": "GPS навигаторы", "slug": "gps", "count": 15, "children": [] }
+          ]
+        },
+        {
+          "id": 82,
+          "name": "Шины и диски",
+          "slug": "tires",
+          "count": 54,
+          "children": [
+            { "id": 821, "name": "Летние шины", "slug": "summer", "count": 28, "children": [] },
+            { "id": 822, "name": "Зимние шины", "slug": "winter", "count": 26, "children": [] }
+          ]
+        },
+        {
+          "id": 83,
+          "name": "Аксессуары",
+          "slug": "auto-accessories",
+          "count": 42,
+          "children": [
+            { "id": 831, "name": "Чехлы", "slug": "seat-covers", "count": 22, "children": [] },
+            { "id": 832, "name": "Коврики", "slug": "mats", "count": 20, "children": [] }
+          ]
+        },
+        {
+          "id": 84,
+          "name": "Инструменты",
+          "slug": "tools",
+          "count": 28,
+          "children": [
+            { "id": 841, "name": "Наборы ключей", "slug": "wrench-sets", "count": 14, "children": [] },
+            { "id": 842, "name": "Компрессоры", "slug": "compressors", "count": 14, "children": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Красота и Здоровье",
+      "slug": "beauty",
+      "icon": "pi pi-sparkles",
+      "count": 134,
+      "children": [
+        {
+          "id": 91,
+          "name": "Уход за лицом",
+          "slug": "skincare",
+          "count": 45,
+          "children": [
+            { "id": 911, "name": "Кремы", "slug": "creams", "count": 25, "children": [] },
+            { "id": 912, "name": "Маски", "slug": "masks", "count": 20, "children": [] }
+          ]
+        },
+        {
+          "id": 92,
+          "name": "Парфюмерия",
+          "slug": "perfume",
+          "count": 38,
+          "children": [
+            { "id": 921, "name": "Мужские", "slug": "men", "count": 18, "children": [] },
+            { "id": 922, "name": "Женские", "slug": "women", "count": 20, "children": [] }
+          ]
+        },
+        {
+          "id": 93,
+          "name": "Техника для красоты",
+          "slug": "beauty-tech",
+          "count": 32,
+          "children": [
+            { "id": 931, "name": "Фены", "slug": "hair-dryers", "count": 16, "children": [] },
+            { "id": 932, "name": "Эпиляторы", "slug": "epilators", "count": 16, "children": [] }
+          ]
+        },
+        {
+          "id": 94,
+          "name": "Витамины",
+          "slug": "vitamins",
+          "count": 19,
+          "children": [
+            { "id": 941, "name": "Мультивитамины", "slug": "multivitamins", "count": 10, "children": [] },
+            { "id": 942, "name": "Омега-3", "slug": "omega-3", "count": 9, "children": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Книги и Канцтовары",
+      "slug": "books",
+      "icon": "pi pi-book",
+      "count": 98,
+      "children": [
+        {
+          "id": 101,
+          "name": "Художественная литература",
+          "slug": "fiction",
+          "count": 42,
+          "children": [
+            { "id": 1011, "name": "Классика", "slug": "classics", "count": 22, "children": [] },
+            { "id": 1012, "name": "Современная проза", "slug": "modern", "count": 20, "children": [] }
+          ]
+        },
+        {
+          "id": 102,
+          "name": "Учебная литература",
+          "slug": "educational",
+          "count": 28,
+          "children": [
+            { "id": 1021, "name": "Школьные учебники", "slug": "textbooks", "count": 18, "children": [] },
+            { "id": 1022, "name": "Языки", "slug": "languages", "count": 10, "children": [] }
+          ]
+        },
+        {
+          "id": 103,
+          "name": "Канцтовары",
+          "slug": "stationery",
+          "count": 28,
+          "children": [
+            { "id": 1031, "name": "Ручки", "slug": "pens", "count": 14, "children": [] },
+            { "id": 1032, "name": "Тетради", "slug": "notebooks", "count": 14, "children": [] }
           ]
         }
       ]

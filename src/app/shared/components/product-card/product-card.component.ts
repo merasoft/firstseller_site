@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductActionsService } from '../../services/product-actions.service';
+import { Carousel } from 'primeng/carousel';
 
 @Component({
   selector: 'app-product-card',
@@ -10,31 +11,16 @@ import { ProductActionsService } from '../../services/product-actions.service';
 })
 export class ProductCardComponent {
   @Input() product!: Product;
+  @ViewChild('imageCarousel', { static: false }) imageCarousel!: Carousel;
 
   // Cached stars array to prevent recreation on every change detection
   private _cachedStars: Map<number, ('full' | 'empty' | 'half')[]> = new Map();
 
   constructor(private productActions: ProductActionsService) {}
 
-  // Handle image navigation for products
-  previousImage(product: Product): void {
-    if (product.currentImageIndex > 0) {
-      product.currentImageIndex--;
-    } else {
-      product.currentImageIndex = product.images.length - 1;
-    }
-  }
-
-  nextImage(product: Product): void {
-    if (product.currentImageIndex < product.images.length - 1) {
-      product.currentImageIndex++;
-    } else {
-      product.currentImageIndex = 0;
-    }
-  }
-
-  setImage(product: Product, index: number): void {
-    product.currentImageIndex = index;
+  // Handle carousel page change event
+  onCarouselPageChange(event: any): void {
+    this.product.currentImageIndex = event.page;
   }
 
   // Product actions - now handled by service

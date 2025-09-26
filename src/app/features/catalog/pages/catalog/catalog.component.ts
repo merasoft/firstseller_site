@@ -1,5 +1,5 @@
 // src/app/features/catalog/pages/catalog/catalog.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Product } from '../../../../shared/models/product.model';
 
@@ -32,6 +32,7 @@ export class CatalogComponent implements OnInit {
   pageTitle = 'Смартфоны';
   totalProducts = 518;
   filtersOpen = false;
+  mobileScreen = window.innerWidth <= 640;
 
   // PrimeNG Breadcrumb
   breadcrumbItems: MenuItem[] = [];
@@ -239,9 +240,11 @@ export class CatalogComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {
-    // Initialize PrimeNG breadcrumbs
-    this.breadcrumbItems = [{ label: 'Телефоны и гаджеты', routerLink: '/category/phones' }, { label: 'Телефоны', routerLink: '/category/phones/mobile' }, { label: 'Смартфоны' }];
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    if (event.target.innerWidth <= 640 && !this.mobileScreen) {
+      this.mobileScreen = true;
+    }
   }
 
   // Filter functions
@@ -294,5 +297,10 @@ export class CatalogComponent implements OnInit {
   getCheckedCount(filter: Filter): number {
     if (!filter.options) return 0;
     return filter.options.filter((option) => option.checked).length;
+  }
+
+  ngOnInit(): void {
+    // Initialize PrimeNG breadcrumbs
+    this.breadcrumbItems = [{ label: 'Телефоны и гаджеты', routerLink: '/category/phones' }, { label: 'Телефоны', routerLink: '/category/phones/mobile' }, { label: 'Смартфоны' }];
   }
 }
