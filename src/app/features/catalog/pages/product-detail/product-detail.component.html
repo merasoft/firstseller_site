@@ -5,94 +5,121 @@
   <main class="flex-1 bg-gray-50">
     <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <!-- Breadcrumbs -->
-      <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
-        <a *ngFor="let crumb of breadcrumbs; let last = last" [routerLink]="crumb.url" class="hover:text-primary-600 transition-colors" [class.text-gray-900]="last" [class.font-medium]="last">
-          {{ crumb.name }}
-          <span *ngIf="!last" class="mx-2">›</span>
-        </a>
-      </nav>
+      <p-breadcrumb [model]="breadcrumbItems" [home]="home" styleClass="mb-4" />
+
+      <div class="flex flex-col gap-2">
+        <h1 class="text-lg sm:text-xl font-bold text-gray-900 leading-tight">{{ product.name }}</h1>
+
+        <div class="flex items-center gap-4 mb-3">
+          <div class="flex items-center gap-2">
+            <div class="flex items-center">
+              <div *ngFor="let star of getStars(product.rating)" class="w-4 h-4">
+                <ng-container [ngSwitch]="star">
+                  <svg *ngSwitchCase="'full'" class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <svg *ngSwitchCase="'half'" class="w-4 h-4 text-yellow-400" viewBox="0 0 20 20">
+                    <defs>
+                      <linearGradient id="half-grad" x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="50%" stop-color="currentColor" />
+                        <stop offset="50%" stop-color="#D1D5DB" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      fill="url(#half-grad)"
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg *ngSwitchCase="'empty'" class="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                </ng-container>
+              </div>
+            </div>
+            <span class="text-xs text-gray-500">
+              ( {{ product.reviewsCount }} <span class="hidden sm:inline">{{ product.reviewsCount === 1 ? 'отзыв' : 'отзыва' }} </span>)
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <p class="text-xs text-gray-600">Арт: {{ product.article }}</p>
+            <button (click)="compareProduct()" class="w-8 h-8 rounded transition-colors hover:bg-gray-100">
+              <i class="text-base text-gray-600 fa-solid fa-scale-balanced"></i>
+            </button>
+            <button (click)="shareProduct()" class="w-8 h-8 rounded transition-colors hover:bg-gray-100">
+              <i class="text-base text-gray-600 pi pi-share-alt"></i>
+            </button>
+            <button (click)="addToFavorites()" class="w-8 h-8 rounded transition-colors hover:bg-gray-100">
+              <i class="text-base text-gray-600 pi pi-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
       <!-- Product Main Section -->
-      <div class="bg-white rounded-3xl shadow-sm p-8 mb-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="md:bg-white rounded-3xl md:shadow-sm md:p-6 mb-8">
+        <div class="product-main-section flex flex-col md:flex-row items-start gap-8">
           <!-- Product Images -->
-          <div class="space-y-4">
-            <!-- Main Image -->
-            <div class="aspect-square rounded-2xl overflow-hidden bg-gray-100">
-              <img [src]="product.images[selectedImageIndex]" [alt]="product.name" class="w-full h-full object-cover" />
-            </div>
-
-            <!-- Thumbnail Images -->
-            <div class="flex gap-3 overflow-x-auto">
+          <div class="galary flex-[2] flex gap-4">
+            <!-- Thumbnail Images Gallery (Left Side) -->
+            <div class="thumbnail-images flex-shrink-0 flex flex-col gap-2 overflow-x-hidden overflow-y-auto pr-1 scrollable">
               <button
                 *ngFor="let image of product.images; let i = index"
                 (click)="selectImage(i)"
-                class="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all"
-                [class.border-primary-500]="i === selectedImageIndex"
-                [class.border-gray-200]="i !== selectedImageIndex">
+                class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all"
+                [ngClass]="{
+                  'border-gray-200': i !== selectedImageIndex,
+                  'border-primary-500': i === selectedImageIndex
+                }">
                 <img [src]="image" [alt]="'Product image ' + (i + 1)" class="w-full h-full object-cover" />
               </button>
             </div>
+
+            <!-- Main Image Carousel (Right Side) -->
+            <div class="main-image md:aspect-square h-80 md:h-auto rounded-2xl bg-white md:bg-gray-100 py-6 md:py-0 overflow-hidden relative">
+              <p-carousel
+                [value]="product.images"
+                [numVisible]="1"
+                [numScroll]="1"
+                [circular]="true"
+                [showNavigators]="true"
+                [showIndicators]="false"
+                class="product-carousel"
+                styleClass="rounded-2xl overflow-hidden"
+                [page]="selectedImageIndex"
+                (onPage)="onCarouselPageChange($event)">
+                <ng-template pTemplate="item" let-image>
+                  <div class="w-auto md:w-full h-full flex items-center justify-center">
+                    <img [src]="image" [alt]="product.name" class="w-auto md:w-full h-full aspect-square md:aspect-auto object-cover" loading="lazy" />
+                  </div>
+                </ng-template>
+              </p-carousel>
+            </div>
           </div>
 
-          <!-- Product Info - Компактная версия -->
-          <div class="space-y-4">
-            <!-- Product Title & Rating -->
-            <div>
-              <h1 class="text-2xl font-bold text-gray-900 mb-3 leading-tight">{{ product.name }}</h1>
-
-              <div class="flex items-center gap-4 mb-3">
-                <div class="flex items-center">
-                  <div class="flex items-center">
-                    <span *ngFor="let star of [1, 2, 3, 4, 5]" class="w-4 h-4 text-gray-300">★</span>
-                  </div>
-                  <span class="ml-2 text-sm text-gray-600">{{ product.reviewsCount }} отзыва</span>
-                </div>
-
-                <div class="flex items-center gap-2">
-                  <span class="text-sm text-gray-600">Арт: {{ product.article }}</span>
-                  <button (click)="compareProduct()" class="p-1 hover:bg-gray-100 rounded transition-colors">
-                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
-                  </button>
-                  <button (click)="shareProduct()" class="p-1 hover:bg-gray-100 rounded transition-colors">
-                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <div class="text-green-600 text-sm font-medium">+ {{ formatPrice(product.bonusPoints) }} бонусов</div>
-            </div>
-
+          <div class="product-info flex-[3]">
             <!-- Price -->
-            <div class="border-b border-gray-200 pb-4">
-              <div class="flex items-baseline gap-3 mb-2">
-                <span class="text-3xl font-bold text-gray-900">{{ formatPrice(selectedVariant?.price || 0) }} сум</span>
-                <span *ngIf="selectedVariant?.oldPrice" class="text-lg text-gray-500 line-through"> {{ formatPrice(selectedVariant.oldPrice) }} сум </span>
+            <div class="flex flex-col border-b border-gray-200 pb-4 gap-3">
+              <div class="flex flex-col gap-1">
+                <div class="price-info flex items-baseline gap-3">
+                  <span class="text-2xl font-bold text-gray-900">{{ formatPrice(selectedVariant?.price || 0) }} сум</span>
+                  <span *ngIf="selectedVariant?.oldPrice" class="text-lg text-gray-500 line-through"> {{ formatPrice(selectedVariant.oldPrice) }} сум </span>
+                </div>
+                <div class="text-sm font-medium text-green-600">+ {{ formatPrice(product.bonusPoints) }} бонусов</div>
               </div>
 
-              <div class="bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200 rounded-lg p-3">
-                <div class="text-pink-600 font-medium text-sm">Выгодная рассрочка:</div>
-                <div class="text-pink-700 text-lg font-bold"> от {{ formatPrice(selectedInstallmentPlan.monthlyPayment) }} сум / мес* </div>
+              <div class="bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200 rounded-lg p-2">
+                <div class="text-pink-600 font-medium text-xs">Выгодная рассрочка:</div>
+                <div class="text-pink-700 text-base font-bold"> от {{ formatPrice(selectedInstallmentPlan.monthlyPayment) }} сум / мес* </div>
               </div>
             </div>
 
             <!-- Color & Memory Selection -->
-            <div class="space-y-3">
+            <div class="flex flex-col gap-3 py-3">
               <!-- Color -->
-              <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">Цвет: {{ selectedColor }}</label>
+              <div class="flex flex-col gap-2">
+                <label class="block text-sm font-medium text-gray-900">Цвет: {{ selectedColor }}</label>
                 <div class="flex gap-2">
                   <button
                     *ngFor="let color of getAvailableColors()"
@@ -113,8 +140,8 @@
               </div>
 
               <!-- Memory -->
-              <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">Память</label>
+              <div class="flex flex-col gap-2">
+                <label class="block text-sm font-medium text-gray-900">Память</label>
                 <div class="flex gap-2">
                   <button
                     *ngFor="let memory of getAvailableMemory()"
@@ -135,62 +162,47 @@
             <!-- Quantity -->
             <div class="flex items-center gap-3">
               <label class="text-sm font-medium text-gray-900">Количество:</label>
-              <div class="flex items-center border border-gray-300 rounded-lg">
-                <button (click)="decreaseQuantity()" class="p-2 hover:bg-gray-100 transition-colors">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
-                  </svg>
+              <div class="h-9 flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                <button (click)="decreaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
+                  <i class="pi pi-minus text-sm"></i>
                 </button>
-                <span class="px-3 py-2 min-w-[2.5rem] text-center text-sm">{{ quantity }}</span>
-                <button (click)="increaseQuantity()" class="p-2 hover:bg-gray-100 transition-colors">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                  </svg>
+                <span class="px-3 text-center text-sm">{{ quantity }}</span>
+                <button (click)="increaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
+                  <i class="pi pi-plus text-sm"></i>
                 </button>
               </div>
             </div>
 
             <!-- Action Buttons - Компактные в один ряд -->
-            <div class="grid grid-cols-3 gap-2 pt-2">
+            <div class="flex gap-4 py-4">
               <button
                 (click)="addToCart()"
-                class="col-span-2 bg-gradient-to-r from-pink-500 to-pink-600 text-white py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-pink-700 transition-all flex items-center justify-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m-2.4 8l1.6 8h12.8m-6.4-8v8m4-8v8"></path>
-                </svg>
-                В корзину
+                class="cart-button flex-1 bg-gradient-to-r from-pink-500 to-pink-600 text-sm lg:base text-white py-2 lg:py-3 rounded-lg font-semibold hover:from-pink-600 hover:to-pink-700 transition-all flex items-center justify-center gap-2">
+                <i class="pi pi-shopping-cart"></i>
+                <span>В корзину</span>
               </button>
 
-              <button (click)="addToFavorites()" class="bg-gray-100 text-gray-700 py-3 rounded-xl hover:bg-gray-200 transition-all flex items-center justify-center" title="В избранное">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                </svg>
+              <button
+                (click)="buyNow()"
+                class="buy-now-button flex-1 bg-white border-2 border-green-500 text-sm lg:base text-green-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-green-50 transition-all">
+                Купить в один клик
               </button>
             </div>
 
             <!-- Buy One Click Button -->
-            <button (click)="buyNow()" class="w-full bg-white border-2 border-green-500 text-green-600 py-3 rounded-xl font-semibold hover:bg-green-50 transition-all"> Купить в один клик </button>
 
             <!-- Benefits - Компактные -->
-            <div class="grid grid-cols-2 gap-3 pt-3 border-t border-gray-200">
+            <div class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-200">
               <div class="flex items-center gap-2">
                 <div class="w-6 h-6 bg-green-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+                  <i class="text-xs text-primary-600 pi pi-shield"></i>
                 </div>
                 <div class="text-sm font-medium text-gray-900">Гарантия {{ product.warranty }}</div>
               </div>
 
               <div class="flex items-center gap-2">
                 <div class="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                  </svg>
+                  <i class="text-xs text-blue-600 pi pi-box"></i>
                 </div>
                 <div class="text-sm font-medium text-gray-900">Бесплатная доставка</div>
               </div>
@@ -199,151 +211,107 @@
         </div>
       </div>
 
-      <!-- Installment Calculator -->
-      <div class="bg-white rounded-3xl shadow-sm p-8 mb-8">
-        <h3 class="text-xl font-bold text-gray-900 mb-6">Калькулятор рассрочки</h3>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div>
-            <label class="block text-sm font-medium text-gray-900 mb-4">Выберите тарифный план</label>
-            <div class="grid grid-cols-2 gap-3">
-              <button
-                *ngFor="let plan of installmentPlans"
-                (click)="selectInstallmentPlan(plan)"
-                class="p-4 border rounded-xl transition-all text-left"
-                [class.border-primary-500]="selectedInstallmentPlan.id === plan.id"
-                [class.bg-primary-50]="selectedInstallmentPlan.id === plan.id"
-                [class.border-gray-300]="selectedInstallmentPlan.id !== plan.id">
-                <div class="font-semibold">{{ plan.months }}-{{ plan.months }}-{{ plan.interestRate }}</div>
-                <div class="text-sm text-gray-600">{{ plan.months }} мес</div>
-              </button>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div class="flex justify-between">
-              <span class="text-gray-600">Ежемесячный платеж:</span>
-              <span class="font-semibold">{{ formatPrice(selectedInstallmentPlan.monthlyPayment) }} сум</span>
-            </div>
-
-            <div class="flex justify-between">
-              <span class="text-gray-600">Первый взнос:</span>
-              <span class="font-semibold">0 сум</span>
-            </div>
-
-            <div class="border-t border-gray-200 pt-4">
-              <div class="text-center">
-                <div class="text-sm text-gray-600 mb-2">Наличие в магазине</div>
-                <div class="font-semibold text-green-600">Ташкент, Бектемирский р-н, Куйлюк, район ТЦ Compass</div>
-                <div class="text-sm text-gray-600">ул. Фергана йули 15 микрорайон, д. 13-14</div>
-                <div class="text-sm text-gray-600">c 9:00 до 21:00 (без выходных)</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Product Details Tabs -->
-      <div class="bg-white rounded-3xl shadow-sm overflow-hidden">
-        <!-- Tab Headers -->
-        <div class="border-b border-gray-200">
-          <nav class="flex overflow-x-auto">
-            <button
-              *ngFor="let tab of tabs"
-              (click)="selectTab(tab.id)"
-              class="px-6 py-4 text-sm font-medium whitespace-nowrap transition-colors relative"
-              [class.text-primary-600]="activeTab === tab.id"
-              [class.text-gray-500]="activeTab !== tab.id"
-              [class.border-b-2]="activeTab === tab.id"
-              [class.border-primary-600]="activeTab === tab.id">
-              {{ tab.name }}
-            </button>
-          </nav>
-        </div>
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+        <p-tabs [value]="activeTab" class="product-details-tabs" scrollable>
+          <p-tablist>
+            <p-tab *ngFor="let tab of tabs" [value]="tab.id">{{ tab.name }}</p-tab>
+          </p-tablist>
+          <p-tabpanels>
+            <!-- Description Tab -->
+            <p-tabpanel value="description">
+              <div class="flex flex-col">
+                <h3 class="text-lg sm:text-xl font-bold mb-4">Описание</h3>
+                <h4 class="text-base sm:text-lg font-semibold mb-2">{{ product.name }}</h4>
+                <p class="text-sm sm:text-base text-gray-700 leading-relaxed">{{ product.description }}</p>
+              </div>
+            </p-tabpanel>
 
-        <!-- Tab Content -->
-        <div class="p-8">
-          <!-- Description Tab -->
-          <div *ngIf="activeTab === 'description'" class="prose max-w-none">
-            <h3 class="text-xl font-bold mb-4">Описание</h3>
-            <h4 class="text-lg font-semibold mb-4">{{ product.name }}</h4>
-            <p class="text-gray-700 leading-relaxed">{{ product.description }}</p>
-          </div>
-
-          <!-- Specifications Tab -->
-          <div *ngIf="activeTab === 'specifications'" class="space-y-8">
-            <div *ngFor="let section of product.specifications">
-              <h3 class="text-lg font-bold text-gray-900 mb-4">{{ section.category }}</h3>
-              <div class="grid gap-3">
-                <div *ngFor="let spec of section.items" class="flex justify-between py-2 border-b border-gray-100 last:border-b-0">
-                  <span class="text-gray-600">{{ spec.name }}</span>
-                  <span class="font-medium text-gray-900">{{ spec.value }}</span>
+            <!-- Specifications Tab -->
+            <p-tabpanel value="specifications">
+              <div class="flex flex-col gap-6">
+                <div *ngFor="let section of product.specifications">
+                  <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-4">{{ section.category }}</h3>
+                  <div class="grid gap-2">
+                    <div *ngFor="let spec of section.items" class="flex justify-between pt-2 pb-1 text-sm sm:text-base border-b border-gray-100 last:border-b-0">
+                      <span class="text-gray-600">{{ spec.name }}</span>
+                      <span class="font-medium text-gray-900">{{ spec.value }}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </p-tabpanel>
 
-          <!-- Reviews Tab -->
-          <div *ngIf="activeTab === 'reviews'" class="text-center py-12">
-            <div class="text-gray-500 mb-4">
-              <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-              </svg>
-              <h3 class="text-lg font-medium text-gray-900 mb-2">Пока нет отзывов</h3>
-              <p class="text-gray-600">Станьте первым, кто оставит отзыв об этом товаре</p>
-            </div>
-            <button class="bg-primary-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-primary-700 transition-colors"> Оставить отзыв </button>
-          </div>
+            <!-- Reviews Tab -->
+            <p-tabpanel value="reviews">
+              <div class="text-center py-12">
+                <div class="text-gray-500 mb-4">
+                  <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                  </svg>
+                  <h3 class="text-base sm:text-lg font-medium text-gray-900 mb-2">Пока нет отзывов</h3>
+                  <p class="text-sm sm:text-base text-gray-600">Станьте первым, кто оставит отзыв об этом товаре</p>
+                </div>
+                <button class="bg-primary-600 text-white text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors"> Оставить отзыв </button>
+              </div>
+            </p-tabpanel>
 
-          <!-- Payment Tab -->
-          <div *ngIf="activeTab === 'payment'" class="prose max-w-none">
-            <h3 class="text-xl font-bold mb-4">Способы оплаты</h3>
-            <div class="grid md:grid-cols-2 gap-6">
-              <div class="border border-gray-200 rounded-xl p-4">
-                <h4 class="font-semibold mb-2">Онлайн оплата</h4>
-                <p class="text-gray-600 text-sm">Оплата банковскими картами Visa, MasterCard, UzCard</p>
+            <!-- Payment Tab -->
+            <p-tabpanel value="payment">
+              <div class="prose max-w-none">
+                <h3 class="text-lg sm:text-xl font-bold mb-4">Способы оплаты</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="border border-gray-200 rounded-xl p-3">
+                    <h4 class="font-semibold mb-2">Онлайн оплата</h4>
+                    <p class="text-gray-600 text-sm">Оплата банковскими картами Visa, MasterCard, UzCard</p>
+                  </div>
+                  <div class="border border-gray-200 rounded-xl p-3">
+                    <h4 class="font-semibold mb-2">Наличными при получении</h4>
+                    <p class="text-gray-600 text-sm">Оплата наличными курьеру или в пункте выдачи</p>
+                  </div>
+                </div>
               </div>
-              <div class="border border-gray-200 rounded-xl p-4">
-                <h4 class="font-semibold mb-2">Наличными при получении</h4>
-                <p class="text-gray-600 text-sm">Оплата наличными курьеру или в пункте выдачи</p>
-              </div>
-            </div>
-          </div>
+            </p-tabpanel>
 
-          <!-- Delivery Tab -->
-          <div *ngIf="activeTab === 'delivery'" class="prose max-w-none">
-            <h3 class="text-xl font-bold mb-4">Доставка</h3>
-            <div class="grid md:grid-cols-2 gap-6">
-              <div class="border border-gray-200 rounded-xl p-4">
-                <h4 class="font-semibold mb-2">Курьерская доставка</h4>
-                <p class="text-gray-600 text-sm">Доставка по Ташкенту в течение 1-2 рабочих дней</p>
+            <!-- Delivery Tab -->
+            <p-tabpanel value="delivery">
+              <div class="prose max-w-none">
+                <h3 class="text-lg sm:text-xl font-bold mb-4">Доставка</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="border border-gray-200 rounded-xl p-3">
+                    <h4 class="font-semibold mb-2">Курьерская доставка</h4>
+                    <p class="text-gray-600 text-sm">Доставка по Ташкенту в течение 1-2 рабочих дней</p>
+                  </div>
+                  <div class="border border-gray-200 rounded-xl p-3">
+                    <h4 class="font-semibold mb-2">Самовывоз</h4>
+                    <p class="text-gray-600 text-sm">Забрать из любого магазина сети Firstseller</p>
+                  </div>
+                </div>
               </div>
-              <div class="border border-gray-200 rounded-xl p-4">
-                <h4 class="font-semibold mb-2">Самовывоз</h4>
-                <p class="text-gray-600 text-sm">Забрать из любого магазина сети Firstseller</p>
-              </div>
-            </div>
-          </div>
+            </p-tabpanel>
 
-          <!-- Discounts Tab -->
-          <div *ngIf="activeTab === 'discounts'" class="prose max-w-none">
-            <h3 class="text-xl font-bold mb-4">Скидки и бонусы</h3>
-            <div class="space-y-4">
-              <div class="border border-gray-200 rounded-xl p-4">
-                <h4 class="font-semibold mb-2">Бонусная программа</h4>
-                <p class="text-gray-600 text-sm">Получайте до 10% бонусов с каждой покупки</p>
+            <!-- Discounts Tab -->
+            <p-tabpanel value="discounts">
+              <div class="prose max-w-none">
+                <h3 class="text-lg sm:text-xl font-bold mb-4">Скидки и бонусы</h3>
+                <div class="space-y-4">
+                  <div class="border border-gray-200 rounded-xl p-3">
+                    <h4 class="font-semibold mb-2">Бонусная программа</h4>
+                    <p class="text-gray-600 text-sm">Получайте до 10% бонусов с каждой покупки</p>
+                  </div>
+                  <div class="border border-gray-200 rounded-xl p-3">
+                    <h4 class="font-semibold mb-2">Рассрочка 0-0-12</h4>
+                    <p class="text-gray-600 text-sm">Рассрочка без первоначального взноса и переплат</p>
+                  </div>
+                </div>
               </div>
-              <div class="border border-gray-200 rounded-xl p-4">
-                <h4 class="font-semibold mb-2">Рассрочка 0-0-12</h4>
-                <p class="text-gray-600 text-sm">Рассрочка без первоначального взноса и переплат</p>
-              </div>
-            </div>
-          </div>
-        </div>
+            </p-tabpanel>
+          </p-tabpanels>
+        </p-tabs>
       </div>
     </div>
   </main>

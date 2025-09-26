@@ -40,7 +40,7 @@
                           [showButtons]="false"
                           placeholder="0"
                           [style]="{ width: '100%' }"
-                          inputStyleClass="text-sm">
+                          inputStyleClass="text-sm focus:!ring-1">
                         </p-inputNumber>
                       </div>
                       <div>
@@ -52,7 +52,7 @@
                           [showButtons]="false"
                           placeholder="∞"
                           [style]="{ width: '100%' }"
-                          inputStyleClass="text-sm">
+                          inputStyleClass="text-sm focus:!ring-1">
                         </p-inputNumber>
                       </div>
                     </div>
@@ -135,7 +135,7 @@
             </div>
           </div>
 
-          <div class="prod-list-container grid lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
+          <div class="prod-list-container grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
             <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
           </div>
 

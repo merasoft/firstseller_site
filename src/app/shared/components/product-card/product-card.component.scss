@@ -1,12 +1,12 @@
 .action-button {
-  @apply w-[34px] h-[34px] bg-white/90 hover:bg-blue-50 shadow rounded-full flex items-center justify-center transition-colors;
+  @apply w-6 h-6 sm:w-8 sm:h-8 bg-white/90 hover:bg-blue-50 shadow rounded-full flex items-center justify-center transition-colors;
   backdrop-filter: blur(2px);
   border: none;
 }
 
 // PrimeNG Carousel customization to match original appearance
 ::ng-deep .product-image-carousel {
-  @apply h-full;
+  @apply w-full h-full;
 
   .p-carousel {
     &,
@@ -14,18 +14,18 @@
     &-content,
     &-viewport,
     &-item-list {
-      @apply h-full;
+      @apply w-full h-full;
     }
 
     &-content-container,
     &-content {
-      @apply relative;
+      @apply relative overflow-hidden;
     }
 
     // Custom navigation buttons
     &-prev-button,
     &-next-button {
-      @apply w-10 h-10 absolute bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-300;
+      @apply w-6 h-6 sm:w-8 sm:h-8 absolute bg-white/90 hover:bg-white rounded-full transition-all duration-300;
       @apply flex items-center justify-center;
       backdrop-filter: blur(2px);
       border: none;
@@ -34,34 +34,33 @@
 
     .carousel-prev-icon,
     .carousel-next-icon {
-      @apply text-white text-base;
+      @apply text-gray-700 text-sm;
     }
 
     &-prev-button {
-      @apply left-1;
+      @apply left-2 sm:left-3 -translate-x-14 group-hover/image:translate-x-0;
     }
-
     &-next-button {
-      @apply right-1;
+      @apply right-2 sm:right-3 translate-x-14 group-hover/image:translate-x-0;
     }
 
     // Custom indicators (dots)
     &-indicator-list {
-      @apply flex justify-center space-x-2 absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20;
+      @apply flex items-center justify-center absolute bottom-3 left-1/2 transform -translate-x-1/2 z-20;
 
       .p-carousel-indicator {
-        @apply p-0 bg-transparent border-0;
+        @apply bg-transparent border-0 p-0;
 
         button {
-          @apply w-3 h-3 bg-white/50 rounded-full transition-all duration-300 border-0;
+          @apply w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-300 rounded-full transition-all duration-300 border-0;
 
           &:hover {
-            @apply bg-white/70;
+            @apply bg-gray-200;
           }
         }
 
         &.p-carousel-indicator-active button {
-          @apply bg-white;
+          @apply w-2.5 h-2.5 sm:w-3 sm:h-3 bg-primary-500;
         }
       }
     }

@@ -30,6 +30,7 @@ import { RatingModule } from 'primeng/rating';
 import { SelectModule } from 'primeng/select';
 import { SidebarModule } from 'primeng/sidebar';
 import { SliderModule } from 'primeng/slider';
+import { TabsModule } from 'primeng/tabs';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 
@@ -62,6 +63,7 @@ const PRIMENG_MODULES = [
   SelectModule,
   SidebarModule,
   SliderModule,
+  TabsModule,
   TagModule,
   TooltipModule,
   PopoverModule,

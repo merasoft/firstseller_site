@@ -18,11 +18,11 @@
     @apply bg-transparent border-none p-0;
 
     &-list {
-      @apply gap-1;
+      @apply gap-1 overflow-x-auto;
     }
 
     &-item {
-      @apply text-xs;
+      @apply text-xs text-nowrap py-2;
 
       &:not(:last-child) &-link {
         @apply text-gray-500 hover:text-primary-600;
@@ -137,22 +137,6 @@
   // Custom checkbox container styling
   .filter-option {
     @apply flex items-center p-2 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer;
-  }
-
-  // Button styling
-  .p-button {
-    &.p-button-text {
-      @apply text-primary-600 hover:text-primary-700 bg-transparent hover:bg-primary-50;
-    }
-
-    &.p-button-sm,
-    &.p-button-small {
-      @apply px-4 py-2 text-sm;
-    }
-
-    &.p-button-info {
-      @apply bg-primary-600 border-primary-600 hover:bg-primary-700 hover:border-primary-700;
-    }
   }
 
   .p-chip {
