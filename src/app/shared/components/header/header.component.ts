@@ -1,6 +1,9 @@
 // src/app/shared/components/header/header.component.ts
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
+import { WishlistService } from '../../services/wishlist.service';
+import { CompareService } from '../../services/compare.service';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +11,48 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @ViewChild('menu') menu: any;
 
   searchQuery: string = '';
   isMenuOpen = false;
+  cartItemsCount = 0;
+  wishlistItemsCount = 0;
+  compareItemsCount = 0;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private cartService: CartService, private wishlistService: WishlistService, private compareService: CompareService) {}
+
+  ngOnInit(): void {
+    // Subscribe to cart changes to update count
+    this.cartService.cart$.subscribe((cart) => {
+      this.cartItemsCount = cart.totalItems;
+      // Update the cart action count
+      const cartAction = this.userActions.find((action) => action.name === 'cart');
+      if (cartAction) {
+        cartAction.count = this.cartItemsCount;
+      }
+    });
+
+    // Subscribe to wishlist changes to update count
+    this.wishlistService.wishlist$.subscribe((wishlist) => {
+      this.wishlistItemsCount = wishlist.totalItems;
+      // Update the wishlist action count
+      const wishlistAction = this.userActions.find((action) => action.name === 'wishlist');
+      if (wishlistAction) {
+        wishlistAction.count = this.wishlistItemsCount;
+      }
+    });
+
+    // Subscribe to compare changes to update count
+    this.compareService.compare$.subscribe((compareList) => {
+      this.compareItemsCount = compareList.totalItems;
+      // Update the compare action count
+      const compareAction = this.userActions.find((action) => action.name === 'compare');
+      if (compareAction) {
+        compareAction.count = this.compareItemsCount;
+      }
+    });
+  }
 
   // Navigation items
   navItems = [
@@ -73,7 +111,7 @@ export class HeaderComponent {
       name: 'compare',
       title: 'Таққослаш',
       count: 0,
-      link: '/compare',
+      link: '/catalog/compare',
       main: true,
       hamburger: false,
       footer: false,
@@ -138,7 +176,7 @@ export class HeaderComponent {
       url: 'pi pi-heart',
       name: 'wishlist',
       title: 'Истаклар',
-      count: 1,
+      count: 0,
       link: '/wishlist',
       main: true,
       hamburger: false,
@@ -149,8 +187,8 @@ export class HeaderComponent {
       url: 'pi pi-shopping-bag',
       name: 'cart',
       title: 'Саватча',
-      count: 13,
-      link: '/cart',
+      count: 0,
+      link: '/catalog/cart',
       main: true,
       hamburger: false,
       footer: true,
@@ -212,6 +250,14 @@ export class HeaderComponent {
     switch (action.name) {
       case 'catalog': {
         this.onCatalogDrawerToggle();
+        break;
+      }
+      case 'cart': {
+        this.cartService.openCartDrawer();
+        break;
+      }
+      case 'wishlist': {
+        this.router.navigate(['/wishlist']);
         break;
       }
       default: {

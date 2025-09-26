@@ -1,6 +1,11 @@
 // src/app/features/wishlist/pages/wishlist/wishlist.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { Product } from '../../../../shared/models/product.model';
+import { WishlistService } from '../../../../shared/services/wishlist.service';
+import { CartService } from '../../../../shared/services/cart.service';
+import { WishlistItem, Wishlist } from '../../../../shared/models/wishlist.model';
 
 @Component({
   selector: 'app-wishlist',
@@ -8,9 +13,11 @@ import { Product } from '../../../../shared/models/product.model';
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.scss'],
 })
-export class WishlistComponent implements OnInit {
+export class WishlistComponent implements OnInit, OnDestroy {
   pageTitle = 'Список желаний';
+  wishlist: Wishlist = { items: [], totalItems: 0, lastUpdated: new Date() };
   wishlistProducts: Product[] = [];
+  private destroy$ = new Subject<void>();
 
   // Sample wishlist products data
   sampleProducts: Product[] = [
@@ -34,6 +41,8 @@ export class WishlistComponent implements OnInit {
       memory: '12GB',
       processor: 'Snapdragon',
       inStock: true,
+      categoryId: 1,
+      category: 'Телефоны и гаджеты',
     },
     {
       id: 2,
@@ -55,6 +64,8 @@ export class WishlistComponent implements OnInit {
       memory: '8GB',
       processor: 'A18 Pro',
       inStock: true,
+      categoryId: 1,
+      category: 'Телефоны и гаджеты',
     },
     {
       id: 3,
@@ -76,6 +87,8 @@ export class WishlistComponent implements OnInit {
       memory: '8GB',
       processor: 'Snapdragon',
       inStock: true,
+      categoryId: 1,
+      category: 'Телефоны и гаджеты',
     },
     {
       id: 4,
@@ -100,22 +113,70 @@ export class WishlistComponent implements OnInit {
     },
   ];
 
+  constructor(private wishlistService: WishlistService, private cartService: CartService, private router: Router) {}
+
   ngOnInit(): void {
-    this.loadWishlistProducts();
+    this.loadWishlistData();
   }
 
-  loadWishlistProducts(): void {
-    // In a real app, this would load from a service/API
-    // For now, we'll use sample data
-    this.wishlistProducts = this.sampleProducts;
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private loadWishlistData(): void {
+    this.wishlistService.wishlist$.pipe(takeUntil(this.destroy$)).subscribe((wishlist) => {
+      this.wishlist = wishlist;
+      // Convert wishlist items to Product array for product-card component
+      this.wishlistProducts = wishlist.items.map((item) => ({
+        ...item.product,
+        currentImageIndex: 0,
+        monthlyPayment: Math.round(item.product.price / 12),
+        installmentMonths: 12,
+        memory: '',
+        processor: '',
+      }));
+    });
   }
 
   removeFromWishlist(productId: number): void {
-    this.wishlistProducts = this.wishlistProducts.filter((product) => product.id !== productId);
+    this.wishlistService.removeFromWishlist(productId);
   }
 
   clearWishlist(): void {
-    this.wishlistProducts = [];
+    this.wishlistService.clearWishlist();
+  }
+
+  addToCart(item: WishlistItem): void {
+    const cartItem = {
+      productId: item.product.id,
+      name: item.product.name,
+      image: item.product.images[0],
+      price: item.product.price,
+      oldPrice: item.product.oldPrice,
+      quantity: 1,
+      selectedVariant: {
+        color: item.product.brand,
+        memory: '', // We don't have memory in wishlist item
+      },
+      inStock: item.product.inStock,
+    };
+
+    this.cartService.addToCart(cartItem);
+    this.cartService.openCartDrawer();
+  }
+
+  continueShopping(): void {
+    this.router.navigate(['/catalog']);
+  }
+
+  // Utility functions
+  formatPrice(price: number): string {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
+  trackByItemId(index: number, item: WishlistItem): number {
+    return item.id;
   }
 
   trackByProductId(index: number, product: Product): number {

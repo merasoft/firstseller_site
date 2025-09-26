@@ -1,0 +1,157 @@
+<!-- src/app/features/catalog/pages/compare/compare.component.html -->
+<div class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Main Content -->
+  <main class="flex-1 bg-gray-50">
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900">{{ pageTitle }}</h1>
+            <p class="mt-2 text-gray-600" *ngIf="compare.totalItems > 0"> {{ compare.totalItems }} товар{{ compare.totalItems === 1 ? '' : compare.totalItems < 5 ? 'а' : 'ов' }} в сравнении </p>
+            <p class="mt-1 text-sm text-blue-600" *ngIf="compare.currentCategory"> Категория: {{ compare.currentCategory }} </p>
+            <p class="mt-1 text-sm text-gray-500" *ngIf="compare.totalItems > 0"> Максимум {{ maxCompareItems }} товаров для сравнения </p>
+          </div>
+
+          <!-- Clear Compare Button -->
+          <button *ngIf="compare.totalItems > 0" (click)="clearCompare()" class="px-4 py-2 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors">
+            Очистить сравнение
+          </button>
+        </div>
+      </div>
+
+      <!-- Compare Content -->
+      <div>
+        <!-- Empty State -->
+        <div *ngIf="compare.totalItems === 0" class="text-center py-16">
+          <div class="text-gray-400 mb-6">
+            <svg class="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Нет товаров для сравнения</h3>
+            <p class="text-gray-600 mb-6">Добавьте товары для сравнения их характеристик</p>
+            <button (click)="continueShopping()" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors">
+              Перейти к каталогу
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div *ngIf="compareProducts.length > 0" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <app-product-card *ngFor="let product of compareProducts; trackBy: trackByProductId" [product]="product"></app-product-card>
+        </div>
+
+        <!-- Compare Table (Optional: for detailed comparison) -->
+        <div *ngIf="compare.totalItems > 1" class="mt-12">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Детальное сравнение</h2>
+
+          <div class="overflow-x-auto">
+            <table class="w-full table-fixed min-w-[1000px]">
+              <thead>
+                <tr class="border-b border-gray-200">
+                  <th class="text-left py-4 px-4 font-medium text-gray-900 w-48">Характеристика</th>
+                  <th *ngFor="let item of compare.items" class="text-center py-4 px-4 font-medium text-gray-900" [style.width]="100 / compare.totalItems + '%'">
+                    <div class="flex flex-col items-center">
+                      <img [src]="item.product.images[0]" [alt]="item.product.name" class="w-16 h-16 object-cover rounded-lg mb-2" />
+                      <span class="text-sm font-medium line-clamp-2">{{ item.product.name }}</span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Price Row -->
+                <tr class="border-b border-gray-100">
+                  <td class="py-4 px-4 font-medium text-gray-900">Цена</td>
+                  <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
+                    <div class="flex flex-col items-center">
+                      <span class="text-lg font-bold text-gray-900">{{ formatPrice(item.product.price) }} сум</span>
+                      <span *ngIf="item.product.oldPrice" class="text-sm text-gray-400 line-through">{{ formatPrice(item.product.oldPrice) }} сум</span>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Brand Row -->
+                <tr class="border-b border-gray-100">
+                  <td class="py-4 px-4 font-medium text-gray-900">Бренд</td>
+                  <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
+                    {{ item.product.brand }}
+                  </td>
+                </tr>
+
+                <!-- Memory Row -->
+                <tr class="border-b border-gray-100" *ngIf="hasMemorySpecs()">
+                  <td class="py-4 px-4 font-medium text-gray-900">Память</td>
+                  <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
+                    {{ item.product.memory || '—' }}
+                  </td>
+                </tr>
+
+                <!-- Processor Row -->
+                <tr class="border-b border-gray-100" *ngIf="hasProcessorSpecs()">
+                  <td class="py-4 px-4 font-medium text-gray-900">Процессор</td>
+                  <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
+                    {{ item.product.processor || '—' }}
+                  </td>
+                </tr>
+
+                <!-- Rating Row -->
+                <tr class="border-b border-gray-100">
+                  <td class="py-4 px-4 font-medium text-gray-900">Рейтинг</td>
+                  <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
+                    <div class="flex items-center justify-center gap-1">
+                      <i class="pi pi-star-fill text-yellow-400 text-sm"></i>
+                      <span class="text-sm">{{ item.product.rating }}</span>
+                      <span class="text-xs text-gray-400">({{ item.product.reviewsCount }})</span>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Availability Row -->
+                <tr class="border-b border-gray-100">
+                  <td class="py-4 px-4 font-medium text-gray-900">Наличие</td>
+                  <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
+                    <span [class]="item.product.inStock ? 'text-green-600' : 'text-red-600'" class="font-medium">
+                      {{ item.product.inStock ? 'В наличии' : 'Нет в наличии' }}
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- Actions Row -->
+                <tr>
+                  <td class="py-4 px-4 font-medium text-gray-900">Действия</td>
+                  <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
+                    <div class="space-y-2">
+                      <button
+                        (click)="addToCart(item)"
+                        [disabled]="!item.product.inStock"
+                        class="w-full py-2 px-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed text-sm">
+                        <span *ngIf="item.product.inStock">В корзину</span>
+                        <span *ngIf="!item.product.inStock">Недоступно</span>
+                      </button>
+                      <button (click)="removeFromCompare(item.product.id)" class="w-full py-2 px-3 border border-red-300 text-red-600 font-medium rounded-lg hover:bg-red-50 transition-colors text-sm">
+                        Удалить
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>

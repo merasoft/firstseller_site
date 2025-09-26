@@ -6,9 +6,11 @@ import { SharedModule } from '../../shared/shared.module';
 import { CatalogRoutingModule } from './catalog-routing.module';
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { CompareComponent } from './pages/compare/compare.component';
 
 @NgModule({
-  declarations: [CatalogComponent, ProductDetailComponent],
+  declarations: [CatalogComponent, ProductDetailComponent, CartComponent, CompareComponent],
   imports: [CommonModule, SharedModule, CatalogRoutingModule],
 })
 export class CatalogModule {}

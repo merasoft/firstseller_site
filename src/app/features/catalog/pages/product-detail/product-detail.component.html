@@ -44,14 +44,14 @@
 
           <div class="flex items-center gap-2">
             <p class="text-xs text-gray-600">Арт: {{ product.article }}</p>
-            <button (click)="compareProduct()" class="w-8 h-8 rounded transition-colors hover:bg-gray-100">
-              <i class="text-base text-gray-600 fa-solid fa-scale-balanced"></i>
+            <button (click)="compareProduct()" class="w-8 h-8 rounded transition-colors hover:bg-gray-100" [class.bg-blue-50]="isInCompare()">
+              <i class="text-base fa-solid fa-scale-balanced transition-colors" [class]="isInCompare() ? 'text-blue-500' : 'text-gray-600 hover:text-blue-500'"></i>
             </button>
             <button (click)="shareProduct()" class="w-8 h-8 rounded transition-colors hover:bg-gray-100">
               <i class="text-base text-gray-600 pi pi-share-alt"></i>
             </button>
-            <button (click)="addToFavorites()" class="w-8 h-8 rounded transition-colors hover:bg-gray-100">
-              <i class="text-base text-gray-600 pi pi-heart"></i>
+            <button (click)="addToFavorites()" class="w-8 h-8 rounded transition-colors hover:bg-gray-100" [class.bg-red-50]="isInWishlist()">
+              <i class="text-base transition-colors" [class]="isInWishlist() ? 'text-red-500 pi pi-heart-fill' : 'text-gray-600 hover:text-red-500 pi pi-heart'"></i>
             </button>
           </div>
         </div>

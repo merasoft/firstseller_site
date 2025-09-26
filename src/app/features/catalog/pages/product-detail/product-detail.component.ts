@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { CartService } from '../../../../shared/services/cart.service';
+import { ProductActionsService } from '../../../../shared/services/product-actions.service';
 
 interface ProductVariant {
   id: string;
@@ -171,7 +173,7 @@ export class ProductDetailComponent implements OnInit {
     { id: 'discounts', name: 'Скидки и бонусы', active: false },
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private cartService: CartService, private productActions: ProductActionsService) {}
 
   loadProduct(): void {
     // Load product data from API
@@ -215,11 +217,22 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart(): void {
-    console.log('Add to cart:', {
-      product: this.product,
-      variant: this.selectedVariant,
+    const cartItem = {
+      productId: parseInt(this.productId) || 1,
+      name: this.product.name,
+      image: this.product.images[0],
+      price: this.selectedVariant?.price || this.product.variants[0].price,
+      oldPrice: this.selectedVariant?.oldPrice || this.product.variants[0].oldPrice,
       quantity: this.quantity,
-    });
+      selectedVariant: {
+        color: this.selectedColor,
+        memory: this.selectedMemory,
+      },
+      inStock: this.selectedVariant?.inStock || this.product.variants[0].inStock,
+    };
+
+    this.cartService.addToCart(cartItem);
+    this.cartService.openCartDrawer();
   }
 
   buyNow(): void {
@@ -231,11 +244,59 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToFavorites(): void {
-    console.log('Add to favorites:', this.product.id);
+    const productForWishlist = {
+      id: parseInt(this.product.id.split('-')[0]) || 1, // Convert string id to number
+      name: this.product.name,
+      images: this.product.images,
+      currentImageIndex: 0,
+      price: this.selectedVariant?.price || this.product.variants[0].price,
+      oldPrice: this.selectedVariant?.oldPrice || this.product.variants[0].oldPrice,
+      monthlyPayment: Math.round((this.selectedVariant?.price || this.product.variants[0].price) / 12),
+      installmentMonths: 12,
+      rating: this.product.rating,
+      reviewsCount: this.product.reviewsCount,
+      badge: this.selectedVariant?.oldPrice ? `${Math.round((1 - this.selectedVariant.price / this.selectedVariant.oldPrice) * 100)}%` : undefined,
+      badgeType: this.selectedVariant?.oldPrice ? ('discount' as const) : undefined,
+      brand: this.product.brand,
+      memory: this.selectedMemory || this.product.variants[0].memory,
+      processor: 'Snapdragon', // Default processor
+      inStock: this.selectedVariant?.inStock || this.product.variants[0].inStock,
+    };
+
+    this.productActions.addToFavorites(productForWishlist);
   }
 
   compareProduct(): void {
-    console.log('Compare product:', this.product.id);
+    const productForCompare = {
+      id: parseInt(this.product.id.split('-')[0]) || 1, // Convert string id to number
+      name: this.product.name,
+      images: this.product.images,
+      currentImageIndex: 0,
+      price: this.selectedVariant?.price || this.product.variants[0].price,
+      oldPrice: this.selectedVariant?.oldPrice || this.product.variants[0].oldPrice,
+      monthlyPayment: Math.round((this.selectedVariant?.price || this.product.variants[0].price) / 12),
+      installmentMonths: 12,
+      rating: this.product.rating,
+      reviewsCount: this.product.reviewsCount,
+      badge: this.selectedVariant?.oldPrice ? `${Math.round((1 - this.selectedVariant.price / this.selectedVariant.oldPrice) * 100)}%` : undefined,
+      badgeType: this.selectedVariant?.oldPrice ? ('discount' as const) : undefined,
+      brand: this.product.brand,
+      memory: this.selectedMemory || this.product.variants[0].memory,
+      processor: 'Snapdragon', // Default processor
+      inStock: this.selectedVariant?.inStock || this.product.variants[0].inStock,
+    };
+
+    this.productActions.addToCompare(productForCompare);
+  }
+
+  isInWishlist(): boolean {
+    const productId = parseInt(this.product.id.split('-')[0]) || 1;
+    return this.productActions.isInWishlist(productId);
+  }
+
+  isInCompare(): boolean {
+    const productId = parseInt(this.product.id.split('-')[0]) || 1;
+    return this.productActions.isInCompare(productId);
   }
 
   shareProduct(): void {

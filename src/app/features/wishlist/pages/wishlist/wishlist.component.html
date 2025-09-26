@@ -11,13 +11,13 @@
         <div class="flex items-center justify-between">
           <div>
             <h1 class="text-3xl font-bold text-gray-900">{{ pageTitle }}</h1>
-            <p class="mt-2 text-gray-600" *ngIf="wishlistProducts.length > 0">
-              {{ wishlistProducts.length }} товар{{ wishlistProducts.length === 1 ? '' : wishlistProducts.length < 5 ? 'а' : 'ов' }} в списке желаний
+            <p class="mt-2 text-gray-600" *ngIf="wishlist.totalItems > 0">
+              {{ wishlist.totalItems }} товар{{ wishlist.totalItems === 1 ? '' : wishlist.totalItems < 5 ? 'а' : 'ов' }} в списке желаний
             </p>
           </div>
 
           <!-- Clear Wishlist Button -->
-          <button *ngIf="wishlistProducts.length > 0" (click)="clearWishlist()" class="px-4 py-2 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors">
+          <button *ngIf="wishlist.totalItems > 0" (click)="clearWishlist()" class="px-4 py-2 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors">
             Очистить список
           </button>
         </div>
@@ -26,7 +26,7 @@
       <!-- Wishlist Content -->
       <div class="bg-white rounded-3xl shadow-sm p-8">
         <!-- Empty State -->
-        <div *ngIf="wishlistProducts.length === 0" class="text-center py-16">
+        <div *ngIf="wishlist.totalItems === 0" class="text-center py-16">
           <div class="text-gray-400 mb-6">
             <svg class="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -48,7 +48,7 @@
 
         <!-- Products Grid -->
         <div *ngIf="wishlistProducts.length > 0" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          <app-product-card *ngFor="let product of wishlistProducts; trackBy: trackByProductId" [product]="product"> </app-product-card>
+          <app-product-card *ngFor="let product of wishlistProducts; trackBy: trackByProductId" [product]="product"></app-product-card>
         </div>
       </div>
     </div>
