@@ -36,6 +36,11 @@ const routes: Routes = [
     path: ':category/:subcategory',
     component: CatalogComponent,
   },
+  {
+    // /catalog/phones/smartphones/apple - листовая категория (3 уровня)
+    path: ':category/:subcategory/:leaf',
+    component: CatalogComponent,
+  },
 ];
 
 @NgModule({

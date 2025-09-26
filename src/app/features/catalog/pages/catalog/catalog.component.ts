@@ -1,5 +1,7 @@
 // src/app/features/catalog/pages/catalog/catalog.component.ts
 import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { MenuItem } from 'primeng/api';
 import { Product } from '../../../../shared/models/product.model';
 
@@ -22,6 +24,22 @@ interface FilterOption {
   checked: boolean;
 }
 
+interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  icon?: string;
+  count?: number;
+  children?: Category[];
+}
+
+interface QuickFilter {
+  id: string;
+  name: string;
+  type: 'brand' | 'memory' | 'processor' | 'category' | 'price';
+  value: string | number;
+}
+
 @Component({
   selector: 'app-catalog',
   standalone: false,
@@ -29,28 +47,53 @@ interface FilterOption {
   styleUrls: ['./catalog.component.scss'],
 })
 export class CatalogComponent implements OnInit {
-  pageTitle = 'Смартфоны';
+  pageTitle = 'Каталог товаров';
   totalProducts = 518;
   filtersOpen = false;
   mobileScreen = window.innerWidth <= 640;
+  isLoading = false;
+
+  // Route parameters
+  categorySlug: string | null = null;
+  subcategorySlug: string | null = null;
+  leafSlug: string | null = null;
+
+  // Category data
+  categories: Category[] = [];
+  currentCategory: Category | null = null;
+  currentSubcategory: Category | null = null;
+  currentLeaf: Category | null = null;
 
   // PrimeNG Breadcrumb
   breadcrumbItems: MenuItem[] = [];
   home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
 
-  breadcrumbs = [
-    { name: 'Главная', url: '/' },
-    { name: 'Телефоны и гаджеты', url: '/category/phones' },
-    { name: 'Телефоны', url: '/category/phones/mobile' },
-    { name: 'Смартфоны', url: '/category/phones/smartphones' },
+  breadcrumbs: { name: string; url: string }[] = [];
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+
+  // Filtering properties
+  filteredProducts: Product[] = [];
+  appliedFilters: { [key: string]: any } = {};
+  selectedFilters: any = [];
+
+  // Temporary filter state for mobile drawer
+  tempFilters: Filter[] = [];
+  originalFilters: Filter[] = [];
+  mobileAccordionActiveValues: string[] = [];
+
+  quickFilters: QuickFilter[] = [
+    { id: 'samsung-galaxy', name: 'Samsung Galaxy', type: 'brand', value: 'Samsung' },
+    { id: 'honor-phones', name: 'Honor', type: 'brand', value: 'Honor' },
+    { id: 'apple-products', name: 'Apple', type: 'brand', value: 'Apple' },
+    { id: 'high-memory', name: '12GB RAM', type: 'memory', value: '12GB' },
+    { id: 'snapdragon', name: 'Snapdragon', type: 'processor', value: 'Snapdragon' },
+    { id: 'laptops', name: 'Ноутбуки', type: 'category', value: 'Компьютерная техника' },
+    { id: 'under-5m', name: 'До 5 млн', type: 'price', value: 5000000 },
+    { id: 'premium', name: 'Премиум', type: 'price', value: 10000000 },
   ];
 
-  selectedFilters = [
-    { filter_id: 'brand', name: 'Бренд', values: ['Huawei', 'Pixel'] },
-    { filter_id: 'memory', name: 'Оперативная память', values: ['8GB', '16GB'] },
-  ];
-
-  quickFilters = ['Samsung S25', 'Honor X9C', 'Honor', 'iPhone', 'Samsung Galaxy S25 Ultra', 'Samsung', 'Samsung Galaxy S24 Ultra', 'iPhone 16', 'iPhone 16 Pro Max', 'iPhone 17 Pro Max'];
+  activeQuickFilters: Set<string> = new Set();
 
   sortOptions = [
     { value: 'popular', label: 'По популярности' },
@@ -79,15 +122,11 @@ export class CatalogComponent implements OnInit {
       name: 'Бренд',
       type: 'checkbox',
       options: [
-        { id: 'tecno', name: 'TECNO', count: 14, checked: false },
-        { id: 'novey', name: 'Novey', count: 8, checked: false },
-        { id: 'ajib', name: 'Ajib', count: 12, checked: false },
-        { id: 'huawei', name: 'Huawei', count: 25, checked: false },
-        { id: 'vivo', name: 'Vivo', count: 18, checked: false },
-        { id: 'google', name: 'Google', count: 6, checked: false },
-        { id: 'pixel', name: 'Pixel', count: 4, checked: false },
-        { id: 'zte', name: 'ZTE', count: 9, checked: false },
-        { id: 'green-lion', name: 'Green Lion', count: 3, checked: false },
+        { id: 'honor', name: 'Honor', count: 2, checked: false },
+        { id: 'samsung', name: 'Samsung', count: 3, checked: false },
+        { id: 'vivo', name: 'Vivo', count: 1, checked: false },
+        { id: 'lenovo', name: 'Lenovo', count: 1, checked: false },
+        { id: 'apple', name: 'Apple', count: 1, checked: false },
       ],
     },
     {
@@ -95,13 +134,21 @@ export class CatalogComponent implements OnInit {
       name: 'Оперативная память',
       type: 'checkbox',
       options: [
-        { id: '2gb', name: '2 ГБ', count: 15, checked: false },
-        { id: '3gb', name: '3 ГБ', count: 22, checked: false },
-        { id: '4gb', name: '4 ГБ', count: 45, checked: false },
-        { id: '6gb', name: '6 ГБ', count: 78, checked: false },
-        { id: '8gb', name: '8 ГБ', count: 156, checked: false },
-        { id: '12gb', name: '12 ГБ', count: 89, checked: false },
-        { id: '16gb', name: '16 ГБ', count: 23, checked: false },
+        { id: '6gb', name: '6GB', count: 1, checked: false },
+        { id: '8gb', name: '8GB', count: 3, checked: false },
+        { id: '12gb', name: '12GB', count: 3, checked: false },
+        { id: '16gb', name: '16GB', count: 1, checked: false },
+      ],
+    },
+    {
+      id: 'processor',
+      name: 'Процессор',
+      type: 'checkbox',
+      options: [
+        { id: 'snapdragon', name: 'Snapdragon', count: 3, checked: false },
+        { id: 'exynos', name: 'Exynos', count: 3, checked: false },
+        { id: 'amd-ryzen', name: 'AMD Ryzen 5', count: 1, checked: false },
+        { id: 'apple-m2', name: 'Apple M2', count: 1, checked: false },
       ],
     },
   ];
@@ -334,8 +381,60 @@ export class CatalogComponent implements OnInit {
   }
 
   applyFilters(): void {
-    // Implement filter logic here
-    console.log('Applying filters...');
+    // Start with all products
+    let filtered = [...this.products];
+
+    // Apply price filter
+    const priceFilter = this.filters.find((f) => f.id === 'price');
+    if (priceFilter && priceFilter.currentMin !== undefined && priceFilter.currentMax !== undefined) {
+      filtered = filtered.filter((product) => product.price >= priceFilter.currentMin! && product.price <= priceFilter.currentMax!);
+    }
+
+    // Apply brand filter
+    const brandFilter = this.filters.find((f) => f.id === 'brand');
+    if (brandFilter && brandFilter.options) {
+      const selectedBrands = brandFilter.options.filter((option) => option.checked).map((option) => option.name);
+      if (selectedBrands.length > 0) {
+        filtered = filtered.filter((product) => selectedBrands.includes(product.brand));
+      }
+    }
+
+    // Apply memory filter
+    const memoryFilter = this.filters.find((f) => f.id === 'memory');
+    if (memoryFilter && memoryFilter.options) {
+      const selectedMemories = memoryFilter.options.filter((option) => option.checked).map((option) => option.name);
+      if (selectedMemories.length > 0) {
+        filtered = filtered.filter((product) => selectedMemories.includes(product.memory));
+      }
+    }
+
+    // Apply processor filter
+    const processorFilter = this.filters.find((f) => f.id === 'processor');
+    if (processorFilter && processorFilter.options) {
+      const selectedProcessors = processorFilter.options.filter((option) => option.checked).map((option) => option.name);
+      if (selectedProcessors.length > 0) {
+        filtered = filtered.filter((product) => product.processor && selectedProcessors.includes(product.processor));
+      }
+    }
+
+    // Apply category quick filters
+    const activeCategories = Array.from(this.activeQuickFilters)
+      .map((id) => this.quickFilters.find((qf) => qf.id === id))
+      .filter((qf) => qf && qf.type === 'category')
+      .map((qf) => qf!.value);
+
+    if (activeCategories.length > 0) {
+      filtered = filtered.filter((product) => product.category && activeCategories.includes(product.category));
+    }
+
+    // Apply sorting
+    this.filteredProducts = this.applySorting(filtered);
+
+    // Update product count
+    this.totalProducts = this.filteredProducts.length;
+
+    // Update applied filters for tag display
+    this.updateAppliedFilters();
   }
 
   clearFilters(): void {
@@ -349,7 +448,52 @@ export class CatalogComponent implements OnInit {
         filter.range = [filter.min!, filter.max!];
       }
     });
+    this.selectedFilters = [];
+    this.activeQuickFilters.clear();
     this.applyFilters();
+  }
+
+  applySorting(products: Product[]): Product[] {
+    const sorted = [...products];
+
+    switch (this.selectedSort) {
+      case 'price-asc':
+        return sorted.sort((a, b) => a.price - b.price);
+      case 'price-desc':
+        return sorted.sort((a, b) => b.price - a.price);
+      case 'rating':
+        return sorted.sort((a, b) => b.rating - a.rating);
+      case 'new':
+        return sorted.sort((a, b) => b.id - a.id); // Assuming higher ID means newer
+      case 'popular':
+      default:
+        return sorted.sort((a, b) => b.reviewsCount - a.reviewsCount);
+    }
+  }
+
+  updateAppliedFilters(): void {
+    this.selectedFilters = [];
+
+    this.filters.forEach((filter) => {
+      if (filter.type === 'checkbox' && filter.options) {
+        const checkedOptions = filter.options.filter((option) => option.checked);
+        if (checkedOptions.length > 0) {
+          this.selectedFilters.push({
+            filter_id: filter.id,
+            name: filter.name,
+            values: checkedOptions.map((option) => option.name),
+          });
+        }
+      }
+
+      if ((filter.type === 'range' && filter.currentMin !== filter.min) || filter.currentMax !== filter.max) {
+        this.selectedFilters.push({
+          filter_id: filter.id,
+          name: filter.name,
+          values: [`${filter.currentMin?.toLocaleString()} - ${filter.currentMax?.toLocaleString()} сум`],
+        });
+      }
+    });
   }
 
   // Get count of checked options for filter
@@ -358,8 +502,310 @@ export class CatalogComponent implements OnInit {
     return filter.options.filter((option) => option.checked).length;
   }
 
+  onFilterOptionChange(filter: Filter, option: FilterOption): void {
+    option.checked = !option.checked;
+    this.applyFilters();
+  }
+
+  onSortChange(): void {
+    this.applyFilters();
+  }
+
+  removeSelectedFilter(filterToRemove: any, valueToRemove?: string): void {
+    const filter = this.filters.find((f) => f.id === filterToRemove.filter_id);
+    if (!filter) return;
+
+    if (filter.type === 'checkbox' && filter.options) {
+      if (valueToRemove) {
+        // Remove specific value
+        const option = filter.options.find((opt) => opt.name === valueToRemove);
+        if (option) option.checked = false;
+      } else {
+        // Remove all values for this filter
+        filter.options.forEach((opt) => (opt.checked = false));
+      }
+    } else if (filter.type === 'range') {
+      filter.currentMin = filter.min;
+      filter.currentMax = filter.max;
+      filter.range = [filter.min!, filter.max!];
+    }
+
+    this.applyFilters();
+  }
+
+  get subcategories(): Category[] {
+    if (!this.currentCategory) return [];
+
+    // If we're at the main category level, show subcategories
+    if (!this.subcategorySlug) {
+      return this.currentCategory.children || [];
+    }
+
+    // If we're in a subcategory but not in a leaf, show the leaf categories
+    if (this.currentSubcategory && !this.leafSlug) {
+      return this.currentSubcategory.children || [];
+    }
+
+    return [];
+  }
+
+  getSubcategoryLink(subcategory: Category): string[] {
+    if (!this.currentCategory) return ['/catalog'];
+
+    // If we're at the main category level, link to subcategory
+    if (!this.subcategorySlug) {
+      return ['/catalog', this.currentCategory.slug, subcategory.slug];
+    }
+
+    // If we're in a subcategory, link to leaf category
+    if (this.currentSubcategory) {
+      return ['/catalog', this.currentCategory.slug, this.currentSubcategory.slug, subcategory.slug];
+    }
+
+    return ['/catalog', this.currentCategory.slug, subcategory.slug];
+  }
+
+  isActiveSubcategory(subcategory: Category): boolean {
+    // If we're at the main category level, check if this is the active subcategory
+    if (!this.subcategorySlug) {
+      return false; // No active subcategory yet
+    }
+
+    // If we're in a subcategory, check if this is the active leaf
+    if (this.currentSubcategory && !this.leafSlug) {
+      return subcategory.slug === this.subcategorySlug;
+    }
+
+    // If we're in a leaf, check if this is the active leaf
+    if (this.leafSlug) {
+      return subcategory.slug === this.leafSlug;
+    }
+
+    return subcategory.slug === this.subcategorySlug;
+  }
+
+  applyQuickFilter(quickFilter: QuickFilter): void {
+    // Toggle the quick filter
+    if (this.activeQuickFilters.has(quickFilter.id)) {
+      this.activeQuickFilters.delete(quickFilter.id);
+      this.removeQuickFilterFromFilters(quickFilter);
+    } else {
+      this.activeQuickFilters.add(quickFilter.id);
+      this.addQuickFilterToFilters(quickFilter);
+    }
+
+    this.applyFilters();
+  }
+
+  private addQuickFilterToFilters(quickFilter: QuickFilter): void {
+    const filter = this.filters.find((f) => f.id === quickFilter.type);
+
+    if (filter && filter.type === 'checkbox' && filter.options) {
+      const option = filter.options.find((opt) => opt.name === quickFilter.value);
+      if (option) {
+        option.checked = true;
+      }
+    } else if (quickFilter.type === 'price' && typeof quickFilter.value === 'number') {
+      const priceFilter = this.filters.find((f) => f.id === 'price');
+      if (priceFilter) {
+        if (quickFilter.id === 'under-5m') {
+          priceFilter.currentMax = quickFilter.value;
+        } else if (quickFilter.id === 'premium') {
+          priceFilter.currentMin = quickFilter.value;
+        }
+        priceFilter.range = [priceFilter.currentMin!, priceFilter.currentMax!];
+      }
+    } else if (quickFilter.type === 'category') {
+      // For category quick filter, we'll filter products directly in applyFilters method
+    }
+  }
+
+  private removeQuickFilterFromFilters(quickFilter: QuickFilter): void {
+    const filter = this.filters.find((f) => f.id === quickFilter.type);
+
+    if (filter && filter.type === 'checkbox' && filter.options) {
+      const option = filter.options.find((opt) => opt.name === quickFilter.value);
+      if (option) {
+        option.checked = false;
+      }
+    } else if (quickFilter.type === 'price') {
+      const priceFilter = this.filters.find((f) => f.id === 'price');
+      if (priceFilter) {
+        priceFilter.currentMin = priceFilter.min;
+        priceFilter.currentMax = priceFilter.max;
+        priceFilter.range = [priceFilter.min!, priceFilter.max!];
+      }
+    }
+  }
+
+  isQuickFilterActive(quickFilter: QuickFilter): boolean {
+    return this.activeQuickFilters.has(quickFilter.id);
+  }
+
+  onMobileFilterOpen(): void {
+    // Store current filter state as backup
+    this.originalFilters = JSON.parse(JSON.stringify(this.filters));
+    // Create temporary filters for mobile drawer
+    this.tempFilters = JSON.parse(JSON.stringify(this.filters));
+    // Initialize mobile accordion with all panels open
+    this.mobileAccordionActiveValues = this.getDefaultAccordionValues();
+  }
+
+  onMobileFilterCancel(): void {
+    // Restore original filter state
+    this.filters = JSON.parse(JSON.stringify(this.originalFilters));
+    this.filtersOpen = false;
+  }
+
+  onMobileFilterApply(): void {
+    // Apply the temporary filter changes
+    this.filters = JSON.parse(JSON.stringify(this.tempFilters));
+    this.applyFilters();
+    this.filtersOpen = false;
+  }
+
+  onTempFilterOptionChange(filter: Filter, option: FilterOption): void {
+    // Update temporary filter state without applying
+    const tempFilter = this.tempFilters.find((f) => f.id === filter.id);
+    if (tempFilter && tempFilter.options) {
+      const tempOption = tempFilter.options.find((opt) => opt.id === option.id);
+      if (tempOption) {
+        tempOption.checked = !tempOption.checked;
+      }
+    }
+  }
+
+  onTempPriceRangeChange(event: any): void {
+    const tempPriceFilter = this.tempFilters[0]; // Price is always first filter
+    if (event == null || typeof event === 'number') {
+      tempPriceFilter.range = [tempPriceFilter.currentMin!, tempPriceFilter.currentMax!];
+    } else if (typeof event === 'object' && Array.isArray(event.values) && event.values.length === 2) {
+      tempPriceFilter.currentMin = event.values[0];
+      tempPriceFilter.currentMax = event.values[1];
+    }
+  }
+
+  getTempFilterCheckedCount(filter: Filter): number {
+    if (!filter.options) return 0;
+    return filter.options.filter((option) => option.checked).length;
+  }
+
+  getDefaultAccordionValues(): string[] {
+    const values = ['price', 'brand', 'memory', 'processor'];
+    if (this.subcategories.length > 0) {
+      values.unshift('categories'); // Add categories at the beginning
+    }
+    return values;
+  }
   ngOnInit(): void {
-    // Initialize PrimeNG breadcrumbs
-    this.breadcrumbItems = [{ label: 'Телефоны и гаджеты', routerLink: '/category/phones' }, { label: 'Телефоны', routerLink: '/category/phones/mobile' }, { label: 'Смартфоны' }];
+    this.loadCategories();
+    this.subscribeToRouteChanges();
+    this.applyFilters(); // Initialize filtered products
+    this.mobileAccordionActiveValues = this.getDefaultAccordionValues();
+  }
+
+  private loadCategories(): void {
+    this.http.get<{ categories: Category[] }>('/assets/data/catalog-menu.json').subscribe({
+      next: (data) => {
+        this.categories = data.categories;
+        this.updatePageContent();
+      },
+      error: (error) => {
+        console.error('Error loading categories:', error);
+        this.setDefaultContent();
+      },
+    });
+  }
+
+  private subscribeToRouteChanges(): void {
+    this.route.params.subscribe((params) => {
+      // Show loading indicator for navigation changes
+      this.isLoading = true;
+
+      this.categorySlug = params['category'] || null;
+      this.subcategorySlug = params['subcategory'] || null;
+      this.leafSlug = params['leaf'] || null;
+
+      // Brief delay to show loading state, then update content
+      setTimeout(() => {
+        this.updatePageContent();
+        this.isLoading = false;
+      }, 300);
+    });
+  }
+
+  private updatePageContent(): void {
+    if (!this.categories.length) return;
+
+    if (this.categorySlug) {
+      this.findCurrentCategory();
+      this.updatePageTitle();
+      this.updateBreadcrumbs();
+    } else {
+      this.setDefaultContent();
+    }
+  }
+
+  private findCurrentCategory(): void {
+    this.currentCategory = this.categories.find((cat) => cat.slug === this.categorySlug) || null;
+    this.currentSubcategory = null;
+    this.currentLeaf = null;
+
+    if (this.currentCategory && this.subcategorySlug) {
+      this.currentSubcategory = this.currentCategory.children?.find((sub) => sub.slug === this.subcategorySlug) || null;
+
+      if (this.currentSubcategory && this.leafSlug) {
+        // Third level - find leaf in subcategory's children
+        this.currentLeaf = this.currentSubcategory.children?.find((leaf) => leaf.slug === this.leafSlug) || null;
+      }
+    }
+  }
+
+  private updatePageTitle(): void {
+    if (this.currentLeaf) {
+      this.pageTitle = this.currentLeaf.name;
+      this.totalProducts = this.currentLeaf.count || 0;
+    } else if (this.currentSubcategory) {
+      this.pageTitle = this.currentSubcategory.name;
+      this.totalProducts = this.currentSubcategory.count || 0;
+    } else if (this.currentCategory) {
+      this.pageTitle = this.currentCategory.name;
+      this.totalProducts = this.currentCategory.count || 0;
+    } else {
+      this.setDefaultContent();
+    }
+  }
+
+  private updateBreadcrumbs(): void {
+    this.breadcrumbs = [{ name: 'Главная', url: '/' }];
+    this.breadcrumbItems = [];
+
+    if (this.currentCategory) {
+      const categoryUrl = `/catalog/${this.currentCategory.slug}`;
+      this.breadcrumbItems.push({ label: this.currentCategory.name, routerLink: categoryUrl });
+
+      if (this.currentSubcategory) {
+        const subcategoryUrl = `${categoryUrl}/${this.currentSubcategory.slug}`;
+        this.breadcrumbItems.push({ label: this.currentSubcategory.name, routerLink: subcategoryUrl });
+
+        if (this.currentLeaf) {
+          // Three levels: Category > Subcategory > Leaf
+          this.breadcrumbItems.push({ label: this.currentLeaf.name });
+        } else {
+          // Two levels: Category > Subcategory (remove link from last item)
+          this.breadcrumbItems[this.breadcrumbItems.length - 1] = { label: this.currentSubcategory.name };
+        }
+      } else {
+        // One level: Category only (remove link from last item)
+        this.breadcrumbItems[this.breadcrumbItems.length - 1] = { label: this.currentCategory.name };
+      }
+    }
+  }
+
+  private setDefaultContent(): void {
+    this.pageTitle = 'Каталог товаров';
+    this.totalProducts = 518;
+    this.breadcrumbs = [{ name: 'Главная', url: '/' }];
+    this.breadcrumbItems = [];
   }
 }

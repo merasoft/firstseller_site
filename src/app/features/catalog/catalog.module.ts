@@ -1,6 +1,7 @@
 // src/app/features/catalog/catalog.module.ts
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../../shared/shared.module';
 
 import { CatalogRoutingModule } from './catalog-routing.module';
@@ -11,6 +12,6 @@ import { CompareComponent } from './pages/compare/compare.component';
 
 @NgModule({
   declarations: [CatalogComponent, ProductDetailComponent, CartComponent, CompareComponent],
-  imports: [CommonModule, SharedModule, CatalogRoutingModule],
+  imports: [CommonModule, HttpClientModule, SharedModule, CatalogRoutingModule],
 })
 export class CatalogModule {}

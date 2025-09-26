@@ -4,26 +4,54 @@
   <app-header></app-header>
 
   <!-- Main Content -->
-  <main class="flex-1 bg-gray-50">
+  <main class="flex-1 bg-gray-50 relative">
+    <!-- Loading Overlay -->
+    <div *ngIf="isLoading" class="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50 transition-opacity duration-300">
+      <div class="flex flex-col items-center gap-3">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+        <span class="text-sm text-gray-600">Загрузка категории...</span>
+      </div>
+    </div>
+
     <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <!-- Breadcrumbs -->
-      <p-breadcrumb [model]="breadcrumbItems" [home]="home" styleClass="mb-6" />
+      <div class="transition-all duration-300" [ngClass]="{ 'animate-pulse': isLoading }">
+        <p-breadcrumb [model]="breadcrumbItems" [home]="home" styleClass="mb-6" />
+      </div>
 
       <!-- Main Content Grid -->
       <div class="grid grid-cols-6 lg:grid-cols-7 xl:grid-cols-4 gap-6">
         <!-- Filters Sidebar -->
         <aside class="filter-container col-span-2 xl:col-span-1">
+          <!-- Subcategories List -->
+          <div *ngIf="subcategories.length > 0" class="bg-white rounded-2xl shadow border border-gray-100 p-4 mb-6">
+            <h3 class="text-base font-semibold text-gray-900 mb-4 px-2 pb-4 border-b border-gray-200">Категории</h3>
+            <div class="flex flex-col gap-2">
+              <a
+                *ngFor="let subcategory of subcategories"
+                [routerLink]="getSubcategoryLink(subcategory)"
+                class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 group">
+                <span class="text-sm text-gray-700 group-hover:text-gray-900" [ngClass]="{ 'text-primary-700 font-medium': isActiveSubcategory(subcategory) }">
+                  {{ subcategory.name }}
+                </span>
+                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full" [ngClass]="{ 'bg-primary-200 text-primary-800': isActiveSubcategory(subcategory) }">
+                  {{ subcategory.count }}
+                </span>
+              </a>
+            </div>
+          </div>
+
           <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4">
             <!-- Filter Header -->
             <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
               <h3 class="text-lg font-bold text-gray-900">Фильтры</h3>
-              <p-button label="Сбросить" [text]="true" size="small" (onClick)="clearFilters()"> </p-button>
+              <button class="text-sm font-medium text-primary-600 hover:text-primary-700" (click)="clearFilters()"> Сбросить </button>
             </div>
 
             <!-- Filters Accordion -->
-            <p-accordion [value]="['price', 'brand', 'memory']" [multiple]="true" styleClass="filter-accordion">
+            <p-accordion [value]="['price', 'brand', 'memory', 'processor']" [multiple]="true" styleClass="filter-accordion">
               <!-- Price Filter -->
-              <p-accordion-panel value="price">
+              <p-accordion-panel value="price" class="mb-4">
                 <p-accordion-header>
                   <span class="text-sm font-semibold text-gray-900">Цена</span>
                 </p-accordion-header>
@@ -80,7 +108,7 @@
                 <p-accordion-content class="mb-4 group-last:mb-0">
                   <div class="pt-4">
                     <div class="space-y-1 pr-1 max-h-64 overflow-y-auto filter-options">
-                      <div *ngFor="let option of filter.options" class="filter-option" [ngClass]="{ '!bg-primary-50': option.checked }" (click)="option.checked = !option.checked; applyFilters()">
+                      <div *ngFor="let option of filter.options" class="filter-option" [ngClass]="{ '!bg-primary-50': option.checked }" (click)="onFilterOptionChange(filter, option)">
                         <p-checkbox #filter_box [inputId]="filter.id + '_' + option.id" [(ngModel)]="option.checked" [binary]="true" />
                         <label [for]="filter.id + '_' + option.id" class="ml-3 text-sm cursor-pointer flex-1 flex items-center justify-between select-none" (click)="$event.preventDefault()">
                           <span class="text-gray-700">{{ option.name }}</span>
@@ -102,9 +130,9 @@
             <!-- Title & Count -->
             <div class="catalog-header flex flex-col gap-2">
               <div class="catalog-header__title flex items-center justify-between gap-4">
-                <h1 class="text-xl font-bold text-gray-900">{{ pageTitle }}</h1>
+                <h1 class="text-xl font-bold text-gray-900 transition-all duration-300" [ngClass]="{ 'animate-pulse': isLoading }">{{ pageTitle }}</h1>
                 <div class="flex items-center gap-2">
-                  <p-select [(ngModel)]="selectedSort" [options]="sortOptions" optionLabel="label" optionValue="value" styleClass="min-w-[160px] label-xs" />
+                  <p-select [(ngModel)]="selectedSort" [options]="sortOptions" optionLabel="label" optionValue="value" styleClass="min-w-[160px] label-xs" (ngModelChange)="onSortChange()" />
                   <button class="" (click)="filtersOpen = true" class="filter-button" [ngClass]="{ active: filtersOpen }">
                     <i class="pi pi-filter text-xs"></i>
                     <span>Фильтры</span>
@@ -114,9 +142,15 @@
 
               <div class="flex items-center flex-wrap gap-2">
                 <p class="text-sm text-gray-600 mr-2">{{ totalProducts }} товаров в наличии</p>
-                <button class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 rounded-full border border-primary-700">Сбросить</button>
+                <button *ngIf="selectedFilters.length > 0" (click)="clearFilters()" class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 rounded-full border border-primary-700"
+                  >Сбросить</button
+                >
                 <ng-container *ngFor="let filter of selectedFilters">
-                  <p-chip *ngFor="let label of filter.values" [removable]="true" class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 border border-primary-700">
+                  <p-chip
+                    *ngFor="let label of filter.values"
+                    [removable]="true"
+                    (onRemove)="removeSelectedFilter(filter, label)"
+                    class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 border border-primary-700">
                     <span class="font-normal text-gray-700">{{ filter.name }}:</span> {{ label }}
                   </p-chip>
                 </ng-container>
@@ -129,14 +163,19 @@
             <div class="flex flex-wrap gap-2">
               <button
                 *ngFor="let filter of quickFilters"
-                class="px-2 py-1 bg-gray-100 hover:bg-primary-100 border border-gray-200 hover:border-primary-300 rounded-full text-sm font-medium transition-all duration-200 hover:text-primary-700">
-                {{ filter }}
+                (click)="applyQuickFilter(filter)"
+                class="px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border"
+                [ngClass]="{
+                  'bg-primary-100 border-primary-300 text-primary-700': isQuickFilterActive(filter),
+                  'bg-gray-100 border-gray-200 text-gray-700 hover:bg-primary-50 hover:border-primary-200 hover:text-primary-600': !isQuickFilterActive(filter)
+                }">
+                {{ filter.name }}
               </button>
             </div>
           </div>
 
           <div class="prod-list-container grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
-            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+            <app-product-card *ngFor="let product of filteredProducts" [product]="product"></app-product-card>
           </div>
 
           <!-- Pagination -->
@@ -166,13 +205,13 @@
 </div>
 
 <!-- Mobile Filters Overlay -->
-<p-drawer [(visible)]="filtersOpen" position="right" styleClass="filter-drawer w-88 sm:w-96">
+<p-drawer [(visible)]="filtersOpen" [blockScroll]="true" position="right" styleClass="filter-drawer w-88 sm:w-96" (onShow)="onMobileFilterOpen()">
   <ng-template #header>
     <h3 class="text-xl font-semibold text-gray-900">Фильтры</h3>
   </ng-template>
   <ng-template #content>
     <div class="overflow-y-auto">
-      <p-accordion [value]="['price', 'brand', 'memory']" [multiple]="true" styleClass="filter-accordion">
+      <p-accordion [(value)]="mobileAccordionActiveValues" [multiple]="true" styleClass="filter-accordion">
         <!-- Price Filter -->
         <p-accordion-panel value="price" class="mb-4">
           <p-accordion-header>
@@ -181,12 +220,12 @@
           <p-accordion-content>
             <div class="space-y-4 px-2 py-4">
               <!-- Price Inputs -->
-              <div class="grid grid-cols-2 gap-3">
+              <div class="grid grid-cols-2 gap-3" *ngIf="tempFilters.length > 0">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">От</label>
                   <p-inputNumber
-                    [(ngModel)]="filters[0].currentMin"
-                    (ngModelChange)="onPriceRangeChange($event)"
+                    [(ngModel)]="tempFilters[0].currentMin"
+                    (ngModelChange)="onTempPriceRangeChange($event)"
                     [useGrouping]="true"
                     [showButtons]="false"
                     placeholder="0"
@@ -197,8 +236,8 @@
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">До</label>
                   <p-inputNumber
-                    [(ngModel)]="filters[0].currentMax"
-                    (ngModelChange)="onPriceRangeChange($event)"
+                    [(ngModel)]="tempFilters[0].currentMax"
+                    (ngModelChange)="onTempPriceRangeChange($event)"
                     [useGrouping]="true"
                     [showButtons]="false"
                     placeholder="∞"
@@ -209,21 +248,52 @@
               </div>
 
               <!-- Price Range Slider -->
-              <div class="p-2">
-                <p-slider [(ngModel)]="filters[0].range" [range]="true" [min]="filters[0].min" [max]="filters[0].max" (onSlideEnd)="onPriceRangeChange($event)" />
+              <div class="p-2" *ngIf="tempFilters.length > 0">
+                <p-slider [(ngModel)]="tempFilters[0].range" [range]="true" [min]="tempFilters[0].min" [max]="tempFilters[0].max" (onSlideEnd)="onTempPriceRangeChange($event)" />
+              </div>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+
+        <!-- Subcategories Panel -->
+        <p-accordion-panel *ngIf="subcategories.length > 0" value="categories" class="group">
+          <p-accordion-header>
+            <div class="flex items-center justify-between w-full">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-semibold text-gray-900">Категории</span>
+              </div>
+            </div>
+          </p-accordion-header>
+          <p-accordion-content class="mb-4">
+            <div class="pt-4">
+              <div class="flex flex-col gap-1 pr-1 max-h-64 overflow-y-auto filter-options">
+                <a
+                  *ngFor="let subcategory of subcategories"
+                  [routerLink]="getSubcategoryLink(subcategory)"
+                  (click)="filtersOpen = false"
+                  class="filter-option flex items-center p-2 rounded hover:bg-gray-50 transition-colors duration-200 group">
+                  <div class="text-sm cursor-pointer flex-1 flex items-center justify-between select-none">
+                    <span class="text-gray-700 group-hover:text-gray-900">
+                      {{ subcategory.name }}
+                    </span>
+                    <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                      {{ subcategory.count }}
+                    </span>
+                  </div>
+                </a>
               </div>
             </div>
           </p-accordion-content>
         </p-accordion-panel>
 
         <!-- Dynamic Filter Panels -->
-        <p-accordion-panel *ngFor="let filter of filters.slice(1)" [value]="filter.id" class="group">
+        <p-accordion-panel *ngFor="let filter of tempFilters.slice(1); let i = index" [value]="filter.id" class="group">
           <p-accordion-header>
             <div class="flex items-center justify-between w-full">
               <div class="flex items-center gap-3">
                 <span class="text-sm font-semibold text-gray-900">{{ filter.name }}</span>
-                <div *ngIf="getCheckedCount(filter) > 0" class="w-5 h-5 pr-0.5 flex items-center justify-center bg-primary-100 text-primary-800 rounded text-xs font-medium">
-                  {{ getCheckedCount(filter) }}
+                <div *ngIf="getTempFilterCheckedCount(filter) > 0" class="w-5 h-5 pr-0.5 flex items-center justify-center bg-primary-100 text-primary-800 rounded text-xs font-medium">
+                  {{ getTempFilterCheckedCount(filter) }}
                 </div>
               </div>
             </div>
@@ -231,9 +301,9 @@
           <p-accordion-content class="mb-4 group-last:mb-0">
             <div class="pt-4">
               <div class="space-y-1 pr-1 max-h-64 overflow-y-auto filter-options">
-                <div *ngFor="let option of filter.options" class="filter-option" [ngClass]="{ '!bg-primary-50': option.checked }" (click)="option.checked = !option.checked; applyFilters()">
-                  <p-checkbox #filter_box [inputId]="filter.id + '_' + option.id" [(ngModel)]="option.checked" [binary]="true" />
-                  <label [for]="filter.id + '_' + option.id" class="ml-3 text-sm cursor-pointer flex-1 flex items-center justify-between select-none" (click)="$event.preventDefault()">
+                <div *ngFor="let option of filter.options" class="filter-option" [ngClass]="{ '!bg-primary-50': option.checked }" (click)="onTempFilterOptionChange(filter, option)">
+                  <p-checkbox #filter_box [inputId]="'temp_' + filter.id + '_' + option.id" [(ngModel)]="option.checked" [binary]="true" />
+                  <label [for]="'temp_' + filter.id + '_' + option.id" class="ml-3 text-sm cursor-pointer flex-1 flex items-center justify-between select-none" (click)="$event.preventDefault()">
                     <span class="text-gray-700">{{ option.name }}</span>
                     <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full" [ngClass]="{ 'bg-primary-200 text-gray-900': option.checked }">{{ option.count }}</span>
                   </label>
@@ -245,8 +315,8 @@
       </p-accordion>
 
       <div class="flex items-center justify-end gap-3 pt-4 mt-4 border-t border-t-gray-200">
-        <button type="button" class="text-xs px-4 py-2 rounded-md border border-gray-200" (click)="filtersOpen = false"> Отмена </button>
-        <button type="button" class="text-xs px-4 py-2 rounded-md bg-primary-600 text-white" (click)="applyFilters(); filtersOpen = false"> Применить </button>
+        <button type="button" class="text-xs px-4 py-2 rounded-md border border-gray-200" (click)="onMobileFilterCancel()"> Отмена </button>
+        <button type="button" class="text-xs px-4 py-2 rounded-md bg-primary-600 text-white" (click)="onMobileFilterApply()"> Применить </button>
       </div>
     </div>
   </ng-template>

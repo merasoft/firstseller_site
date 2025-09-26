@@ -113,6 +113,12 @@ export class MegaMenuComponent implements OnInit {
     this.isDialogOpen = false;
   }
 
+  closeMenu() {
+    if (this.menu) {
+      this.menu.hide();
+    }
+  }
+
   ngOnInit() {
     this.loadCatalogData();
   }
