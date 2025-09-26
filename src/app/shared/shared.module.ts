@@ -32,12 +32,14 @@ import { SidebarModule } from 'primeng/sidebar';
 import { SliderModule } from 'primeng/slider';
 import { TabsModule } from 'primeng/tabs';
 import { TagModule } from 'primeng/tag';
+import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
+import { CartDrawerComponent } from './components/cart-drawer/cart-drawer.component';
 
 const PRIMENG_MODULES = [
   AccordionModule,
@@ -65,6 +67,7 @@ const PRIMENG_MODULES = [
   SliderModule,
   TabsModule,
   TagModule,
+  ToastModule,
   TooltipModule,
   PopoverModule,
   ChipModule,
@@ -72,8 +75,8 @@ const PRIMENG_MODULES = [
 ];
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent],
+  declarations: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent, CartDrawerComponent],
   imports: [CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
-  exports: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent, CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
+  exports: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent, CartDrawerComponent, CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
 })
 export class SharedModule {}

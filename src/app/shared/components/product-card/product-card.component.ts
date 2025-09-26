@@ -36,8 +36,18 @@ export class ProductCardComponent {
     this.productActions.addToFavorites(product);
   }
 
+  // Check if product is in wishlist
+  isInWishlist(): boolean {
+    return this.productActions.isInWishlist(this.product.id);
+  }
+
   onAddToCompare(product: Product): void {
     this.productActions.addToCompare(product);
+  }
+
+  // Check if product is in compare list
+  isInCompare(): boolean {
+    return this.productActions.isInCompare(this.product.id);
   }
 
   // Utility functions

@@ -16,4 +16,6 @@ export interface Product {
   memory: string;
   processor: string;
   inStock: boolean;
+  categoryId?: number;
+  category?: string;
 }

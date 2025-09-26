@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { providePrimeNG } from 'primeng/config';
+import { MessageService } from 'primeng/api';
 import Lara from '@primeng/themes/lara';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
   ],
   providers: [
+    MessageService,
     providePrimeNG({
       theme: {
         preset: Lara,

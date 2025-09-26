@@ -1,0 +1,188 @@
+<!-- src/app/features/catalog/pages/cart/cart.component.html -->
+<div class="min-h-screen flex flex-col">
+  <app-header></app-header>
+
+  <main class="flex-1 bg-gray-50">
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Корзина</h1>
+        <p class="mt-2 text-gray-600" *ngIf="cart.totalItems > 0"> {{ cart.totalItems }} товар{{ cart.totalItems === 1 ? '' : cart.totalItems < 5 ? 'а' : 'ов' }} в корзине </p>
+      </div>
+
+      <!-- Cart Content -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Cart Items -->
+        <div class="lg:col-span-2">
+          <!-- Empty Cart -->
+          <div *ngIf="cart.items.length === 0" class="bg-white rounded-3xl shadow-sm p-8 text-center">
+            <div class="text-gray-400 mb-6">
+              <svg class="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0H17M9 19.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM20.5 19.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
+              </svg>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">Ваша корзина пуста</h3>
+              <p class="text-gray-600 mb-6">Добавьте товары для оформления заказа</p>
+              <button (click)="continueShopping()" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors">
+                Перейти к каталогу
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cart Items List -->
+          <div *ngIf="cart.items.length > 0" class="bg-white rounded-3xl shadow-sm overflow-hidden">
+            <!-- Header -->
+            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+              <h2 class="text-lg font-semibold text-gray-900">Товары в корзине</h2>
+              <button (click)="clearCart()" class="text-sm text-red-600 hover:text-red-700 font-medium"> Очистить корзину </button>
+            </div>
+
+            <!-- Items -->
+            <div class="divide-y divide-gray-200">
+              <div *ngFor="let item of cart.items; trackBy: trackByItemId" class="p-6">
+                <div class="flex items-start gap-4">
+                  <!-- Product Image -->
+                  <div class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden bg-gray-100">
+                    <img [src]="item.image" [alt]="item.name" class="w-full h-full object-cover" />
+                  </div>
+
+                  <!-- Product Details -->
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between">
+                      <div class="flex-1">
+                        <h3 class="text-sm font-medium text-gray-900 line-clamp-2">{{ item.name }}</h3>
+                        <p *ngIf="getVariantText(item)" class="text-sm text-gray-600 mt-1">{{ getVariantText(item) }}</p>
+
+                        <!-- Price -->
+                        <div class="flex items-center gap-2 mt-2">
+                          <span class="text-lg font-bold text-gray-900">{{ formatPrice(item.price) }} сум</span>
+                          <span *ngIf="item.oldPrice" class="text-sm text-gray-500 line-through">{{ formatPrice(item.oldPrice) }} сум</span>
+                        </div>
+
+                        <!-- Stock Status -->
+                        <div class="mt-2">
+                          <span *ngIf="item.inStock" class="inline-flex items-center text-xs font-medium text-green-700 bg-green-50 px-2 py-1 rounded-full">
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path
+                                fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd"></path>
+                            </svg>
+                            В наличии
+                          </span>
+                          <span *ngIf="!item.inStock" class="inline-flex items-center text-xs font-medium text-red-700 bg-red-50 px-2 py-1 rounded-full">
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path
+                                fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                clip-rule="evenodd"></path>
+                            </svg>
+                            Нет в наличии
+                          </span>
+                        </div>
+                      </div>
+
+                      <!-- Remove Button -->
+                      <button (click)="removeItem(item.id)" class="text-gray-400 hover:text-red-600 transition-colors ml-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                      </button>
+                    </div>
+
+                    <!-- Quantity Controls -->
+                    <div class="flex items-center justify-between mt-4">
+                      <div class="flex items-center border border-gray-200 rounded-lg">
+                        <button (click)="updateQuantity(item.id, item.quantity - 1)" class="p-2 hover:bg-gray-50 transition-colors disabled:opacity-50" [disabled]="item.quantity <= 1">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                          </svg>
+                        </button>
+                        <span class="px-4 py-2 text-sm font-medium min-w-[3rem] text-center">{{ item.quantity }}</span>
+                        <button (click)="updateQuantity(item.id, item.quantity + 1)" class="p-2 hover:bg-gray-50 transition-colors">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                          </svg>
+                        </button>
+                      </div>
+
+                      <!-- Item Total -->
+                      <div class="text-right">
+                        <div class="text-lg font-bold text-gray-900">{{ formatPrice(item.price * item.quantity) }} сум</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div *ngIf="cart.items.length > 0" class="lg:col-span-1">
+          <div class="bg-white rounded-3xl shadow-sm p-6 sticky top-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Итого к оплате</h3>
+
+            <!-- Summary Details -->
+            <div class="space-y-3 mb-6">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Товары ({{ cart.totalItems }})</span>
+                <span class="font-medium">{{ formatPrice(cart.subtotal) }} сум</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Доставка</span>
+                <span class="font-medium text-green-600" *ngIf="cart.shipping === 0">Бесплатно</span>
+                <span class="font-medium" *ngIf="cart.shipping > 0">{{ formatPrice(cart.shipping) }} сум</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Налог</span>
+                <span class="font-medium">{{ formatPrice(cart.tax) }} сум</span>
+              </div>
+              <div class="border-t border-gray-200 pt-3">
+                <div class="flex justify-between">
+                  <span class="text-base font-semibold text-gray-900">Итого</span>
+                  <span class="text-xl font-bold text-gray-900">{{ formatPrice(cart.total) }} сум</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Free Shipping Notice -->
+            <div *ngIf="cart.subtotal < 500000 && cart.subtotal > 0" class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+              <div class="flex items-start">
+                <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                  <p class="text-sm text-blue-800">
+                    Добавьте товаров на <strong>{{ formatPrice(500000 - cart.subtotal) }} сум</strong> и получите бесплатную доставку!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-3">
+              <button (click)="proceedToCheckout()" class="w-full bg-primary-600 text-white py-3 px-4 rounded-xl font-semibold hover:bg-primary-700 transition-colors"> Оформить заказ </button>
+              <button (click)="continueShopping()" class="w-full border border-gray-200 text-gray-900 py-3 px-4 rounded-xl font-medium hover:bg-gray-50 transition-colors"> Продолжить покупки </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

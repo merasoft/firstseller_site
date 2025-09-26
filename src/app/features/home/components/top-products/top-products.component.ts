@@ -166,6 +166,8 @@ export class TopProductsComponent implements OnInit {
       memory: '',
       processor: '',
       inStock: true,
+      categoryId: 1, // Default to smartphones category
+      category: 'Телефоны и гаджеты',
     };
   }
 }
