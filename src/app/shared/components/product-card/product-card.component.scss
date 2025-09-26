@@ -4,35 +4,66 @@
   border: none;
 }
 
-// Mobile swipe enhancements
-.image-container {
-  touch-action: pan-y; // Allow vertical scrolling but handle horizontal gestures
-  user-select: none; // Prevent text selection during swipe
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+// PrimeNG Carousel customization to match original appearance
+::ng-deep .product-image-carousel {
+  @apply h-full;
 
-  &.swiping {
-    transition: none; // Disable transitions during active swipe
-
-    img {
-      transition: none; // Also disable image transitions during swipe
+  .p-carousel {
+    &,
+    &-content-container,
+    &-content,
+    &-viewport,
+    &-item-list {
+      @apply h-full;
     }
-  }
 
-  // Smooth image transitions when not swiping
-  img {
-    transition: transform 0.3s ease-in-out;
-  }
-}
+    &-content-container,
+    &-content {
+      @apply relative;
+    }
 
-// Mobile-specific image indicators
-@media (max-width: 768px) {
-  .image-indicators {
-    opacity: 1; // Always show on mobile
-    backdrop-filter: blur(4px);
-    background: rgba(0, 0, 0, 0.1);
-    padding: 4px 8px;
-    border-radius: 12px;
+    // Custom navigation buttons
+    &-prev-button,
+    &-next-button {
+      @apply w-10 h-10 absolute bg-white/10 hover:bg-white/20 rounded-full text-white transition-all duration-300;
+      @apply flex items-center justify-center;
+      backdrop-filter: blur(2px);
+      border: none;
+      z-index: 1;
+    }
+
+    .carousel-prev-icon,
+    .carousel-next-icon {
+      @apply text-white text-base;
+    }
+
+    &-prev-button {
+      @apply left-1;
+    }
+
+    &-next-button {
+      @apply right-1;
+    }
+
+    // Custom indicators (dots)
+    &-indicator-list {
+      @apply flex justify-center space-x-2 absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20;
+
+      .p-carousel-indicator {
+        @apply p-0 bg-transparent border-0;
+
+        button {
+          @apply w-3 h-3 bg-white/50 rounded-full transition-all duration-300 border-0;
+
+          &:hover {
+            @apply bg-white/70;
+          }
+        }
+
+        &.p-carousel-indicator-active button {
+          @apply bg-white;
+        }
+      }
+    }
   }
 }

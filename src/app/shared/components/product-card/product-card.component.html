@@ -10,49 +10,23 @@
     </div>
 
     <!-- Product Image -->
-    <div
-      #imageContainer
-      class="image-container relative aspect-square overflow-hidden group"
-      (touchstart)="onTouchStart($event)"
-      (touchend)="onTouchEnd($event)"
-      (click)="onImageContainerClick($event)"
-      [class.swiping]="isSwipping">
-      <img [src]="product.images[product.currentImageIndex]" [alt]="product.name" class="h-full object-cover transition-transform duration-500" loading="lazy" />
-
-      <!-- Image Navigation (Show on hover) -->
-      <div *ngIf="product.images.length > 1" class="absolute inset-0 flex items-center justify-between p-1.5 sm:p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <button
-          (click)="previousImage(product); $event.preventDefault(); $event.stopPropagation()"
-          class="w-6 h-6 sm:w-8 sm:h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg">
-          <svg class="w-3 h-3 sm:w-4 sm:h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-        </button>
-
-        <button
-          (click)="nextImage(product); $event.preventDefault(); $event.stopPropagation()"
-          class="w-6 h-6 sm:w-8 sm:h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg">
-          <svg class="w-3 h-3 sm:w-4 sm:h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Image Indicators -->
-      <div
-        *ngIf="product.images.length > 1"
-        class="image-indicators absolute bottom-3 left-1/2 transform -translate-x-1/2 flex items-center gap-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300"
-        (click)="$event.stopPropagation()"
-        (touchstart)="$event.stopPropagation()">
-        <button
-          *ngFor="let image of product.images; let i = index"
-          (click)="setImage(product, i); $event.preventDefault(); $event.stopPropagation()"
-          class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-200"
-          [ngClass]="{
-            'bg-gray-200 hover:bg-gray-300': i !== product.currentImageIndex,
-            'bg-primary-500 w-2 h-2 sm:w-3 sm:h-3': i === product.currentImageIndex,
-          }"></button>
-      </div>
+    <div class="image-container relative aspect-square overflow-hidden group" (click)="$event.stopPropagation()">
+      <p-carousel
+        #imageCarousel
+        [value]="product.images"
+        [numVisible]="1"
+        [numScroll]="1"
+        [circular]="true"
+        [autoplayInterval]="0"
+        [showIndicators]="true"
+        [showNavigators]="true"
+        [page]="product.currentImageIndex"
+        (onPage)="onCarouselPageChange($event)"
+        class="product-image-carousel">
+        <ng-template pTemplate="item" let-image>
+          <img [src]="image" [alt]="product.name" class="w-full h-full object-cover" loading="lazy" />
+        </ng-template>
+      </p-carousel>
 
       <!-- Favorite & Compare -->
       <div class="hidden md:flex flex-col gap-2 absolute top-3 right-3 translate-x-14 group-hover:translate-x-0 transition-all duration-300">
@@ -136,13 +110,13 @@
     <div class="flex items-center gap-2">
       <button
         (click)="onBuyOneClick(product)"
-        class="flex-1 h-7 sm:h-9 bg-primary-600 hover:bg-primary-700 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02]">
+        class="flex-1 h-8 sm:h-9 bg-primary-600 hover:bg-primary-700 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02]">
         Купить
       </button>
 
       <button
         (click)="onAddToCart(product)"
-        class="w-10 h-7 sm:h-9 bg-green-500 hover:bg-green-600 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02] flex items-center justify-center gap-1">
+        class="w-10 h-8 sm:h-9 bg-green-500 hover:bg-green-600 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02] flex items-center justify-center gap-1">
         <i class="pi pi-shopping-cart"></i>
       </button>
     </div>

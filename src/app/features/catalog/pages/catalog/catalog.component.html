@@ -114,8 +114,9 @@
 
               <div class="flex items-center flex-wrap gap-2">
                 <p class="text-sm text-gray-600 mr-2">{{ totalProducts }} товаров в наличии</p>
+                <button class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 rounded-full border border-primary-700">Сбросить</button>
                 <ng-container *ngFor="let filter of selectedFilters">
-                  <p-chip *ngFor="let label of filter.values" [removable]="true" class="px-2 py-[3px] text-xs text-gray-900 font-semibold bg-primary-50 border border-primary-700">
+                  <p-chip *ngFor="let label of filter.values" [removable]="true" class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 border border-primary-700">
                     <span class="font-normal text-gray-700">{{ filter.name }}:</span> {{ label }}
                   </p-chip>
                 </ng-container>
@@ -242,6 +243,11 @@
           </p-accordion-content>
         </p-accordion-panel>
       </p-accordion>
+
+      <div class="flex items-center justify-end gap-3 pt-4 mt-4 border-t border-t-gray-200">
+        <button type="button" class="text-xs px-4 py-2 rounded-md border border-gray-200" (click)="filtersOpen = false"> Отмена </button>
+        <button type="button" class="text-xs px-4 py-2 rounded-md bg-primary-600 text-white" (click)="applyFilters(); filtersOpen = false"> Применить </button>
+      </div>
     </div>
   </ng-template>
 </p-drawer>
