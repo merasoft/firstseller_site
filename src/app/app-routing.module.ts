@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import('./features/catalog/catalog.module').then((m) => m.CatalogModule),
   },
   {
+    path: 'wishlist',
+    loadChildren: () => import('./features/wishlist/wishlist.module').then((m) => m.WishlistModule),
+  },
+  {
     path: '**',
     redirectTo: '/home',
   },
