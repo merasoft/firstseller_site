@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MenuItem } from 'primeng/api';
 import { Product } from '../../../../shared/models/product.model';
+import { combineLatest } from 'rxjs';
 
 interface Filter {
   id: string;
@@ -57,6 +58,7 @@ export class CatalogComponent implements OnInit {
   categorySlug: string | null = null;
   subcategorySlug: string | null = null;
   leafSlug: string | null = null;
+  filterType: string | null = null; // hit, top, discount
 
   // Category data
   categories: Category[] = [];
@@ -384,6 +386,24 @@ export class CatalogComponent implements OnInit {
     // Start with all products
     let filtered = [...this.products];
 
+    // Apply special filter types first
+    if (this.filterType) {
+      switch (this.filterType) {
+        case 'hit':
+          // Filter for hit products (products with high rating or have badges)
+          filtered = filtered.filter((product) => product.rating >= 4.5 || product.badge || product.badgeType);
+          break;
+        case 'top':
+          // Filter for top products (only products with 'top' badge)
+          filtered = filtered.filter((product) => product.badgeType === 'top');
+          break;
+        case 'discount':
+          // Filter for discounted products (have oldPrice or discount badge)
+          filtered = filtered.filter((product) => product.oldPrice || product.badgeType === 'discount' || product.badgeType === 'super-price');
+          break;
+      }
+    }
+
     // Apply price filter
     const priceFilter = this.filters.find((f) => f.id === 'price');
     if (priceFilter && priceFilter.currentMin !== undefined && priceFilter.currentMax !== undefined) {
@@ -699,7 +719,7 @@ export class CatalogComponent implements OnInit {
   }
   ngOnInit(): void {
     this.loadCategories();
-    this.subscribeToRouteChanges();
+    this.subscribeToRouteAndQueryParams();
     this.applyFilters(); // Initialize filtered products
     this.mobileAccordionActiveValues = this.getDefaultAccordionValues();
   }
@@ -717,18 +737,25 @@ export class CatalogComponent implements OnInit {
     });
   }
 
-  private subscribeToRouteChanges(): void {
-    this.route.params.subscribe((params) => {
+  private subscribeToRouteAndQueryParams(): void {
+    combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, queryParams]) => {
       // Show loading indicator for navigation changes
       this.isLoading = true;
 
+      // Update route parameters
       this.categorySlug = params['category'] || null;
       this.subcategorySlug = params['subcategory'] || null;
       this.leafSlug = params['leaf'] || null;
 
+      // Update filter type from query params
+      this.filterType = queryParams['filter'] || null;
+
       // Brief delay to show loading state, then update content
       setTimeout(() => {
         this.updatePageContent();
+        this.updatePageTitle();
+        this.updateBreadcrumbs();
+        this.applyFilters();
         this.isLoading = false;
       }, 300);
     });
@@ -739,9 +766,8 @@ export class CatalogComponent implements OnInit {
 
     if (this.categorySlug) {
       this.findCurrentCategory();
-      this.updatePageTitle();
-      this.updateBreadcrumbs();
-    } else {
+    } else if (!this.filterType) {
+      // Only set default content if we don't have a special filter type
       this.setDefaultContent();
     }
   }
@@ -762,6 +788,26 @@ export class CatalogComponent implements OnInit {
   }
 
   private updatePageTitle(): void {
+    // Check for special filter types first
+    if (this.filterType) {
+      switch (this.filterType) {
+        case 'hit':
+          this.pageTitle = 'Хит продаж';
+          break;
+        case 'top':
+          this.pageTitle = 'Топ продукты';
+          break;
+        case 'discount':
+          this.pageTitle = 'Чегирмалар';
+          break;
+        default:
+          this.setDefaultContent();
+          return;
+      }
+      // Count will be updated after filtering
+      return;
+    }
+
     if (this.currentLeaf) {
       this.pageTitle = this.currentLeaf.name;
       this.totalProducts = this.currentLeaf.count || 0;
@@ -779,6 +825,26 @@ export class CatalogComponent implements OnInit {
   private updateBreadcrumbs(): void {
     this.breadcrumbs = [{ name: 'Главная', url: '/' }];
     this.breadcrumbItems = [];
+
+    // Handle special filter types
+    if (this.filterType) {
+      let filterName = '';
+      switch (this.filterType) {
+        case 'hit':
+          filterName = 'Хит продаж';
+          break;
+        case 'top':
+          filterName = 'Топ продукты';
+          break;
+        case 'discount':
+          filterName = 'Чегирмалар';
+          break;
+      }
+      if (filterName) {
+        this.breadcrumbItems.push({ label: filterName });
+      }
+      return;
+    }
 
     if (this.currentCategory) {
       const categoryUrl = `/catalog/${this.currentCategory.slug}`;

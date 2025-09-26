@@ -1,9 +1,10 @@
 // src/app/shared/components/header/header.component.ts
 import { Component, HostListener, ViewChild, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { CompareService } from '../../services/compare.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit {
   wishlistItemsCount = 0;
   compareItemsCount = 0;
 
-  constructor(private router: Router, private cartService: CartService, private wishlistService: WishlistService, private compareService: CompareService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private cartService: CartService, private wishlistService: WishlistService, private compareService: CompareService) {}
 
   ngOnInit(): void {
     // Subscribe to cart changes to update count
@@ -52,6 +53,40 @@ export class HeaderComponent implements OnInit {
         compareAction.count = this.compareItemsCount;
       }
     });
+
+    // Subscribe to router events to update active states
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.updateActiveStates();
+    });
+
+    // Initial update
+    this.updateActiveStates();
+  }
+
+  private updateActiveStates(): void {
+    const currentUrl = this.router.url;
+    const urlTree = this.router.parseUrl(currentUrl);
+    const queryParams = urlTree.queryParams;
+
+    // Reset all active states
+    this.navItems.forEach((item) => (item.isActive = false));
+
+    // Set active state based on current route and query params
+    if (currentUrl.includes('/catalog')) {
+      const filterParam = queryParams['filter'];
+
+      if (filterParam) {
+        const activeItem = this.navItems.find((item) => {
+          if (item.queryParams) {
+            return item.queryParams['filter'] === filterParam;
+          }
+          return false;
+        });
+        if (activeItem) {
+          activeItem.isActive = true;
+        }
+      }
+    }
   }
 
   // Navigation items
@@ -65,17 +100,20 @@ export class HeaderComponent implements OnInit {
     },
     {
       title: 'Хит продаж',
-      link: '/catalog/computers',
+      link: '/catalog',
+      queryParams: { filter: 'hit' },
       isActive: false,
     },
     {
       title: 'Топ продукты',
       link: '/catalog',
+      queryParams: { filter: 'top' },
       isActive: false,
     },
     {
       title: 'Чегирмалар',
       link: '/catalog',
+      queryParams: { filter: 'discount' },
       isActive: false,
       isSpecial: true,
     },
@@ -242,7 +280,11 @@ export class HeaderComponent implements OnInit {
     if (item.action === 'catalog') {
       this.onCatalogToggle(event);
     } else if (item.link) {
-      this.router.navigate([item.link]);
+      if (item.queryParams) {
+        this.router.navigate([item.link], { queryParams: item.queryParams });
+      } else {
+        this.router.navigate([item.link]);
+      }
     }
   }
 

@@ -58,10 +58,10 @@
       </div>
 
       <!-- Product Main Section -->
-      <div class="md:bg-white rounded-3xl md:shadow-sm md:p-6 mb-8">
+      <div class="md:bg-white max-w-screen-lg rounded-3xl md:shadow-sm md:p-6 mb-8">
         <div class="product-main-section flex flex-col md:flex-row items-start gap-8">
           <!-- Product Images -->
-          <div class="galary flex-[2] flex gap-4">
+          <div class="galary flex-1 flex gap-4">
             <!-- Thumbnail Images Gallery (Left Side) -->
             <div class="thumbnail-images flex-shrink-0 flex flex-col gap-2 overflow-x-hidden overflow-y-auto pr-1 scrollable">
               <button
@@ -98,7 +98,7 @@
             </div>
           </div>
 
-          <div class="product-info flex-[3]">
+          <div class="product-info flex-1">
             <!-- Price -->
             <div class="flex flex-col border-b border-gray-200 pb-4 gap-3">
               <div class="flex flex-col gap-1">
@@ -220,20 +220,20 @@
           <p-tabpanels>
             <!-- Description Tab -->
             <p-tabpanel value="description">
-              <div class="flex flex-col">
-                <h3 class="text-lg sm:text-xl font-bold mb-4">Описание</h3>
-                <h4 class="text-base sm:text-lg font-semibold mb-2">{{ product.name }}</h4>
-                <p class="text-sm sm:text-base text-gray-700 leading-relaxed">{{ product.description }}</p>
+              <div class="flex flex-col p-4">
+                <h3 class="text-lg font-bold mb-4">Описание</h3>
+                <h4 class="text-base font-semibold mb-2">{{ product.name }}</h4>
+                <p class="text-[13px] sm:text-[15px] text-gray-700 leading-relaxed">{{ product.description }}</p>
               </div>
             </p-tabpanel>
 
             <!-- Specifications Tab -->
             <p-tabpanel value="specifications">
-              <div class="flex flex-col gap-6">
+              <div class="flex flex-col gap-6 p-4">
                 <div *ngFor="let section of product.specifications">
-                  <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-4">{{ section.category }}</h3>
-                  <div class="grid gap-2">
-                    <div *ngFor="let spec of section.items" class="flex justify-between pt-2 pb-1 text-sm sm:text-base border-b border-gray-100 last:border-b-0">
+                  <h3 class="text-base font-bold text-gray-900 mb-4">{{ section.category }}</h3>
+                  <div class="grid gap-2 max-w-[600px]">
+                    <div *ngFor="let spec of section.items" class="flex justify-between pt-2 pb-1 text-sm sm:text-[15px] border-b border-gray-100 last:border-b-0">
                       <span class="text-gray-600">{{ spec.name }}</span>
                       <span class="font-medium text-gray-900">{{ spec.value }}</span>
                     </div>
@@ -244,7 +244,7 @@
 
             <!-- Reviews Tab -->
             <p-tabpanel value="reviews">
-              <div class="text-center py-12">
+              <div class="text-center px-4 py-10">
                 <div class="text-gray-500 mb-4">
                   <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -253,7 +253,7 @@
                       stroke-width="2"
                       d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                   </svg>
-                  <h3 class="text-base sm:text-lg font-medium text-gray-900 mb-2">Пока нет отзывов</h3>
+                  <h3 class="text-base font-medium text-gray-900 mb-2">Пока нет отзывов</h3>
                   <p class="text-sm sm:text-base text-gray-600">Станьте первым, кто оставит отзыв об этом товаре</p>
                 </div>
                 <button class="bg-primary-600 text-white text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors"> Оставить отзыв </button>
@@ -262,8 +262,8 @@
 
             <!-- Payment Tab -->
             <p-tabpanel value="payment">
-              <div class="prose max-w-none">
-                <h3 class="text-lg sm:text-xl font-bold mb-4">Способы оплаты</h3>
+              <div class="p-4">
+                <h3 class="text-lg font-bold mb-4">Способы оплаты</h3>
                 <div class="grid md:grid-cols-2 gap-6">
                   <div class="border border-gray-200 rounded-xl p-3">
                     <h4 class="font-semibold mb-2">Онлайн оплата</h4>
@@ -279,8 +279,8 @@
 
             <!-- Delivery Tab -->
             <p-tabpanel value="delivery">
-              <div class="prose max-w-none">
-                <h3 class="text-lg sm:text-xl font-bold mb-4">Доставка</h3>
+              <div class="p-4">
+                <h3 class="text-lg font-bold mb-4">Доставка</h3>
                 <div class="grid md:grid-cols-2 gap-6">
                   <div class="border border-gray-200 rounded-xl p-3">
                     <h4 class="font-semibold mb-2">Курьерская доставка</h4>
@@ -296,8 +296,8 @@
 
             <!-- Discounts Tab -->
             <p-tabpanel value="discounts">
-              <div class="prose max-w-none">
-                <h3 class="text-lg sm:text-xl font-bold mb-4">Скидки и бонусы</h3>
+              <div class="p-4">
+                <h3 class="text-lg font-bold mb-4">Скидки и бонусы</h3>
                 <div class="space-y-4">
                   <div class="border border-gray-200 rounded-xl p-3">
                     <h4 class="font-semibold mb-2">Бонусная программа</h4>
