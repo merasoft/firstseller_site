@@ -1,5 +1,5 @@
 <!-- src/app/shared/components/cart-drawer/cart-drawer.component.html -->
-<p-drawer [(visible)]="isOpen" (onHide)="closeDrawer()" position="right" [blockScroll]="true" styleClass="cart-drawer" [style]="{ width: '420px' }">
+<p-drawer [(visible)]="isOpen" (onHide)="closeDrawer()" position="right" styleClass="cart-drawer" [style]="{ width: '420px' }">
   <!-- Header -->
   <ng-template #header>
     <div class="flex items-center justify-between w-full">
@@ -30,7 +30,7 @@
       </div>
 
       <!-- Cart Items -->
-      <div *ngIf="cart.items.length > 0" class="flex-1 overflow-y-auto">
+      <div *ngIf="cart.items.length > 0" class="flex-1 overflow-y-auto scrollable">
         <div class="space-y-4">
           <div *ngFor="let item of cart.items; trackBy: trackByItemId" class="flex gap-4 p-4 border border-gray-100 rounded-xl hover:border-gray-200 transition-colors">
             <!-- Product Image -->

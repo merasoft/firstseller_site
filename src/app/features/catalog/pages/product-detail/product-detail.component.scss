@@ -89,20 +89,6 @@
   }
 }
 
-.scrollable {
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    @apply bg-gray-100 rounded-full;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded-full hover:bg-gray-400;
-  }
-}
-
 @media (max-width: 1180px) {
   .product-main-section {
     .galary,

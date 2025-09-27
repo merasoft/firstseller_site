@@ -1,23 +1,23 @@
 [
   {
     "id": 1,
-    "name": "Ноутбуклар",
+    "name": "Ноутбуки",
     "slug": "laptops",
     "parentSlug": "computers",
-    "description": "Gaming, ишчи ва ультрабуклар - барча турдаги ноутбуклар",
+    "description": "Игровые, рабочие и ультрабуки - все виды ноутбуков",
     "image": "/assets/images/categories/computers.webp",
     "productCount": 125,
     "isPopular": true,
     "children": [
       {
         "id": 11,
-        "name": "Gaming ноутбуклар",
+        "name": "Игровые ноутбуки",
         "slug": "gaming-laptops",
         "productCount": 35
       },
       {
         "id": 12,
-        "name": "Ишчи ноутбуклар",
+        "name": "Рабочие ноутбуки",
         "slug": "business-laptops",
         "productCount": 30
       },
@@ -29,7 +29,7 @@
       },
       {
         "id": 14,
-        "name": "Ультрабуклар",
+        "name": "Ультрабуки",
         "slug": "ultrabooks",
         "productCount": 20
       }
@@ -37,10 +37,10 @@
   },
   {
     "id": 2,
-    "name": "Велосипедлар",
+    "name": "Велосипеды",
     "slug": "bicycles",
     "parentSlug": "sports",
-    "description": "Горные ва шаҳар велосипедлари - спорт ва дам олиш учун",
+    "description": "Горные и городские велосипеды - для спорта и отдыха",
     "image": "/assets/images/categories/bicycles.webp",
     "productCount": 35,
     "isPopular": true,
@@ -61,10 +61,10 @@
   },
   {
     "id": 3,
-    "name": "Телефонлар",
+    "name": "Телефоны",
     "slug": "phones",
     "parentSlug": "phone-and-gadgets",
-    "description": "Eng oxirgi model smartfonlar - Samsung, iPhone, Xiaomi",
+    "description": "Новейшие модели смартфонов - Samsung, iPhone, Xiaomi",
     "image": "/assets/images/categories/smartphones.webp",
     "productCount": 180,
     "isPopular": true,
@@ -97,10 +97,10 @@
   },
   {
     "id": 4,
-    "name": "Планшетлар",
+    "name": "Планшеты",
     "slug": "tablets",
     "parentSlug": "phone-and-gadgets",
-    "description": "iPad, Samsung Galaxy Tab ва бошқа планшетлар",
+    "description": "iPad, Samsung Galaxy Tab и другие планшеты",
     "image": "/assets/images/categories/tablets.webp",
     "productCount": 45,
     "isPopular": true,
@@ -127,10 +127,10 @@
   },
   {
     "id": 5,
-    "name": "Ақлли соатлар",
+    "name": "Умные часы",
     "slug": "smartwatches",
     "parentSlug": "phone-and-gadgets",
-    "description": "Apple Watch, Samsung Galaxy Watch ва фитнес браслетлар",
+    "description": "Apple Watch, Samsung Galaxy Watch и фитнес-браслеты",
     "image": "/assets/images/categories/smartwatches.webp",
     "productCount": 65,
     "isPopular": true,
@@ -163,10 +163,10 @@
   },
   {
     "id": 6,
-    "name": "Колонкалар",
+    "name": "Колонки",
     "slug": "speakers",
     "parentSlug": "audio",
-    "description": "Bluetooth ва портатив колонкалар - юқори сифатли аудио",
+    "description": "Bluetooth и портативные колонки - высококачественное аудио",
     "image": "/assets/images/categories/speakers.webp",
     "productCount": 38,
     "isPopular": true,
@@ -187,10 +187,10 @@
   },
   {
     "id": 7,
-    "name": "Маиший техника",
+    "name": "Бытовая техника",
     "slug": "appliances",
     "parentSlug": "",
-    "description": "Уй учун барча керакли техникалар - кухня ва юв машиналари",
+    "description": "Вся необходимая техника для дома - кухонная и стиральные машины",
     "image": "/assets/images/categories/appliances.webp",
     "productCount": 210,
     "isPopular": true,
@@ -226,7 +226,7 @@
     "name": "Парфюмерия",
     "slug": "perfume",
     "parentSlug": "beauty",
-    "description": "Эркаклар ва аёллар учун парфюмлар ва атирлар",
+    "description": "Парфюмерия и ароматы для мужчин и женщин",
     "image": "/assets/images/categories/perfume.webp",
     "productCount": 38,
     "isPopular": true,

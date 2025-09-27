@@ -11,23 +11,23 @@ export class FooterComponent {
   // Footer links sections
   footerSections = [
     {
-      title: 'Тез хаволалар',
+      title: 'Быстрые ссылки',
       links: [
-        { name: 'Биз ҳақимизда', url: '/about' },
-        { name: 'Етказиб бериш', url: '/delivery' },
-        { name: 'Тўлов усуллари', url: '/payment' },
-        { name: 'Кафолат', url: '/warranty' },
-        { name: 'Алоқа', url: '/contact' },
+        { name: 'О нас', url: '/about' },
+        { name: 'Доставка', url: '/delivery' },
+        { name: 'Способы оплаты', url: '/payment' },
+        { name: 'Гарантия', url: '/warranty' },
+        { name: 'Контакты', url: '/contact' },
       ],
     },
     {
-      title: 'Категориялар',
+      title: 'Категории',
       links: [
         { name: 'Телефоны и гаджеты', url: '/catalog/smartphones' },
-        { name: 'Ноутбуклар', url: '/catalog/laptops' },
-        { name: 'Телевизорлар', url: '/catalog/tv' },
-        { name: 'Маиший техника', url: '/catalog/appliances' },
-        { name: 'Аксессуарлар', url: '/catalog/accessories' },
+        { name: 'Ноутбуки', url: '/catalog/laptops' },
+        { name: 'Телевизоры', url: '/catalog/tv' },
+        { name: 'Бытовая техника', url: '/catalog/appliances' },
+        { name: 'Аксессуары', url: '/catalog/accessories' },
       ],
     },
   ];

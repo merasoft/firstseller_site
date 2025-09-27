@@ -59,7 +59,7 @@ export class WishlistService {
       // Show success toast notification
       this.messageService.add({
         severity: 'success',
-        summary: 'Добавлено в список желаний',
+        summary: 'Добавлено в избранное',
         detail: `${product.name}`,
         life: 3000,
       });
@@ -84,7 +84,7 @@ export class WishlistService {
     if (removedItem) {
       this.messageService.add({
         severity: 'info',
-        summary: 'Удалено из списка желаний',
+        summary: 'Удалено из избранного',
         detail: `${removedItem.product.name}`,
         life: 3000,
       });

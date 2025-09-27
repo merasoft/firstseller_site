@@ -13,7 +13,7 @@
 
         <div class="hidden md:flex items-center gap-2">
           <i class="pi pi-truck"></i>
-          <span>Тез етказиб бериш барча вилоятларга</span>
+          <span>Быстрая доставка во все регионы</span>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
           <!-- Search Bar -->
           <div class="searchbar flex-1 max-w-2xl mx-8">
             <div class="relative">
-              <input pInputText type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" placeholder="Маҳсулотларни излаш..." class="form-search pl-4 py-3 pr-[120px]" />
+              <input pInputText type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" placeholder="Поиск товаров..." class="form-search pl-4 py-3 pr-[120px]" />
               <p-button
                 (onClick)="onSearch()"
                 icon="pi pi-search text-xs"
@@ -78,13 +78,7 @@
   </div>
 
   <div class="searchbar-mobile hidden px-4 sm:px-6 lg:px-8 mt-4">
-    <input
-      pInputText
-      type="text"
-      [(ngModel)]="searchQuery"
-      (keyup.enter)="onSearch()"
-      placeholder="Маҳсулотларни излаш..."
-      class="form-search text-sm sm:text-base bg-white px-2 sm:px-4 py-2 !rounded-lg" />
+    <input pInputText type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" placeholder="Поиск товаров..." class="form-search text-sm sm:text-base bg-white px-2 sm:px-4 py-2 !rounded-lg" />
   </div>
 
   <!-- Navigation Menu -->

@@ -798,7 +798,7 @@ export class CatalogComponent implements OnInit {
           this.pageTitle = 'Топ продукты';
           break;
         case 'discount':
-          this.pageTitle = 'Чегирмалар';
+          this.pageTitle = 'Скидки';
           break;
         default:
           this.setDefaultContent();
@@ -837,7 +837,7 @@ export class CatalogComponent implements OnInit {
           filterName = 'Топ продукты';
           break;
         case 'discount':
-          filterName = 'Чегирмалар';
+          filterName = 'Скидки';
           break;
       }
       if (filterName) {

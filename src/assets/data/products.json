@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Смартфон Samsung Galaxy S25 FE 128GB",
     "slug": "samsung-galaxy-s25-fe-128gb",
-    "shortDescription": "Jetblack rangda professional камера билан",
+    "shortDescription": "В черном цвете с профессиональной камерой",
     "price": 10450000,
     "oldPrice": 11200000,
     "discountPercentage": 22,
@@ -22,7 +22,7 @@
     "isNew": true,
     "isFeatured": true,
     "isChoice": true,
-    "choiceReason": "Юқори рейтинг ва яхши шарҳлар",
+    "choiceReason": "Высокий рейтинг и хорошие отзывы",
     "tags": ["смартфон", "samsung", "5g", "android"],
     "colors": [
       { "name": "Jetblack", "code": "#000000" },
@@ -31,7 +31,7 @@
     "specifications": [
       { "name": "Экран", "value": "6.4 дюйм" },
       { "name": "ОЗУ", "value": "8 ГБ" },
-      { "name": "Хотира", "value": "128 ГБ" }
+      { "name": "Память", "value": "128 ГБ" }
     ]
   }
 ]
