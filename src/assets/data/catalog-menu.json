@@ -13,7 +13,7 @@
           "slug": "phones",
           "count": 180,
           "children": [
-            { "id": 111, "name": "Смартфонлар", "slug": "smartphones", "count": 45, "children": [] },
+            { "id": 111, "name": "Смартфоны", "slug": "smartphones", "count": 45, "children": [] },
             { "id": 112, "name": "iPhone", "slug": "iphone", "count": 35, "children": [] },
             { "id": 113, "name": "Samsung Galaxy", "slug": "samsung", "count": 45, "children": [] },
             { "id": 116, "name": "OnePlus", "slug": "oneplus", "count": 15, "children": [] },
@@ -22,7 +22,7 @@
         },
         {
           "id": 12,
-          "name": "Ақлли соатлар ва браслетлар",
+          "name": "Умные часы и браслеты",
           "slug": "smartwatches",
           "count": 65,
           "children": [
@@ -34,7 +34,7 @@
         },
         {
           "id": 13,
-          "name": "Планшетлар",
+          "name": "Планшеты",
           "slug": "tablets",
           "count": 45,
           "children": [
@@ -45,7 +45,7 @@
         },
         {
           "id": 14,
-          "name": "Аксессуарлар",
+          "name": "Аксессуары",
           "slug": "phone-accessories",
           "count": 55,
           "children": [
@@ -58,22 +58,22 @@
     },
     {
       "id": 2,
-      "name": "Компьютер техникаси",
+      "name": "Компьютерная техника",
       "slug": "computers",
       "icon": "fa-solid fa-laptop",
       "count": 285,
       "children": [
         {
           "id": 21,
-          "name": "Ноутбуклар",
+          "name": "Ноутбуки",
           "slug": "laptops",
           "count": 125,
           "children": [
-            { "id": 211, "name": "Gaming ноутбуклар", "slug": "gaming-laptops", "count": 35, "children": [] },
-            { "id": 212, "name": "Ишчи ноутбуклар", "slug": "business-laptops", "count": 30, "children": [] },
+            { "id": 211, "name": "Игровые ноутбуки", "slug": "gaming-laptops", "count": 35, "children": [] },
+            { "id": 212, "name": "Рабочие ноутбуки", "slug": "business-laptops", "count": 30, "children": [] },
             { "id": 213, "name": "MacBook", "slug": "macbook", "count": 25, "children": [] },
-            { "id": 214, "name": "Ультрабуклар", "slug": "ultrabooks", "count": 20, "children": [] },
-            { "id": 215, "name": "Студент ноутбуклар", "slug": "student-laptops", "count": 15, "children": [] }
+            { "id": 214, "name": "Ультрабуки", "slug": "ultrabooks", "count": 20, "children": [] },
+            { "id": 215, "name": "Студенческие ноутбуки", "slug": "student-laptops", "count": 15, "children": [] }
           ]
         },
         {
@@ -105,7 +105,7 @@
     },
     {
       "id": 3,
-      "name": "Телевизорлар ва Мониторлар",
+      "name": "Телевизоры и Мониторы",
       "slug": "tv",
       "icon": "pi pi-desktop",
       "count": 81,
@@ -161,7 +161,7 @@
       "children": [
         {
           "id": 31,
-          "name": "Наушниклар",
+          "name": "Наушники",
           "slug": "headphones",
           "count": 45,
           "children": [
@@ -171,7 +171,7 @@
         },
         {
           "id": 32,
-          "name": "Колонкалар",
+          "name": "Колонки",
           "slug": "speakers",
           "count": 38,
           "children": [
@@ -191,7 +191,7 @@
         },
         {
           "id": 34,
-          "name": "Микрофонлар",
+          "name": "Микрофоны",
           "slug": "microphones",
           "count": 17,
           "children": [
@@ -203,14 +203,14 @@
     },
     {
       "id": 5,
-      "name": "Аксессуарлар",
+      "name": "Аксессуары",
       "slug": "accessories",
       "icon": "pi pi-cog",
       "count": 161,
       "children": [
         {
           "id": 51,
-          "name": "Повербанклар",
+          "name": "Повербанки",
           "slug": "powerbanks",
           "count": 35,
           "children": [
@@ -220,7 +220,7 @@
         },
         {
           "id": 52,
-          "name": "Зарядлаш кабеллари",
+          "name": "Зарядные кабели",
           "slug": "cables",
           "count": 42,
           "children": [
@@ -230,7 +230,7 @@
         },
         {
           "id": 53,
-          "name": "Чехоллар",
+          "name": "Чехлы",
           "slug": "cases",
           "count": 28,
           "children": [
@@ -240,7 +240,7 @@
         },
         {
           "id": 54,
-          "name": "Ҳолдерлар",
+          "name": "Держатели",
           "slug": "holders",
           "count": 56,
           "children": [

@@ -11,14 +11,12 @@
         <div class="flex items-center justify-between">
           <div>
             <h1 class="text-3xl font-bold text-gray-900">{{ pageTitle }}</h1>
-            <p class="mt-2 text-gray-600" *ngIf="wishlist.totalItems > 0">
-              {{ wishlist.totalItems }} товар{{ wishlist.totalItems === 1 ? '' : wishlist.totalItems < 5 ? 'а' : 'ов' }} в списке желаний
-            </p>
+            <p class="mt-2 text-gray-600" *ngIf="wishlist.totalItems > 0"> {{ wishlist.totalItems }} товар{{ wishlist.totalItems === 1 ? '' : wishlist.totalItems < 5 ? 'а' : 'ов' }} в избранном </p>
           </div>
 
           <!-- Clear Wishlist Button -->
           <button *ngIf="wishlist.totalItems > 0" (click)="clearWishlist()" class="px-4 py-2 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors">
-            Очистить список
+            Очистить избранное
           </button>
         </div>
       </div>
@@ -35,7 +33,7 @@
                 stroke-width="1.5"
                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
             </svg>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">Ваш список желаний пуст</h3>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Ваше избранное пусто</h3>
             <p class="text-gray-600 mb-6">Добавляйте понравившиеся товары, чтобы не потерять их</p>
             <a routerLink="/catalog" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors">
               Перейти к каталогу

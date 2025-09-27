@@ -25,7 +25,7 @@ export class HitProductsComponent implements OnInit {
   hitProducts: HitProduct[] = [
     {
       id: 1,
-      name: 'Биграликда арзон! Яшамоқ + Япон зобити',
+      name: 'Вместе дешевле! Жить + Японский завтрак',
       image: 'assets/images/products/books.webp',
       price: 99000,
       oldPrice: 129000,
@@ -128,7 +128,7 @@ export class HitProductsComponent implements OnInit {
     },
     {
       id: 10,
-      name: '"Asaxiy Books ҳин бестселлерлари 2024" тўплами',
+      name: 'Коллекция "Бестселлеры Asaxiy Books 2024"',
       image: 'assets/images/products/books.webp',
       price: 799000,
       oldPrice: 1099000,

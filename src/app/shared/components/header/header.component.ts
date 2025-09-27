@@ -99,19 +99,19 @@ export class HeaderComponent implements OnInit {
       action: 'catalog',
     },
     {
-      title: 'Хит продаж',
+      title: 'Хиты продаж',
       link: '/catalog',
       queryParams: { filter: 'hit' },
       isActive: false,
     },
     {
-      title: 'Топ продукты',
+      title: 'Топ товары',
       link: '/catalog',
       queryParams: { filter: 'top' },
       isActive: false,
     },
     {
-      title: 'Чегирмалар',
+      title: 'Скидки',
       link: '/catalog',
       queryParams: { filter: 'discount' },
       isActive: false,
@@ -147,7 +147,7 @@ export class HeaderComponent implements OnInit {
       type: 'icon',
       url: 'fa-solid fa-scale-balanced',
       name: 'compare',
-      title: 'Таққослаш',
+      title: 'Сравнить',
       count: 0,
       link: '/catalog/compare',
       main: true,
@@ -213,7 +213,7 @@ export class HeaderComponent implements OnInit {
       type: 'icon',
       url: 'pi pi-heart',
       name: 'wishlist',
-      title: 'Истаклар',
+      title: 'Избранное',
       count: 0,
       link: '/wishlist',
       main: true,
@@ -224,7 +224,7 @@ export class HeaderComponent implements OnInit {
       type: 'icon',
       url: 'pi pi-shopping-bag',
       name: 'cart',
-      title: 'Саватча',
+      title: 'Корзина',
       count: 0,
       link: '/catalog/cart',
       main: true,
@@ -233,9 +233,9 @@ export class HeaderComponent implements OnInit {
     },
     {
       type: 'image',
-      url: '/assets/images/flag_uz.png',
+      url: '/assets/images/flag_ru.png',
       name: 'lang',
-      title: 'Узбекча',
+      title: 'Русский',
       count: 0,
       link: null,
       main: true,
@@ -246,7 +246,7 @@ export class HeaderComponent implements OnInit {
       type: 'icon',
       url: 'pi pi-user',
       name: 'account',
-      title: 'Кабинет',
+      title: 'Личный кабинет',
       count: 0,
       link: '/account',
       main: true,
@@ -256,9 +256,9 @@ export class HeaderComponent implements OnInit {
   ];
 
   lang_list = [
-    { code: 'uz', label: 'Uzbek', flag: 'flag_uz.png' },
-    { code: 'ru', label: 'Russian', flag: 'flag_ru.png' },
-    { code: 'en', label: 'English', flag: 'flag_en.png' },
+    { code: 'uz', label: 'Узбекский', flag: 'flag_uz.png' },
+    { code: 'ru', label: 'Русский', flag: 'flag_ru.png' },
+    { code: 'en', label: 'Английский', flag: 'flag_en.png' },
   ];
 
   onSearch(): void {

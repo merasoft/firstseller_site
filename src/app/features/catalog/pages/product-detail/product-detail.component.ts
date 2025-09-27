@@ -22,10 +22,18 @@ interface ProductSpecification {
 
 interface InstallmentPlan {
   id: string;
+  index: number;
   months: number;
   monthlyPayment: number;
   totalAmount: number;
   interestRate: number;
+}
+
+interface PaymentProvider {
+  id: string;
+  name: string;
+  logo: string;
+  additionalFee: number;
 }
 
 @Component({
@@ -156,13 +164,20 @@ export class ProductDetailComponent implements OnInit {
   ];
 
   installmentPlans: InstallmentPlan[] = [
-    { id: '0-0-3', months: 3, monthlyPayment: 4682067, totalAmount: 14046200, interestRate: 0 },
-    { id: '0-0-6', months: 6, monthlyPayment: 2341033, totalAmount: 14046200, interestRate: 0 },
-    { id: '0-0-9', months: 9, monthlyPayment: 1560689, totalAmount: 14046200, interestRate: 0 },
-    { id: '0-0-12', months: 12, monthlyPayment: 1170517, totalAmount: 14046200, interestRate: 0 },
+    { id: '0-0-3', index: 1, months: 3, monthlyPayment: 4682067, totalAmount: 14046200, interestRate: 0 },
+    { id: '0-5-6', index: 2, months: 6, monthlyPayment: 2451304, totalAmount: 14707824, interestRate: 5 },
+    { id: '0-10-9', index: 3, months: 9, monthlyPayment: 1711802, totalAmount: 15406218, interestRate: 10 },
+    { id: '0-15-12', index: 4, months: 12, monthlyPayment: 1344454, totalAmount: 16133448, interestRate: 15 },
   ];
 
-  selectedInstallmentPlan = this.installmentPlans[3]; // 12 months by default
+  selectedInstallmentPlan = this.installmentPlans[0];
+
+  paymentProviders: PaymentProvider[] = [
+    { id: 'xazna', name: 'Xazna', logo: '/assets/images/xazna.png', additionalFee: 0 },
+    { id: 'uzum', name: 'Uzum', logo: '/assets/images/uzum.png', additionalFee: 75000 },
+  ];
+
+  selectedPaymentProvider = this.paymentProviders[0];
 
   tabs = [
     { id: 'description', name: 'О товаре', active: true },
@@ -206,6 +221,10 @@ export class ProductDetailComponent implements OnInit {
     this.selectedInstallmentPlan = plan;
   }
 
+  selectPaymentProvider(provider: PaymentProvider): void {
+    this.selectedPaymentProvider = provider;
+  }
+
   increaseQuantity(): void {
     this.quantity++;
   }
@@ -232,7 +251,6 @@ export class ProductDetailComponent implements OnInit {
     };
 
     this.cartService.addToCart(cartItem);
-    this.cartService.openCartDrawer();
   }
 
   buyNow(): void {

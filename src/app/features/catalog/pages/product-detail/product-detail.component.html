@@ -58,156 +58,231 @@
       </div>
 
       <!-- Product Main Section -->
-      <div class="md:bg-white max-w-screen-lg rounded-3xl md:shadow-sm md:p-6 mb-8">
-        <div class="product-main-section flex flex-col md:flex-row items-start gap-8">
-          <!-- Product Images -->
-          <div class="galary flex-1 flex gap-4">
-            <!-- Thumbnail Images Gallery (Left Side) -->
-            <div class="thumbnail-images flex-shrink-0 flex flex-col gap-2 overflow-x-hidden overflow-y-auto pr-1 scrollable">
-              <button
-                *ngFor="let image of product.images; let i = index"
-                (click)="selectImage(i)"
-                class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all"
-                [ngClass]="{
-                  'border-gray-200': i !== selectedImageIndex,
-                  'border-primary-500': i === selectedImageIndex
-                }">
-                <img [src]="image" [alt]="'Product image ' + (i + 1)" class="w-full h-full object-cover" />
-              </button>
+      <div class="max-w-screen-2xl flex flex-col xl:flex-row items-stretch gap-6 mb-8">
+        <div class="flex-1 md:bg-white rounded-3xl md:shadow-sm md:p-6">
+          <div class="product-main-section flex flex-col md:flex-row items-start gap-8">
+            <!-- Product Images -->
+            <div class="galary flex-1 flex gap-4">
+              <!-- Thumbnail Images Gallery (Left Side) -->
+              <div class="thumbnail-images flex-shrink-0 flex flex-col gap-2 overflow-x-hidden overflow-y-auto pr-1 scrollable">
+                <button
+                  *ngFor="let image of product.images; let i = index"
+                  (click)="selectImage(i)"
+                  class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all"
+                  [ngClass]="{
+                    'border-gray-200': i !== selectedImageIndex,
+                    'border-primary-500': i === selectedImageIndex
+                  }">
+                  <img [src]="image" [alt]="'Product image ' + (i + 1)" class="w-full h-full object-cover" />
+                </button>
+              </div>
+
+              <!-- Main Image Carousel (Right Side) -->
+              <div class="main-image md:aspect-[5/6] h-80 md:h-auto rounded-2xl bg-white md:bg-gray-100 py-6 md:py-0 overflow-hidden relative">
+                <p-carousel
+                  [value]="product.images"
+                  [numVisible]="1"
+                  [numScroll]="1"
+                  [circular]="true"
+                  [showNavigators]="true"
+                  [showIndicators]="false"
+                  class="product-carousel"
+                  styleClass="rounded-2xl overflow-hidden"
+                  [page]="selectedImageIndex"
+                  (onPage)="onCarouselPageChange($event)">
+                  <ng-template pTemplate="item" let-image>
+                    <div class="w-auto md:w-full h-full flex items-center justify-center">
+                      <img [src]="image" [alt]="product.name" class="w-auto md:w-full h-full aspect-square md:aspect-auto object-cover" loading="lazy" />
+                    </div>
+                  </ng-template>
+                </p-carousel>
+              </div>
             </div>
 
-            <!-- Main Image Carousel (Right Side) -->
-            <div class="main-image md:aspect-square h-80 md:h-auto rounded-2xl bg-white md:bg-gray-100 py-6 md:py-0 overflow-hidden relative">
-              <p-carousel
-                [value]="product.images"
-                [numVisible]="1"
-                [numScroll]="1"
-                [circular]="true"
-                [showNavigators]="true"
-                [showIndicators]="false"
-                class="product-carousel"
-                styleClass="rounded-2xl overflow-hidden"
-                [page]="selectedImageIndex"
-                (onPage)="onCarouselPageChange($event)">
-                <ng-template pTemplate="item" let-image>
-                  <div class="w-auto md:w-full h-full flex items-center justify-center">
-                    <img [src]="image" [alt]="product.name" class="w-auto md:w-full h-full aspect-square md:aspect-auto object-cover" loading="lazy" />
+            <div class="product-info flex-1">
+              <!-- Price -->
+              <div class="flex flex-col border-b border-gray-200 pb-4 gap-3">
+                <div class="flex flex-col gap-1">
+                  <div class="price-info flex items-baseline gap-3">
+                    <span class="text-2xl font-bold text-gray-900">{{ formatPrice(selectedVariant?.price || 0) }} сум</span>
+                    <span *ngIf="selectedVariant?.oldPrice" class="text-lg text-gray-500 line-through"> {{ formatPrice(selectedVariant.oldPrice) }} сум </span>
                   </div>
-                </ng-template>
-              </p-carousel>
-            </div>
-          </div>
-
-          <div class="product-info flex-1">
-            <!-- Price -->
-            <div class="flex flex-col border-b border-gray-200 pb-4 gap-3">
-              <div class="flex flex-col gap-1">
-                <div class="price-info flex items-baseline gap-3">
-                  <span class="text-2xl font-bold text-gray-900">{{ formatPrice(selectedVariant?.price || 0) }} сум</span>
-                  <span *ngIf="selectedVariant?.oldPrice" class="text-lg text-gray-500 line-through"> {{ formatPrice(selectedVariant.oldPrice) }} сум </span>
+                  <div class="text-sm font-medium text-green-600">+ {{ formatPrice(product.bonusPoints) }} бонусов</div>
                 </div>
-                <div class="text-sm font-medium text-green-600">+ {{ formatPrice(product.bonusPoints) }} бонусов</div>
+
+                <div class="bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200 rounded-lg p-2">
+                  <div class="text-pink-600 font-medium text-xs">Выгодная рассрочка:</div>
+                  <div class="text-pink-700 text-base font-bold"> от {{ formatPrice(selectedInstallmentPlan.monthlyPayment + selectedPaymentProvider.additionalFee) }} сум / мес* </div>
+                </div>
               </div>
 
-              <div class="bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200 rounded-lg p-2">
-                <div class="text-pink-600 font-medium text-xs">Выгодная рассрочка:</div>
-                <div class="text-pink-700 text-base font-bold"> от {{ formatPrice(selectedInstallmentPlan.monthlyPayment) }} сум / мес* </div>
-              </div>
-            </div>
+              <!-- Color & Memory Selection -->
+              <div class="flex flex-col gap-3 py-3">
+                <!-- Color -->
+                <div class="flex flex-col gap-2">
+                  <label class="block text-sm font-medium text-gray-900">Цвет: {{ selectedColor }}</label>
+                  <div class="flex gap-2">
+                    <button
+                      *ngFor="let color of getAvailableColors()"
+                      (click)="selectColor(color)"
+                      class="w-8 h-8 rounded-full border-2 transition-all relative"
+                      [style.background-color]="getColorCode(color)"
+                      [class.border-primary-500]="selectedColor === color"
+                      [class.border-gray-300]="selectedColor !== color"
+                      [class.opacity-50]="!isColorAvailable(color)"
+                      [disabled]="!isColorAvailable(color)">
+                      <span *ngIf="selectedColor === color" class="absolute inset-0 flex items-center justify-center">
+                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
 
-            <!-- Color & Memory Selection -->
-            <div class="flex flex-col gap-3 py-3">
-              <!-- Color -->
-              <div class="flex flex-col gap-2">
-                <label class="block text-sm font-medium text-gray-900">Цвет: {{ selectedColor }}</label>
-                <div class="flex gap-2">
-                  <button
-                    *ngFor="let color of getAvailableColors()"
-                    (click)="selectColor(color)"
-                    class="w-8 h-8 rounded-full border-2 transition-all relative"
-                    [style.background-color]="getColorCode(color)"
-                    [class.border-primary-500]="selectedColor === color"
-                    [class.border-gray-300]="selectedColor !== color"
-                    [class.opacity-50]="!isColorAvailable(color)"
-                    [disabled]="!isColorAvailable(color)">
-                    <span *ngIf="selectedColor === color" class="absolute inset-0 flex items-center justify-center">
-                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                      </svg>
-                    </span>
+                <!-- Memory -->
+                <div class="flex flex-col gap-2">
+                  <label class="block text-sm font-medium text-gray-900">Память</label>
+                  <div class="flex gap-2">
+                    <button
+                      *ngFor="let memory of getAvailableMemory()"
+                      (click)="selectMemory(memory)"
+                      class="px-3 py-1.5 border rounded-lg transition-all text-sm"
+                      [class.border-primary-500]="selectedMemory === memory"
+                      [class.bg-primary-50]="selectedMemory === memory"
+                      [class.text-primary-700]="selectedMemory === memory"
+                      [class.border-gray-300]="selectedMemory !== memory"
+                      [class.opacity-50]="!isMemoryAvailable(memory)"
+                      [disabled]="!isMemoryAvailable(memory)">
+                      {{ memory }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quantity -->
+              <div class="flex items-center gap-3">
+                <label class="text-sm font-medium text-gray-900">Количество:</label>
+                <div class="h-9 flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                  <button (click)="decreaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
+                    <i class="pi pi-minus text-sm"></i>
+                  </button>
+                  <span class="px-3 text-center text-sm">{{ quantity }}</span>
+                  <button (click)="increaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
+                    <i class="pi pi-plus text-sm"></i>
                   </button>
                 </div>
               </div>
 
-              <!-- Memory -->
-              <div class="flex flex-col gap-2">
-                <label class="block text-sm font-medium text-gray-900">Память</label>
-                <div class="flex gap-2">
-                  <button
-                    *ngFor="let memory of getAvailableMemory()"
-                    (click)="selectMemory(memory)"
-                    class="px-3 py-1.5 border rounded-lg transition-all text-sm"
-                    [class.border-primary-500]="selectedMemory === memory"
-                    [class.bg-primary-50]="selectedMemory === memory"
-                    [class.text-primary-700]="selectedMemory === memory"
-                    [class.border-gray-300]="selectedMemory !== memory"
-                    [class.opacity-50]="!isMemoryAvailable(memory)"
-                    [disabled]="!isMemoryAvailable(memory)">
-                    {{ memory }}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Quantity -->
-            <div class="flex items-center gap-3">
-              <label class="text-sm font-medium text-gray-900">Количество:</label>
-              <div class="h-9 flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                <button (click)="decreaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
-                  <i class="pi pi-minus text-sm"></i>
+              <!-- Action Buttons - Компактные в один ряд -->
+              <div class="flex gap-4 py-4">
+                <button
+                  (click)="addToCart()"
+                  class="cart-button flex-1 bg-gradient-to-r from-pink-500 to-pink-600 text-sm lg:base text-white py-2 lg:py-3 rounded-lg font-semibold hover:from-pink-600 hover:to-pink-700 transition-all flex items-center justify-center gap-2">
+                  <i class="pi pi-shopping-cart"></i>
+                  <span>В корзину</span>
                 </button>
-                <span class="px-3 text-center text-sm">{{ quantity }}</span>
-                <button (click)="increaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
-                  <i class="pi pi-plus text-sm"></i>
+
+                <button
+                  (click)="buyNow()"
+                  class="buy-now-button flex-1 bg-white border-2 border-green-500 text-sm lg:base text-green-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-green-50 transition-all">
+                  Купить в один клик
                 </button>
               </div>
-            </div>
 
-            <!-- Action Buttons - Компактные в один ряд -->
-            <div class="flex gap-4 py-4">
-              <button
-                (click)="addToCart()"
-                class="cart-button flex-1 bg-gradient-to-r from-pink-500 to-pink-600 text-sm lg:base text-white py-2 lg:py-3 rounded-lg font-semibold hover:from-pink-600 hover:to-pink-700 transition-all flex items-center justify-center gap-2">
-                <i class="pi pi-shopping-cart"></i>
-                <span>В корзину</span>
-              </button>
+              <!-- Buy One Click Button -->
 
-              <button
-                (click)="buyNow()"
-                class="buy-now-button flex-1 bg-white border-2 border-green-500 text-sm lg:base text-green-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-green-50 transition-all">
-                Купить в один клик
-              </button>
-            </div>
-
-            <!-- Buy One Click Button -->
-
-            <!-- Benefits - Компактные -->
-            <div class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-200">
-              <div class="flex items-center gap-2">
-                <div class="w-6 h-6 bg-green-100 rounded-lg flex items-center justify-center">
-                  <i class="text-xs text-primary-600 pi pi-shield"></i>
+              <!-- Benefits - Компактные -->
+              <div class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-200">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="text-xs text-primary-600 pi pi-shield"></i>
+                  </div>
+                  <div class="text-sm font-medium text-gray-900">Гарантия {{ product.warranty }}</div>
                 </div>
-                <div class="text-sm font-medium text-gray-900">Гарантия {{ product.warranty }}</div>
-              </div>
 
-              <div class="flex items-center gap-2">
-                <div class="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <i class="text-xs text-blue-600 pi pi-box"></i>
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <i class="text-xs text-blue-600 pi pi-box"></i>
+                  </div>
+                  <div class="text-sm font-medium text-gray-900">Бесплатная доставка</div>
                 </div>
-                <div class="text-sm font-medium text-gray-900">Бесплатная доставка</div>
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- Installment Plan Section -->
+        <div class="installment-plan flex flex-col w-full xl:w-88 bg-white rounded-lg md:rounded-3xl shadow-sm p-3 md:p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <i class="pi pi-info-circle text-blue-500 cursor-pointer" title="Покупайте товар у удобного для вас партнёра и на подходящий срок рассрочки"></i>
+            <h3 class="text-lg font-semibold text-gray-900">Рассрочка платежа</h3>
+          </div>
+
+          <!-- Month Selection Tabs -->
+          <div class="month-container flex flex-col gap-2">
+            <p class="text-sm font-semibold">Месяцы</p>
+            <div class="month-tabs flex bg-gray-100 rounded-lg p-1 mb-4">
+              <button
+                *ngFor="let plan of installmentPlans"
+                (click)="selectedInstallmentPlan = plan"
+                class="flex-1 py-2 px-3 text-sm font-medium rounded-md transition-all"
+                [ngClass]="{
+                  'bg-white text-primary-600 shadow-sm': selectedInstallmentPlan.id === plan.id,
+                  'text-gray-600 hover:text-gray-900': selectedInstallmentPlan.id !== plan.id
+                }">
+                {{ plan.months }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Payment Providers -->
+          <div class="payment-providers flex flex-col gap-3">
+            <button
+              *ngFor="let provider of paymentProviders"
+              (click)="selectPaymentProvider(provider)"
+              class="provider-card flex items-center justify-between p-3 border rounded-lg transition-all cursor-pointer"
+              [ngClass]="{
+                'border-primary-500 bg-primary-50': selectedPaymentProvider.id === provider.id,
+                'border-gray-200 hover:border-primary-300': selectedPaymentProvider.id !== provider.id
+              }">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-8 flex items-center justify-center">
+                  <img [src]="provider.logo" [alt]="provider.name" class="w-full object-cover" />
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-gray-900">{{ formatPrice(selectedInstallmentPlan.monthlyPayment + provider.additionalFee) }} сум</p>
+                  <p class="text-xs text-gray-500">в месяц</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span
+                  class="text-[13px] font-medium transition-colors"
+                  [ngClass]="{
+                    'text-primary-600': selectedPaymentProvider.id === provider.id,
+                    'text-gray-500': selectedPaymentProvider.id !== provider.id
+                  }">
+                  {{ selectedPaymentProvider.id === provider.id ? 'Выбрано' : 'Выбрать' }}
+                </span>
+              </div>
+            </button>
+          </div>
+
+          <!-- Total Amount -->
+          <div class="total-amount mt-4 p-3 bg-gray-50 rounded-lg">
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-600">Общая сумма:</span>
+              <span class="text-lg font-semibold text-gray-900">
+                {{ formatPrice(selectedInstallmentPlan.totalAmount + selectedPaymentProvider.additionalFee * selectedInstallmentPlan.months) }} сум</span
+              >
+            </div>
+          </div>
+
+          <!-- Main CTA Button -->
+          <button
+            class="max-w-60 xl:max-w-full xl:w-full ml-auto xl:ml-0 mt-4 bg-orange-500 hover:bg-orange-600 text-sm md:text-base text-white py-2 md:py-3 px-4 rounded-lg font-medium transition-colors">
+            Заказать в рассрочку
+          </button>
         </div>
       </div>
 

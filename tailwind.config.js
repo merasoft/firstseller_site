@@ -4,21 +4,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Асосий яшил палитра
+        // Основная зеленая палитра
         primary: {
           50: '#ecfdf5', // Eng ochiq yashil
-          100: '#d1fae5', // Juda ochiq
+          100: '#d1fae5', // Очень светлый
           200: '#a7f3d0', // Ochiq
           300: '#6ee7b7', // O'rtacha ochiq
           400: '#34d399', // O'rtacha
           500: '#10b981', // Asosiy brand rangi
           600: '#059669', // Quyuqroq
           700: '#047857', // Quyuq
-          800: '#065f46', // Juda quyuq
+          800: '#065f46', // Очень темный
           900: '#064e3b', // Eng quyuq
         },
 
-        // Qo'shimcha ranglar
+        // Дополнительные цвета
         secondary: {
           500: '#06b6d4', // Turkuaz
           600: '#0891b2',
@@ -26,13 +26,13 @@ module.exports = {
         },
 
         accent: {
-          orange: '#f97316', // Chegirmalar uchun
+          orange: '#f97316', // Для скидок
           red: '#ef4444', // Sale uchun
           yellow: '#eab308', // Diqqat uchun
           blue: '#3b82f6', // Info uchun
         },
 
-        // Gradient ranglar
+        // Градиентные цвета
         gradient: {
           'green-light': '#ecfdf5',
           'green-dark': '#065f46',

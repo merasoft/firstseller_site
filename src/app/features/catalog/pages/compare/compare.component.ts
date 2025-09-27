@@ -79,7 +79,6 @@ export class CompareComponent implements OnInit, OnDestroy {
     };
 
     this.cartService.addToCart(cartItem);
-    this.cartService.openCartDrawer();
   }
 
   continueShopping(): void {

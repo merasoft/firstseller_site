@@ -1,6 +1,7 @@
 // src/app/shared/services/cart.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { MessageService } from 'primeng/api';
 import { Cart, CartItem } from '../models/cart.model';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class CartService {
   private isCartDrawerOpenSubject = new BehaviorSubject<boolean>(false);
   public isCartDrawerOpen$ = this.isCartDrawerOpenSubject.asObservable();
 
-  constructor() {
+  constructor(private messageService: MessageService) {
     this.loadCartFromStorage();
   }
 
@@ -62,6 +63,7 @@ export class CartService {
     const existingItemIndex = currentCart.items.findIndex((cartItem) => cartItem.productId === item.productId && JSON.stringify(cartItem.selectedVariant) === JSON.stringify(item.selectedVariant));
 
     let updatedItems: CartItem[];
+    let isNewItem = false;
 
     if (existingItemIndex > -1) {
       // Update quantity of existing item
@@ -77,11 +79,20 @@ export class CartService {
         id: `${item.productId}-${Date.now()}-${Math.random()}`,
       };
       updatedItems = [...currentCart.items, newItem];
+      isNewItem = true;
     }
 
     const updatedCart = this.calculateTotals(updatedItems);
     this.cartSubject.next(updatedCart);
     this.saveCartToStorage();
+
+    // Show success toast notification
+    this.messageService.add({
+      severity: 'success',
+      summary: isNewItem ? 'Добавлено в корзину' : 'Количество обновлено',
+      detail: `${item.name}`,
+      life: 3000,
+    });
   }
 
   removeFromCart(itemId: string): void {

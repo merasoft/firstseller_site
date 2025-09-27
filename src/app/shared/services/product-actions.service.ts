@@ -31,7 +31,6 @@ export class ProductActionsService {
     };
 
     this.cartService.addToCart(cartItem);
-    this.cartService.openCartDrawer();
   }
 
   addToFavorites(product: Product): void {
