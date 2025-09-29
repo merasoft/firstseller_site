@@ -18,8 +18,8 @@
         [numScroll]="1"
         [circular]="true"
         [autoplayInterval]="0"
-        [showIndicators]="true"
-        [showNavigators]="true"
+        [showIndicators]="product.images.length > 1"
+        [showNavigators]="product.images.length > 1"
         [page]="product.currentImageIndex"
         (onPage)="onCarouselPageChange($event)"
         class="product-image-carousel">

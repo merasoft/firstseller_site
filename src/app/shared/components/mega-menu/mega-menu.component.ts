@@ -102,6 +102,7 @@ export class MegaMenuComponent implements OnInit {
     if (this.openPanels.has(categoryId)) {
       this.openPanels.delete(categoryId);
     } else {
+      this.openPanels.clear();
       this.openPanels.add(categoryId);
     }
   }

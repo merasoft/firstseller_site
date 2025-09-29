@@ -113,17 +113,39 @@ export class SuperDealsComponent implements OnInit {
       endDate: '01.10.2025',
       category: 'appliances',
     },
+    {
+      id: 7,
+      name: 'Смартфон Xiaomi Redmi 14C 8/256GB Black',
+      image: '/assets/images/products/xiaomi-redmi14c.webp',
+      oldPrice: 2500000,
+      newPrice: 1999000,
+      discount: 20,
+      rating: 5,
+      reviewCount: 234,
+      endDate: '01.10.2025',
+      category: 'smartphones',
+    },
   ];
 
   responsiveOptions = [
     {
       breakpoint: '1300px',
       numVisible: 5,
-      numScroll: 1,
+      numScroll: 2,
     },
     {
       breakpoint: '1160px',
       numVisible: 4,
+      numScroll: 2,
+    },
+    {
+      breakpoint: '850px',
+      numVisible: 3,
+      numScroll: 1,
+    },
+    {
+      breakpoint: '640px',
+      numVisible: 2,
       numScroll: 1,
     },
   ];
@@ -152,6 +174,13 @@ export class SuperDealsComponent implements OnInit {
       );
     }
     return this._cachedStars.get(rating)!;
+  }
+
+  onPrevPageClick(event: any) {
+    this.carousel.navBackward(event);
+  }
+  onNextPageClick(event: any) {
+    this.carousel.navForward(event);
   }
 
   ngOnInit() {
