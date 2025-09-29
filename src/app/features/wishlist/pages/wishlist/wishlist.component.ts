@@ -2,6 +2,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { Product } from '../../../../shared/models/product.model';
 import { WishlistService } from '../../../../shared/services/wishlist.service';
 import { CartService } from '../../../../shared/services/cart.service';
@@ -14,7 +15,7 @@ import { WishlistItem, Wishlist } from '../../../../shared/models/wishlist.model
   styleUrls: ['./wishlist.component.scss'],
 })
 export class WishlistComponent implements OnInit, OnDestroy {
-  pageTitle = 'Список желаний';
+  pageTitle = '';
   wishlist: Wishlist = { items: [], totalItems: 0, lastUpdated: new Date() };
   wishlistProducts: Product[] = [];
   private destroy$ = new Subject<void>();
@@ -113,10 +114,18 @@ export class WishlistComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(private wishlistService: WishlistService, private cartService: CartService, private router: Router) {}
+  constructor(private wishlistService: WishlistService, private cartService: CartService, private router: Router, private translate: TranslateService) {}
 
   ngOnInit(): void {
+    this.pageTitle = this.translate.instant('WISHLIST.TITLE');
     this.loadWishlistData();
+    this.subscribeToLanguageChanges();
+  }
+
+  private subscribeToLanguageChanges(): void {
+    this.translate.onLangChange.subscribe(() => {
+      this.pageTitle = this.translate.instant('WISHLIST.TITLE');
+    });
   }
 
   ngOnDestroy(): void {

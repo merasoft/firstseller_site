@@ -32,7 +32,7 @@
               [routerLink]="['/catalog', activeCategory.slug, sub.slug]"
               (click)="closeMenu()"
               class="w-fit text-sm text-gray-700 hover:text-gray-900 relative inline-block after:absolute after:left-0 after:-bottom-[2px] after:h-[1px] after:bg-gray-900 after:w-0 after:transition-all after:duration-300 hover:after:w-full">
-              Все товары
+              {{ 'COMMON.ALL_PRODUCTS' | translate }}
             </a>
           </div>
         </div>
@@ -42,7 +42,7 @@
         [routerLink]="['/catalog', activeCategory.slug]"
         (click)="closeMenu()"
         class="w-fit mt-4 text-sm font-medium text-primary-600 hover:text-primary-700 relative inline-block after:absolute after:left-0 after:-bottom-[2px] after:h-[1px] after:bg-primary-700 after:w-0 after:transition-all after:duration-300 hover:after:w-full">
-        Все товары в {{ activeCategory.name }}
+        {{ 'COMMON.ALL_PRODUCTS_IN' | translate }} {{ activeCategory.name }}
       </a>
     </div>
   </div>
@@ -50,7 +50,7 @@
 
 <p-drawer [(visible)]="isDialogOpen" [blockScroll]="true" position="full" styleClass="catalog-drawer">
   <ng-template #header>
-    <h3 class="text-xl font-semibold text-gray-900">Все категории</h3>
+    <h3 class="text-xl font-semibold text-gray-900">{{ 'COMMON.ALL_CATEGORIES' | translate }}</h3>
   </ng-template>
   <ng-template #content>
     <div class="pl-2 pr-6 py-2">
@@ -69,7 +69,7 @@
                 [routerLink]="['/catalog', cat.slug]"
                 (click)="closeDrawer()"
                 class="w-fit text-sm text-gray-700 active:text-gray-900 relative inline-block after:absolute after:left-0 after:-bottom-[2px] after:h-[1px] after:bg-gray-900 after:w-0 after:transition-all after:duration-300 active:after:w-full">
-                Все товары
+                {{ 'COMMON.ALL_PRODUCTS' | translate }}
               </a>
               <a
                 *ngFor="let sub of cat.children"

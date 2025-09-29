@@ -38,12 +38,12 @@
               </div>
             </div>
             <span class="text-xs text-gray-500">
-              ( {{ product.reviewsCount }} <span class="hidden sm:inline">{{ product.reviewsCount === 1 ? 'отзыв' : 'отзыва' }} </span>)
+              ( {{ product.reviewsCount }} <span class="hidden sm:inline">{{ getReviewText(product.reviewsCount) }} </span>)
             </span>
           </div>
 
           <div class="flex items-center gap-2">
-            <p class="text-xs text-gray-600">Арт: {{ product.article }}</p>
+            <p class="text-xs text-gray-600">{{ 'PRODUCTS.ARTICLE' | translate }}: {{ product.article }}</p>
             <button (click)="compareProduct()" class="w-8 h-8 rounded transition-colors hover:bg-gray-100" [class.bg-blue-50]="isInCompare()">
               <i class="text-base fa-solid fa-scale-balanced transition-colors" [class]="isInCompare() ? 'text-blue-500' : 'text-gray-600 hover:text-blue-500'"></i>
             </button>
@@ -60,9 +60,9 @@
       <!-- Product Main Section -->
       <div class="max-w-screen-2xl flex flex-col xl:flex-row items-stretch gap-6 mb-8">
         <div class="flex-1 md:bg-white rounded-3xl md:shadow-sm md:p-6">
-          <div class="product-main-section flex flex-col md:flex-row items-start gap-8">
+          <div class="product-main-section flex flex-col md:flex-row md:items-start gap-8">
             <!-- Product Images -->
-            <div class="galary flex-1 flex gap-4">
+            <div class="galary md:flex-[5] flex gap-4">
               <!-- Thumbnail Images Gallery (Left Side) -->
               <div class="thumbnail-images flex-shrink-0 flex flex-col gap-2 overflow-x-hidden overflow-y-auto pr-1 scrollable">
                 <button
@@ -78,7 +78,7 @@
               </div>
 
               <!-- Main Image Carousel (Right Side) -->
-              <div class="main-image md:aspect-[5/6] h-80 md:h-auto rounded-2xl bg-white md:bg-gray-100 py-6 md:py-0 overflow-hidden relative">
+              <div class="main-image md:aspect-square h-80 md:h-auto rounded-2xl bg-white md:bg-gray-100 py-6 md:py-0 overflow-hidden relative">
                 <p-carousel
                   [value]="product.images"
                   [numVisible]="1"
@@ -99,20 +99,23 @@
               </div>
             </div>
 
-            <div class="product-info flex-1">
+            <div class="product-info md:flex-[3] flex flex-col">
               <!-- Price -->
               <div class="flex flex-col border-b border-gray-200 pb-4 gap-3">
                 <div class="flex flex-col gap-1">
-                  <div class="price-info flex items-baseline gap-3">
-                    <span class="text-2xl font-bold text-gray-900">{{ formatPrice(selectedVariant?.price || 0) }} сум</span>
-                    <span *ngIf="selectedVariant?.oldPrice" class="text-lg text-gray-500 line-through"> {{ formatPrice(selectedVariant.oldPrice) }} сум </span>
+                  <div class="price-info flex md:flex-col items-baseline gap-3 md:gap-0">
+                    <span class="text-2xl font-bold text-gray-900">{{ formatPrice(selectedVariant?.price || 0) }} {{ getCurrency() }}</span>
+                    <span *ngIf="selectedVariant?.oldPrice" class="text-lg text-gray-500 line-through"> {{ formatPrice(selectedVariant.oldPrice) }} {{ getCurrency() }} </span>
                   </div>
-                  <div class="text-sm font-medium text-green-600">+ {{ formatPrice(product.bonusPoints) }} бонусов</div>
+                  <div class="text-sm font-medium text-green-600">+ {{ formatPrice(product.bonusPoints) }} {{ getBonusText() }}</div>
                 </div>
 
-                <div class="bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200 rounded-lg p-2">
-                  <div class="text-pink-600 font-medium text-xs">Выгодная рассрочка:</div>
-                  <div class="text-pink-700 text-base font-bold"> от {{ formatPrice(selectedInstallmentPlan.monthlyPayment + selectedPaymentProvider.additionalFee) }} сум / мес* </div>
+                <div class="max-w-88 md:max-w-full bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-2">
+                  <div class="text-orange-600 font-medium text-xs">{{ 'PRODUCTS.PROFITABLE_INSTALLMENT' | translate }}</div>
+                  <div class="text-orange-700 text-base font-bold">
+                    {{ 'PRODUCTS.FROM' | translate }} {{ formatPrice(selectedInstallmentPlan.monthlyPayment + selectedPaymentProvider.additionalFee) }} {{ getCurrency() }} /
+                    {{ 'PRODUCTS.PER_MONTH' | translate }}*
+                  </div>
                 </div>
               </div>
 
@@ -120,7 +123,7 @@
               <div class="flex flex-col gap-3 py-3">
                 <!-- Color -->
                 <div class="flex flex-col gap-2">
-                  <label class="block text-sm font-medium text-gray-900">Цвет: {{ selectedColor }}</label>
+                  <label class="block text-sm font-medium text-gray-900">{{ 'PRODUCTS.COLOR' | translate }}: {{ selectedColor }}</label>
                   <div class="flex gap-2">
                     <button
                       *ngFor="let color of getAvailableColors()"
@@ -142,7 +145,7 @@
 
                 <!-- Memory -->
                 <div class="flex flex-col gap-2">
-                  <label class="block text-sm font-medium text-gray-900">Память</label>
+                  <label class="block text-sm font-medium text-gray-900">{{ 'PRODUCTS.MEMORY' | translate }}</label>
                   <div class="flex gap-2">
                     <button
                       *ngFor="let memory of getAvailableMemory()"
@@ -160,33 +163,32 @@
                 </div>
               </div>
 
-              <!-- Quantity -->
-              <div class="flex items-center gap-3">
-                <label class="text-sm font-medium text-gray-900">Количество:</label>
-                <div class="h-9 flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                  <button (click)="decreaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
-                    <i class="pi pi-minus text-sm"></i>
-                  </button>
-                  <span class="px-3 text-center text-sm">{{ quantity }}</span>
-                  <button (click)="increaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
-                    <i class="pi pi-plus text-sm"></i>
-                  </button>
-                </div>
-              </div>
-
               <!-- Action Buttons - Компактные в один ряд -->
-              <div class="flex gap-4 py-4">
-                <button
-                  (click)="addToCart()"
-                  class="cart-button flex-1 bg-gradient-to-r from-pink-500 to-pink-600 text-sm lg:base text-white py-2 lg:py-3 rounded-lg font-semibold hover:from-pink-600 hover:to-pink-700 transition-all flex items-center justify-center gap-2">
-                  <i class="pi pi-shopping-cart"></i>
-                  <span>В корзину</span>
-                </button>
+              <div class="flex flex-col gap-4 py-4 max-w-88 md:max-w-full">
+                <div class="flex items-stretch gap-4">
+                  <button
+                    (click)="quantity == 0 && addToCart()"
+                    class="cart-button flex-1 bg-gradient-to-r from-primary-500 to-primary-600 text-sm lg:base text-white py-2 lg:py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
+                    [ngClass]="{ 'hover:from-primary-600 hover:to-primary-700': quantity == 0 }">
+                    <i class="pi pi-shopping-cart"></i>
+                    <span *ngIf="quantity == 0">{{ 'PRODUCTS.ADD_TO_CART_ACTION' | translate }}</span>
+                    <span *ngIf="quantity > 0">{{ 'PRODUCTS.IN_CART' | translate }}</span>
+                  </button>
+                  <div *ngIf="quantity > 0" class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <button (click)="decreaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
+                      <i class="pi pi-minus text-sm"></i>
+                    </button>
+                    <span class="px-3 text-center text-sm">{{ quantity }}</span>
+                    <button (click)="increaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
+                      <i class="pi pi-plus text-sm"></i>
+                    </button>
+                  </div>
+                </div>
 
                 <button
                   (click)="buyNow()"
                   class="buy-now-button flex-1 bg-white border-2 border-green-500 text-sm lg:base text-green-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-green-50 transition-all">
-                  Купить в один клик
+                  {{ 'PRODUCTS.BUY_ONE_CLICK' | translate }}
                 </button>
               </div>
 
@@ -198,14 +200,14 @@
                   <div class="w-6 h-6 bg-green-100 rounded-lg flex items-center justify-center">
                     <i class="text-xs text-primary-600 pi pi-shield"></i>
                   </div>
-                  <div class="text-sm font-medium text-gray-900">Гарантия {{ product.warranty }}</div>
+                  <div class="text-sm font-medium text-gray-900">{{ 'PRODUCTS.WARRANTY' | translate }} {{ product.warranty }}</div>
                 </div>
 
                 <div class="flex items-center gap-2">
                   <div class="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center">
                     <i class="text-xs text-blue-600 pi pi-box"></i>
                   </div>
-                  <div class="text-sm font-medium text-gray-900">Бесплатная доставка</div>
+                  <div class="text-sm font-medium text-gray-900">{{ 'PRODUCTS.FREE_DELIVERY' | translate }}</div>
                 </div>
               </div>
             </div>
@@ -215,13 +217,13 @@
         <!-- Installment Plan Section -->
         <div class="installment-plan flex flex-col w-full xl:w-88 bg-white rounded-lg md:rounded-3xl shadow-sm p-3 md:p-6">
           <div class="flex items-center gap-2 mb-4">
-            <i class="pi pi-info-circle text-blue-500 cursor-pointer" title="Покупайте товар у удобного для вас партнёра и на подходящий срок рассрочки"></i>
-            <h3 class="text-lg font-semibold text-gray-900">Рассрочка платежа</h3>
+            <i class="pi pi-info-circle text-blue-500 cursor-pointer" [title]="'PRODUCTS.INSTALLMENT_INFO' | translate"></i>
+            <h3 class="text-lg font-semibold text-gray-900">{{ 'PRODUCTS.INSTALLMENT_PAYMENT' | translate }}</h3>
           </div>
 
           <!-- Month Selection Tabs -->
           <div class="month-container flex flex-col gap-2">
-            <p class="text-sm font-semibold">Месяцы</p>
+            <p class="text-sm font-semibold">{{ 'PRODUCTS.MONTHS' | translate }}</p>
             <div class="month-tabs flex bg-gray-100 rounded-lg p-1 mb-4">
               <button
                 *ngFor="let plan of installmentPlans"
@@ -251,8 +253,8 @@
                   <img [src]="provider.logo" [alt]="provider.name" class="w-full object-cover" />
                 </div>
                 <div>
-                  <p class="text-sm font-medium text-gray-900">{{ formatPrice(selectedInstallmentPlan.monthlyPayment + provider.additionalFee) }} сум</p>
-                  <p class="text-xs text-gray-500">в месяц</p>
+                  <p class="text-sm font-medium text-gray-900">{{ formatPrice(selectedInstallmentPlan.monthlyPayment + provider.additionalFee) }} {{ getCurrency() }}</p>
+                  <p class="text-xs text-gray-500">{{ 'PRODUCTS.PER_MONTH_LOWERCASE' | translate }}</p>
                 </div>
               </div>
               <div class="flex items-center gap-2">
@@ -262,7 +264,7 @@
                     'text-primary-600': selectedPaymentProvider.id === provider.id,
                     'text-gray-500': selectedPaymentProvider.id !== provider.id
                   }">
-                  {{ selectedPaymentProvider.id === provider.id ? 'Выбрано' : 'Выбрать' }}
+                  {{ selectedPaymentProvider.id === provider.id ? ('COMMON.SELECTED' | translate) : ('COMMON.SELECT' | translate) }}
                 </span>
               </div>
             </button>
@@ -271,9 +273,9 @@
           <!-- Total Amount -->
           <div class="total-amount mt-4 p-3 bg-gray-50 rounded-lg">
             <div class="flex items-center justify-between">
-              <span class="text-sm text-gray-600">Общая сумма:</span>
+              <span class="text-sm text-gray-600">{{ 'PRODUCTS.TOTAL_AMOUNT' | translate }}:</span>
               <span class="text-lg font-semibold text-gray-900">
-                {{ formatPrice(selectedInstallmentPlan.totalAmount + selectedPaymentProvider.additionalFee * selectedInstallmentPlan.months) }} сум</span
+                {{ formatPrice(selectedInstallmentPlan.totalAmount + selectedPaymentProvider.additionalFee * selectedInstallmentPlan.months) }} {{ getCurrency() }}</span
               >
             </div>
           </div>
@@ -281,7 +283,7 @@
           <!-- Main CTA Button -->
           <button
             class="max-w-60 xl:max-w-full xl:w-full ml-auto xl:ml-0 mt-4 bg-orange-500 hover:bg-orange-600 text-sm md:text-base text-white py-2 md:py-3 px-4 rounded-lg font-medium transition-colors">
-            Заказать в рассрочку
+            {{ 'PRODUCTS.ORDER_INSTALLMENT' | translate }}
           </button>
         </div>
       </div>
@@ -296,7 +298,7 @@
             <!-- Description Tab -->
             <p-tabpanel value="description">
               <div class="flex flex-col p-4">
-                <h3 class="text-lg font-bold mb-4">Описание</h3>
+                <h3 class="text-lg font-bold mb-4">{{ 'PRODUCTS.DESCRIPTION' | translate }}</h3>
                 <h4 class="text-base font-semibold mb-2">{{ product.name }}</h4>
                 <p class="text-[13px] sm:text-[15px] text-gray-700 leading-relaxed">{{ product.description }}</p>
               </div>
@@ -328,25 +330,27 @@
                       stroke-width="2"
                       d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                   </svg>
-                  <h3 class="text-base font-medium text-gray-900 mb-2">Пока нет отзывов</h3>
-                  <p class="text-sm sm:text-base text-gray-600">Станьте первым, кто оставит отзыв об этом товаре</p>
+                  <h3 class="text-base font-medium text-gray-900 mb-2">{{ 'PRODUCTS.NO_REVIEWS_YET' | translate }}</h3>
+                  <p class="text-sm sm:text-base text-gray-600">{{ 'PRODUCTS.BE_FIRST_REVIEWER' | translate }}</p>
                 </div>
-                <button class="bg-primary-600 text-white text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors"> Оставить отзыв </button>
+                <button class="bg-primary-600 text-white text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors">{{
+                  'PRODUCTS.LEAVE_REVIEW' | translate
+                }}</button>
               </div>
             </p-tabpanel>
 
             <!-- Payment Tab -->
             <p-tabpanel value="payment">
               <div class="p-4">
-                <h3 class="text-lg font-bold mb-4">Способы оплаты</h3>
+                <h3 class="text-lg font-bold mb-4">{{ 'PRODUCTS.PAYMENT_METHODS' | translate }}</h3>
                 <div class="grid md:grid-cols-2 gap-6">
                   <div class="border border-gray-200 rounded-xl p-3">
-                    <h4 class="font-semibold mb-2">Онлайн оплата</h4>
-                    <p class="text-gray-600 text-sm">Оплата банковскими картами Visa, MasterCard, UzCard</p>
+                    <h4 class="font-semibold mb-2">{{ 'PRODUCTS.ONLINE_PAYMENT' | translate }}</h4>
+                    <p class="text-gray-600 text-sm">{{ 'PRODUCTS.ONLINE_PAYMENT_INFO' | translate }}</p>
                   </div>
                   <div class="border border-gray-200 rounded-xl p-3">
-                    <h4 class="font-semibold mb-2">Наличными при получении</h4>
-                    <p class="text-gray-600 text-sm">Оплата наличными курьеру или в пункте выдачи</p>
+                    <h4 class="font-semibold mb-2">{{ 'PRODUCTS.CASH_ON_DELIVERY' | translate }}</h4>
+                    <p class="text-gray-600 text-sm">{{ 'PRODUCTS.CASH_ON_DELIVERY_INFO' | translate }}</p>
                   </div>
                 </div>
               </div>
@@ -355,15 +359,15 @@
             <!-- Delivery Tab -->
             <p-tabpanel value="delivery">
               <div class="p-4">
-                <h3 class="text-lg font-bold mb-4">Доставка</h3>
+                <h3 class="text-lg font-bold mb-4">{{ 'PRODUCTS.DELIVERY_SECTION' | translate }}</h3>
                 <div class="grid md:grid-cols-2 gap-6">
                   <div class="border border-gray-200 rounded-xl p-3">
-                    <h4 class="font-semibold mb-2">Курьерская доставка</h4>
-                    <p class="text-gray-600 text-sm">Доставка по Ташкенту в течение 1-2 рабочих дней</p>
+                    <h4 class="font-semibold mb-2">{{ 'PRODUCTS.COURIER_DELIVERY' | translate }}</h4>
+                    <p class="text-gray-600 text-sm">{{ 'PRODUCTS.DELIVERY_INFO' | translate }}</p>
                   </div>
                   <div class="border border-gray-200 rounded-xl p-3">
-                    <h4 class="font-semibold mb-2">Самовывоз</h4>
-                    <p class="text-gray-600 text-sm">Забрать из любого магазина сети Firstseller</p>
+                    <h4 class="font-semibold mb-2">{{ 'PRODUCTS.PICKUP' | translate }}</h4>
+                    <p class="text-gray-600 text-sm">{{ 'PRODUCTS.PICKUP_INFO' | translate }}</p>
                   </div>
                 </div>
               </div>
@@ -372,15 +376,15 @@
             <!-- Discounts Tab -->
             <p-tabpanel value="discounts">
               <div class="p-4">
-                <h3 class="text-lg font-bold mb-4">Скидки и бонусы</h3>
+                <h3 class="text-lg font-bold mb-4">{{ 'PRODUCTS.DISCOUNTS_BONUSES' | translate }}</h3>
                 <div class="space-y-4">
                   <div class="border border-gray-200 rounded-xl p-3">
-                    <h4 class="font-semibold mb-2">Бонусная программа</h4>
-                    <p class="text-gray-600 text-sm">Получайте до 10% бонусов с каждой покупки</p>
+                    <h4 class="font-semibold mb-2">{{ 'PRODUCTS.BONUS_PROGRAM' | translate }}</h4>
+                    <p class="text-gray-600 text-sm">{{ 'PRODUCTS.BONUS_INFO' | translate }}</p>
                   </div>
                   <div class="border border-gray-200 rounded-xl p-3">
-                    <h4 class="font-semibold mb-2">Рассрочка 0-0-12</h4>
-                    <p class="text-gray-600 text-sm">Рассрочка без первоначального взноса и переплат</p>
+                    <h4 class="font-semibold mb-2">{{ 'PRODUCTS.INSTALLMENT_0_0_12' | translate }}</h4>
+                    <p class="text-gray-600 text-sm">{{ 'PRODUCTS.INSTALLMENT_NO_DEPOSIT' | translate }}</p>
                   </div>
                 </div>
               </div>

@@ -4,6 +4,8 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { CompareService } from '../../services/compare.service';
+import { LanguageService, Language } from '../../services/language.service';
+import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -14,6 +16,7 @@ import { filter } from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit {
   @ViewChild('menu') menu: any;
+  @ViewChild('languagePopover') languagePopover: any;
 
   searchQuery: string = '';
   isMenuOpen = false;
@@ -21,9 +24,29 @@ export class HeaderComponent implements OnInit {
   wishlistItemsCount = 0;
   compareItemsCount = 0;
 
-  constructor(private router: Router, private route: ActivatedRoute, private cartService: CartService, private wishlistService: WishlistService, private compareService: CompareService) {}
+  // Language properties
+  currentLanguage: string = 'ru';
+  languages: Language[] = [];
+  isLanguagePopoverVisible: boolean = false;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private cartService: CartService,
+    private wishlistService: WishlistService,
+    private compareService: CompareService,
+    private languageService: LanguageService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
+    // Initialize languages
+    this.languages = this.languageService.languages;
+    this.languageService.currentLanguage$.subscribe((lang) => {
+      this.currentLanguage = lang;
+      this.updateTranslations();
+    });
+
     // Subscribe to cart changes to update count
     this.cartService.cart$.subscribe((cart) => {
       this.cartItemsCount = cart.totalItems;
@@ -87,6 +110,14 @@ export class HeaderComponent implements OnInit {
         }
       }
     }
+
+    // Set active state for publications page
+    if (currentUrl.includes('/home/publications')) {
+      const publicationsItem = this.navItems.find((item) => item.link === '/home/publications');
+      if (publicationsItem) {
+        publicationsItem.isActive = true;
+      }
+    }
   }
 
   // Navigation items
@@ -116,6 +147,11 @@ export class HeaderComponent implements OnInit {
       queryParams: { filter: 'discount' },
       isActive: false,
       isSpecial: true,
+    },
+    {
+      title: 'Публикации',
+      link: '/home/publications',
+      isActive: false,
     },
   ];
 
@@ -191,9 +227,9 @@ export class HeaderComponent implements OnInit {
       type: 'icon',
       url: 'pi pi-book',
       name: 'news',
-      title: 'Новости',
+      title: 'Публикации',
       count: 0,
-      link: '/',
+      link: '/home/publications',
       main: false,
       hamburger: true,
       footer: false,
@@ -256,9 +292,9 @@ export class HeaderComponent implements OnInit {
   ];
 
   lang_list = [
-    { code: 'uz', label: 'Узбекский', flag: 'flag_uz.png' },
+    { code: 'uz', label: "O'zbekcha", flag: 'flag_uz.png' },
     { code: 'ru', label: 'Русский', flag: 'flag_ru.png' },
-    { code: 'en', label: 'Английский', flag: 'flag_en.png' },
+    { code: 'en', label: 'English', flag: 'flag_en.png' },
   ];
 
   onSearch(): void {
@@ -288,7 +324,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  onUserActionClick(action: any): void {
+  onUserActionClick(action: any, event?: Event): void {
     switch (action.name) {
       case 'catalog': {
         this.onCatalogDrawerToggle();
@@ -302,6 +338,12 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/wishlist']);
         break;
       }
+      case 'lang': {
+        if (event && this.languagePopover) {
+          this.languagePopover.toggle(event);
+        }
+        break;
+      }
       default: {
         this.router.navigate([action.link]);
         break;
@@ -313,7 +355,100 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  onLanguageSelect(language: Language): void {
+    this.languageService.setLanguage(language.code);
+    this.isLanguagePopoverVisible = false;
+    this.languagePopover.hide();
+
+    // Update the language action with the new flag and title
+    const langAction = this.userActions.find((action) => action.name === 'lang');
+    if (langAction) {
+      langAction.url = `/assets/images/${language.flag}`;
+      langAction.title = language.name;
+    }
+  }
+
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  // Language methods
+  changeLanguage(languageCode: string): void {
+    this.languageService.setLanguage(languageCode);
+  }
+
+  getCurrentLanguageData(): Language | undefined {
+    return this.languageService.getCurrentLanguageData();
+  }
+
+  private updateTranslations(): void {
+    // Update navigation items with translations
+    this.translate.get(['HEADER.CATALOG', 'NAVIGATION.HIT_SALE', 'NAVIGATION.TOP_PRODUCTS', 'NAVIGATION.DEALS', 'NAVIGATION.PUBLICATIONS']).subscribe((translations) => {
+      this.navItems[0].title = translations['HEADER.CATALOG'];
+      this.navItems[1].title = translations['NAVIGATION.HIT_SALE'];
+      this.navItems[2].title = translations['NAVIGATION.TOP_PRODUCTS'];
+      this.navItems[3].title = translations['NAVIGATION.DEALS'];
+      this.navItems[4].title = translations['NAVIGATION.PUBLICATIONS'];
+    });
+
+    // Update user actions with translations
+    this.translate
+      .get([
+        'HEADER.HOME',
+        'HEADER.CATALOG',
+        'HEADER.CART',
+        'HEADER.WISHLIST',
+        'HEADER.COMPARE',
+        'HEADER.PROFILE',
+        'HEADER.PAY',
+        'HEADER.TRACK_ORDER',
+        'HEADER.NEW_PRODUCTS',
+        'HEADER.NEWS',
+        'HEADER.ABOUT',
+      ])
+      .subscribe((translations) => {
+        const homeAction = this.userActions.find((action) => action.name === 'main');
+        if (homeAction) homeAction.title = translations['HEADER.HOME'];
+
+        const catalogAction = this.userActions.find((action) => action.name === 'catalog');
+        if (catalogAction) catalogAction.title = translations['HEADER.CATALOG'];
+
+        const cartAction = this.userActions.find((action) => action.name === 'cart');
+        if (cartAction) cartAction.title = translations['HEADER.CART'];
+
+        const wishlistAction = this.userActions.find((action) => action.name === 'wishlist');
+        if (wishlistAction) wishlistAction.title = translations['HEADER.WISHLIST'];
+
+        const compareAction = this.userActions.find((action) => action.name === 'compare');
+        if (compareAction) compareAction.title = translations['HEADER.COMPARE'];
+
+        const accountAction = this.userActions.find((action) => action.name === 'account');
+        if (accountAction) accountAction.title = translations['HEADER.PROFILE'];
+
+        const payAction = this.userActions.find((action) => action.name === 'pay');
+        if (payAction) payAction.title = translations['HEADER.PAY'];
+
+        const trackAction = this.userActions.find((action) => action.name === 'track');
+        if (trackAction) trackAction.title = translations['HEADER.TRACK_ORDER'];
+
+        const newProductsAction = this.userActions.find((action) => action.name === 'new_products');
+        if (newProductsAction) newProductsAction.title = translations['HEADER.NEW_PRODUCTS'];
+
+        const newsAction = this.userActions.find((action) => action.name === 'news');
+        if (newsAction) newsAction.title = translations['HEADER.NEWS'];
+
+        const aboutAction = this.userActions.find((action) => action.name === 'about');
+        if (aboutAction) aboutAction.title = translations['HEADER.ABOUT'];
+      });
+
+    // Update language action with current language
+    const currentLang = this.languages.find((lang) => lang.code === this.currentLanguage);
+    if (currentLang) {
+      const langAction = this.userActions.find((action) => action.name === 'lang');
+      if (langAction) {
+        langAction.url = `/assets/images/${currentLang.flag}`;
+        langAction.title = currentLang.name;
+      }
+    }
   }
 }

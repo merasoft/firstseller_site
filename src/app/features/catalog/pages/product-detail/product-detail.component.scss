@@ -89,34 +89,10 @@
   }
 }
 
-@media (max-width: 1180px) {
-  .product-main-section {
-    .galary,
-    .product-info {
-      @apply flex-1;
-    }
-  }
-}
-
 @media (max-width: 900px) {
   .product-main-section .galary {
     .thumbnail-images {
       @apply hidden;
     }
-  }
-
-  .cart-button {
-    @apply w-14 flex-none;
-
-    span {
-      display: none;
-    }
-  }
-  .buy-now-button {
-    @apply flex-1;
-  }
-
-  .price-info {
-    @apply flex-col gap-0;
   }
 }

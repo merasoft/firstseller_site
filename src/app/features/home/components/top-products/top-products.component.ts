@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../../shared/models/product.model';
+import { TranslateService } from '@ngx-translate/core';
 
 interface TopProduct {
   id: number;
@@ -22,6 +23,8 @@ interface TopProduct {
   styleUrls: ['./top-products.component.scss'],
 })
 export class TopProductsComponent implements OnInit {
+  constructor(private translate: TranslateService) {}
+
   topProducts: TopProduct[] = [
     {
       id: 11,

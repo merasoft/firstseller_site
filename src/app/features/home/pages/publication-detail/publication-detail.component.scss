@@ -1,0 +1,320 @@
+// Publication Detail Component Styles
+
+// Line clamp utility for text truncation
+.line-clamp-2 {
+  @apply overflow-hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+// Prose styling for article content
+.prose {
+  color: theme('colors.gray.700');
+  line-height: 1.75;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-gray-900 font-bold mb-4 mt-8;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  h4 {
+    @apply text-lg;
+  }
+
+  p {
+    @apply mb-4;
+  }
+
+  ul,
+  ol {
+    @apply mb-4 pl-6;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+
+  li {
+    @apply mb-2;
+  }
+
+  blockquote {
+    @apply border-l-4 border-primary-500 pl-6 py-4 my-6 bg-gray-50 rounded-r-xl italic text-gray-800;
+  }
+
+  img {
+    @apply rounded-xl max-w-full h-auto my-6 shadow-sm;
+  }
+
+  a {
+    @apply text-primary-600 hover:text-primary-700 underline transition-colors;
+  }
+
+  code {
+    @apply bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono;
+  }
+
+  pre {
+    @apply bg-gray-900 text-gray-100 p-4 rounded-xl overflow-x-auto my-6;
+
+    code {
+      @apply bg-transparent text-inherit p-0;
+    }
+  }
+
+  table {
+    @apply w-full border-collapse border border-gray-300 my-6;
+
+    th,
+    td {
+      @apply border border-gray-300 px-4 py-2 text-left;
+    }
+
+    th {
+      @apply bg-gray-50 font-semibold;
+    }
+  }
+
+  hr {
+    @apply border-gray-300 my-8;
+  }
+}
+
+// Loading animation
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+// Enhanced card hover effects for related publications
+.group {
+  &:hover {
+    .group-hover\:scale-110 {
+      transform: scale(1.1);
+    }
+
+    .group-hover\:text-primary-600 {
+      color: theme('colors.primary.600');
+    }
+  }
+}
+
+// Custom smooth transitions
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.duration-700 {
+  transition-duration: 700ms;
+}
+
+// Category badge styles
+.category-badge-news {
+  @apply bg-blue-500;
+}
+
+.category-badge-reviews {
+  @apply bg-green-500;
+}
+
+.category-badge-tutorials {
+  @apply bg-purple-500;
+}
+
+.category-badge-comparisons {
+  @apply bg-orange-500;
+}
+
+.category-badge-tips {
+  @apply bg-pink-500;
+}
+
+.category-badge-technology {
+  @apply bg-indigo-500;
+}
+
+// Back button hover animation
+button {
+  @apply transition-colors;
+
+  &:hover {
+    svg {
+      @apply transition-transform duration-200;
+      transform: translateX(-2px);
+    }
+  }
+}
+
+// Enhanced shadow effects
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.hover\:shadow-lg:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+// Transform effects
+.hover\:-translate-y-1:hover {
+  transform: translateY(-0.25rem);
+}
+
+// Backdrop blur for better glass effect
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .prose {
+    @apply text-sm;
+    line-height: 1.6;
+
+    h1 {
+      @apply text-xl mb-3 mt-6;
+    }
+
+    h2 {
+      @apply text-lg mb-3 mt-6;
+    }
+
+    h3 {
+      @apply text-base mb-2 mt-4;
+    }
+
+    h4 {
+      @apply text-sm mb-2 mt-4;
+    }
+
+    p {
+      @apply text-sm mb-3;
+    }
+
+    ul,
+    ol {
+      @apply text-sm mb-3 pl-4;
+    }
+
+    li {
+      @apply mb-1;
+    }
+
+    blockquote {
+      @apply text-sm pl-4 py-3 my-4;
+    }
+
+    code {
+      @apply text-sm px-1.5 py-0.5;
+    }
+
+    pre {
+      @apply p-3 my-4 text-sm;
+    }
+
+    table {
+      @apply text-sm my-4;
+
+      th,
+      td {
+        @apply px-2 py-1.5;
+      }
+    }
+
+    hr {
+      @apply my-6;
+    }
+  }
+
+  // Additional mobile adjustments
+  .prose-lg {
+    @apply text-sm;
+  }
+
+  // Reduce padding on mobile for content container
+  .bg-white.rounded-2xl.shadow-sm {
+    .p-6 {
+      @apply p-4;
+    }
+
+    .sm\:p-8 {
+      @apply p-4;
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .prose {
+    color: black !important;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: black !important;
+    }
+
+    a {
+      color: black !important;
+      text-decoration: underline !important;
+    }
+
+    blockquote {
+      border-left: 2px solid black !important;
+      background: transparent !important;
+    }
+  }
+
+  button,
+  .shadow-sm,
+  .hover\:shadow-lg {
+    display: none !important;
+  }
+}

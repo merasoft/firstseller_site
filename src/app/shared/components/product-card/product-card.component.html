@@ -5,7 +5,7 @@
     <!-- Badge -->
     <div *ngIf="product.badge" class="absolute top-1 left-2 sm:top-4 sm:left-4 z-10">
       <span class="inline-block text-[10px] sm:text-xs font-medium sm:font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-white shadow-sm" [ngClass]="getBadgeClasses(product.badgeType)">
-        {{ product.badge }}
+        {{ getTranslatedBadge(product.badge, product.badgeType) }}
       </span>
     </div>
 
@@ -30,11 +30,11 @@
 
       <!-- Favorite & Compare -->
       <div class="hidden md:flex flex-col gap-2 absolute top-3 right-3 translate-x-14 group-hover/image:translate-x-0 transition-all duration-300">
-        <button (click)="$event.preventDefault(); onAddToFavorites(product)" class="group/fav action-button" [class.active]="isInWishlist()" title="В избранное">
+        <button (click)="$event.preventDefault(); onAddToFavorites(product)" class="group/fav action-button" [class.active]="isInWishlist()" [title]="'PRODUCTS.ADD_TO_FAVORITES_TITLE' | translate">
           <i class="text-base transition-colors" [class]="isInWishlist() ? 'text-red-500 pi pi-heart-fill' : 'text-gray-700 group-hover/fav:text-red-500 pi pi-heart'"></i>
         </button>
 
-        <button (click)="$event.preventDefault(); onAddToCompare(product)" class="group/comp action-button" [class.active]="isInCompare()" title="Сравнить">
+        <button (click)="$event.preventDefault(); onAddToCompare(product)" class="group/comp action-button" [class.active]="isInCompare()" [title]="'PRODUCTS.ADD_TO_COMPARE_TITLE' | translate">
           <i class="text-base transition-colors" [class]="isInCompare() ? 'text-blue-500 fa-solid fa-scale-balanced' : 'text-gray-700 group-hover/comp:text-blue-500 fa-solid fa-scale-balanced'"></i>
         </button>
       </div>
@@ -75,19 +75,21 @@
           </div>
         </div>
         <span class="text-xs text-gray-500">
-          ( {{ product.reviewsCount }} <span class="hidden sm:inline">{{ product.reviewsCount === 1 ? 'отзыв' : 'отзыва' }} </span>)
+          ( {{ product.reviewsCount }} <span class="hidden sm:inline">{{ getReviewText(product.reviewsCount) }} </span>)
         </span>
       </div>
 
       <!-- Price -->
       <div class="space-y-1 !mt-auto pt-2">
-        <div *ngIf="product.oldPrice" class="text-xs sm:text-sm text-gray-500 line-through"> {{ formatPrice(product.oldPrice!) }} сум </div>
-        <div class="text-base sm:text-lg font-bold text-gray-900"> {{ formatPrice(product.price) }} сум </div>
+        <div *ngIf="product.oldPrice" class="text-xs sm:text-sm text-gray-500 line-through"> {{ formatPrice(product.oldPrice!) }} {{ getCurrency() }} </div>
+        <div class="text-base sm:text-lg font-bold text-gray-900"> {{ formatPrice(product.price) }} {{ getCurrency() }} </div>
       </div>
 
       <!-- Monthly Payment -->
       <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-md p-1 text-center">
-        <div class="text-orange-700 font-normal sm:font-semibold text-[11px] sm:text-sm"> {{ formatPrice(product.monthlyPayment) }} сум × {{ product.installmentMonths }} мес </div>
+        <div class="text-orange-700 font-normal sm:font-semibold text-[11px] sm:text-sm">
+          {{ formatPrice(product.monthlyPayment) }} {{ getCurrency() }} × {{ product.installmentMonths }} {{ 'PRODUCTS.MONTHLY_PAYMENT' | translate }}
+        </div>
       </div>
     </div>
   </a>
@@ -99,12 +101,13 @@
       <button
         (click)="onBuyOneClick(product)"
         class="flex-1 h-8 sm:h-9 bg-primary-600 hover:bg-primary-700 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02]">
-        Купить
+        {{ 'PRODUCTS.BUY_NOW' | translate }}
       </button>
 
       <button
         (click)="onAddToCart(product)"
-        class="w-10 h-8 sm:h-9 bg-green-500 hover:bg-green-600 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02] flex items-center justify-center gap-1">
+        class="w-10 h-8 sm:h-9 bg-green-500 hover:bg-green-600 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02] flex items-center justify-center gap-1"
+        [title]="'PRODUCTS.ADD_TO_CART_SHORT' | translate">
         <i class="pi pi-shopping-cart"></i>
       </button>
     </div>

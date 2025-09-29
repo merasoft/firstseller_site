@@ -9,7 +9,7 @@
     <div *ngIf="isLoading" class="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50 transition-opacity duration-300">
       <div class="flex flex-col items-center gap-3">
         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-        <span class="text-sm text-gray-600">Загрузка категории...</span>
+        <span class="text-sm text-gray-600">{{ 'CATALOG.LOADING_CATEGORY' | translate }}</span>
       </div>
     </div>
 
@@ -25,7 +25,7 @@
         <aside class="filter-container col-span-2 xl:col-span-1">
           <!-- Subcategories List -->
           <div *ngIf="subcategories.length > 0" class="bg-white rounded-2xl shadow border border-gray-100 p-4 mb-6">
-            <h3 class="text-base font-semibold text-gray-900 mb-4 px-2 pb-4 border-b border-gray-200">Категории</h3>
+            <h3 class="text-base font-semibold text-gray-900 mb-4 px-2 pb-4 border-b border-gray-200">{{ 'CATALOG.CATEGORIES' | translate }}</h3>
             <div class="flex flex-col gap-2">
               <a
                 *ngFor="let subcategory of subcategories"
@@ -44,8 +44,8 @@
           <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-4">
             <!-- Filter Header -->
             <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
-              <h3 class="text-lg font-bold text-gray-900">Фильтры</h3>
-              <button class="text-sm font-medium text-primary-600 hover:text-primary-700" (click)="clearFilters()"> Сбросить </button>
+              <h3 class="text-lg font-bold text-gray-900">{{ 'CATALOG.FILTERS' | translate }}</h3>
+              <button class="text-sm font-medium text-primary-600 hover:text-primary-700" (click)="clearFilters()">{{ 'CATALOG.FILTERS_RESET' | translate }}</button>
             </div>
 
             <!-- Filters Accordion -->
@@ -53,14 +53,14 @@
               <!-- Price Filter -->
               <p-accordion-panel value="price" class="mb-4">
                 <p-accordion-header>
-                  <span class="text-sm font-semibold text-gray-900">Цена</span>
+                  <span class="text-sm font-semibold text-gray-900">{{ 'CATALOG.PRICE_FILTER' | translate }}</span>
                 </p-accordion-header>
                 <p-accordion-content>
                   <div class="space-y-4 px-2 py-4">
                     <!-- Price Inputs -->
                     <div class="grid grid-cols-2 gap-3">
                       <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">От</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ 'COMMON.FROM' | translate }}</label>
                         <p-inputNumber
                           [(ngModel)]="filters[0].currentMin"
                           (ngModelChange)="onPriceRangeChange($event)"
@@ -72,7 +72,7 @@
                         </p-inputNumber>
                       </div>
                       <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">До</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ 'COMMON.TO' | translate }}</label>
                         <p-inputNumber
                           [(ngModel)]="filters[0].currentMax"
                           (ngModelChange)="onPriceRangeChange($event)"
@@ -135,16 +135,16 @@
                   <p-select [(ngModel)]="selectedSort" [options]="sortOptions" optionLabel="label" optionValue="value" styleClass="min-w-[160px] label-xs" (ngModelChange)="onSortChange()" />
                   <button class="" (click)="filtersOpen = true" class="filter-button" [ngClass]="{ active: filtersOpen }">
                     <i class="pi pi-filter text-xs"></i>
-                    <span>Фильтры</span>
+                    <span>{{ 'CATALOG.FILTERS' | translate }}</span>
                   </button>
                 </div>
               </div>
 
               <div class="flex items-center flex-wrap gap-2">
-                <p class="text-sm text-gray-600 mr-2">{{ totalProducts }} товаров в наличии</p>
-                <button *ngIf="selectedFilters.length > 0" (click)="clearFilters()" class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 rounded-full border border-primary-700"
-                  >Сбросить</button
-                >
+                <p class="text-sm text-gray-600 mr-2">{{ totalProducts }} {{ 'CATALOG.PRODUCTS_IN_STOCK' | translate }}</p>
+                <button *ngIf="selectedFilters.length > 0" (click)="clearFilters()" class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 rounded-full border border-primary-700">{{
+                  'CATALOG.RESET_FILTERS' | translate
+                }}</button>
                 <ng-container *ngFor="let filter of selectedFilters">
                   <p-chip
                     *ngFor="let label of filter.values"
@@ -185,7 +185,7 @@
             [rowsPerPageOptions]="[24, 48, 96]"
             [first]="0"
             [showCurrentPageReport]="true"
-            currentPageReportTemplate="Показано {first} - {last} из {totalRecords} товаров"
+            [currentPageReportTemplate]="'CATALOG.PAGINATION.SHOWING' | translate"
             [pageLinkSize]="mobileScreen ? 3 : 4"
             [showFirstLastIcon]="!mobileScreen"
             firstIcon="pi pi-angle-double-left"
@@ -207,7 +207,7 @@
 <!-- Mobile Filters Overlay -->
 <p-drawer [(visible)]="filtersOpen" [blockScroll]="true" position="right" styleClass="filter-drawer w-88 sm:w-96" (onShow)="onMobileFilterOpen()">
   <ng-template #header>
-    <h3 class="text-xl font-semibold text-gray-900">Фильтры</h3>
+    <h3 class="text-xl font-semibold text-gray-900">{{ 'CATALOG.MOBILE.FILTERS_TITLE' | translate }}</h3>
   </ng-template>
   <ng-template #content>
     <div class="overflow-y-auto">
@@ -215,14 +215,14 @@
         <!-- Price Filter -->
         <p-accordion-panel value="price" class="mb-4">
           <p-accordion-header>
-            <span class="text-sm font-semibold text-gray-900">Цена</span>
+            <span class="text-sm font-semibold text-gray-900">{{ 'CATALOG.PRICE_FILTER' | translate }}</span>
           </p-accordion-header>
           <p-accordion-content>
             <div class="space-y-4 px-2 py-4">
               <!-- Price Inputs -->
               <div class="grid grid-cols-2 gap-3" *ngIf="tempFilters.length > 0">
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">От</label>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">{{ 'COMMON.FROM' | translate }}</label>
                   <p-inputNumber
                     [(ngModel)]="tempFilters[0].currentMin"
                     (ngModelChange)="onTempPriceRangeChange($event)"
@@ -234,7 +234,7 @@
                   </p-inputNumber>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">До</label>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">{{ 'COMMON.TO' | translate }}</label>
                   <p-inputNumber
                     [(ngModel)]="tempFilters[0].currentMax"
                     (ngModelChange)="onTempPriceRangeChange($event)"
@@ -260,7 +260,7 @@
           <p-accordion-header>
             <div class="flex items-center justify-between w-full">
               <div class="flex items-center gap-3">
-                <span class="text-sm font-semibold text-gray-900">Категории</span>
+                <span class="text-sm font-semibold text-gray-900">{{ 'CATALOG.CATEGORIES' | translate }}</span>
               </div>
             </div>
           </p-accordion-header>
@@ -315,8 +315,8 @@
       </p-accordion>
 
       <div class="flex items-center justify-end gap-3 pt-4 mt-4 border-t border-t-gray-200">
-        <button type="button" class="text-xs px-4 py-2 rounded-md border border-gray-200" (click)="onMobileFilterCancel()"> Отмена </button>
-        <button type="button" class="text-xs px-4 py-2 rounded-md bg-primary-600 text-white" (click)="onMobileFilterApply()"> Применить </button>
+        <button type="button" class="text-xs px-4 py-2 rounded-md border border-gray-200" (click)="onMobileFilterCancel()">{{ 'CATALOG.MOBILE.CANCEL' | translate }}</button>
+        <button type="button" class="text-xs px-4 py-2 rounded-md bg-primary-600 text-white" (click)="onMobileFilterApply()">{{ 'CATALOG.MOBILE.APPLY' | translate }}</button>
       </div>
     </div>
   </ng-template>

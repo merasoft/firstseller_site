@@ -1,0 +1,252 @@
+<!-- Publications Page -->
+<div class="min-h-screen flex flex-col">
+  <app-header></app-header>
+
+  <main class="flex-1 bg-gray-50">
+    <!-- Header Section -->
+    <section class="bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400 py-16 sm:py-20">
+      <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4"> {{ 'PUBLICATIONS.TITLE' | translate }} </h1>
+          <p class="text-lg sm:text-xl text-primary-100 max-w-3xl mx-auto"> {{ 'PUBLICATIONS.SUBTITLE' | translate }} </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-12 sm:py-16">
+      <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Filters and Search -->
+        <div class="mb-12">
+          <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
+            <!-- Category Filters -->
+            <div class="flex flex-wrap gap-2">
+              <button
+                *ngFor="let category of categories"
+                (click)="setActiveCategory(category)"
+                class="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
+                [ngClass]="{
+                  'bg-primary-600 text-white shadow-green': activeCategory === category,
+                  'bg-white text-gray-700 border border-gray-200 hover:bg-primary-50 hover:border-primary-300': activeCategory !== category
+                }">
+                {{ category | translate }}
+              </button>
+            </div>
+
+            <!-- Search -->
+            <div class="relative flex-shrink-0 w-full lg:w-auto">
+              <input
+                type="text"
+                [(ngModel)]="searchQuery"
+                (input)="onSearchChange()"
+                [placeholder]="'PUBLICATIONS.SEARCH_PLACEHOLDER' | translate"
+                class="w-full lg:w-80 pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all duration-300" />
+              <svg class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Results Count -->
+          <div class="text-gray-600 text-sm">
+            {{ 'PUBLICATIONS.FOUND_PUBLICATIONS' | translate }}: <span class="font-semibold text-primary-600">{{ filteredPublications.length }}</span>
+          </div>
+        </div>
+
+        <!-- Featured Publications -->
+        <div *ngIf="featuredPublications.length > 0" class="mb-16">
+          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">{{ 'PUBLICATIONS.FEATURED' | translate }}</h2>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <article
+              *ngFor="let publication of featuredPublications"
+              (click)="onPublicationClick(publication)"
+              class="group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-hover transition-all duration-500 hover:-translate-y-1">
+              <div class="relative h-64 sm:h-72 overflow-hidden">
+                <img [src]="publication.image" [alt]="publication.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+                <!-- Category Badge -->
+                <div class="absolute top-4 left-4">
+                  <span class="inline-block bg-primary-600 text-white px-3 py-1.5 rounded-full text-sm font-medium shadow-lg">
+                    {{ publication.category | translate }}
+                  </span>
+                </div>
+
+                <!-- Featured Badge -->
+                <div class="absolute top-4 right-4">
+                  <span class="inline-block bg-accent-yellow text-gray-900 px-3 py-1.5 rounded-full text-sm font-bold shadow-lg"> ⭐ {{ 'PUBLICATIONS.FEATURED' | translate }} </span>
+                </div>
+              </div>
+
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
+                  {{ publication.title }}
+                </h3>
+
+                <p *ngIf="publication.description" class="text-gray-600 mb-4 line-clamp-3">
+                  {{ publication.description }}
+                </p>
+
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    {{ publication.date }}
+                  </div>
+
+                  <div *ngIf="publication.readTime" class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    {{ publication.readTime }} {{ 'PUBLICATIONS.MIN_READ' | translate }}
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- All Publications Grid -->
+        <div class="mb-12">
+          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">{{ 'PUBLICATIONS.ALL_PUBLICATIONS' | translate }}</h2>
+
+          <!-- Loading State -->
+          <div *ngIf="isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8]" class="animate-pulse">
+              <div class="bg-gray-200 rounded-2xl h-80"></div>
+            </div>
+          </div>
+
+          <!-- Publications Grid -->
+          <div *ngIf="!isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <article
+              *ngFor="let publication of paginatedPublications"
+              (click)="onPublicationClick(publication)"
+              class="group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-hover transition-all duration-300 hover:-translate-y-1 h-96">
+              <!-- Image Container -->
+              <div class="relative h-48 overflow-hidden">
+                <img [src]="publication.image" [alt]="publication.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+
+                <!-- Category Badge -->
+                <div class="absolute top-3 left-3">
+                  <span class="inline-block text-xs font-medium px-2.5 py-1 rounded-full text-white shadow-lg" [ngClass]="getCategoryBadgeClass(publication.category)">
+                    {{ publication.category | translate }}
+                  </span>
+                </div>
+
+                <!-- Date Badge -->
+                <div class="absolute bottom-3 right-3">
+                  <span class="inline-block bg-white/90 backdrop-blur-sm text-gray-800 px-2.5 py-1 rounded-full text-xs font-medium shadow-lg">
+                    {{ formatDate(publication.date) }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Content -->
+              <div class="p-4 flex flex-col justify-between flex-1">
+                <div>
+                  <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
+                    {{ publication.title }}
+                  </h3>
+
+                  <p *ngIf="publication.description" class="text-gray-600 text-sm mb-3 line-clamp-2">
+                    {{ publication.description }}
+                  </p>
+                </div>
+
+                <div class="flex items-center justify-between text-xs text-gray-500 mt-auto">
+                  <div *ngIf="publication.author" class="flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    {{ publication.author }}
+                  </div>
+
+                  <div *ngIf="publication.readTime" class="flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    {{ publication.readTime }}м
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="!isLoading && filteredPublications.length === 0" class="text-center py-16">
+            <div class="max-w-md mx-auto">
+              <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+              </svg>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Публикации не найдены</h3>
+              <p class="text-gray-500">Попробуйте изменить критерии поиска или выберите другую категорию</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div *ngIf="totalPages > 1" class="flex justify-center items-center gap-2">
+          <button
+            (click)="goToPage(currentPage - 1)"
+            [disabled]="currentPage === 1"
+            class="p-2 rounded-xl border border-gray-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+
+          <div class="flex gap-1">
+            <button
+              *ngFor="let page of getVisiblePages()"
+              (click)="goToPage(page)"
+              class="w-10 h-10 rounded-xl font-medium transition-all duration-300"
+              [class.bg-primary-600]="page === currentPage"
+              [class.text-white]="page === currentPage"
+              [class.shadow-green]="page === currentPage"
+              [class.bg-white]="page !== currentPage"
+              [class.text-gray-700]="page !== currentPage"
+              [class.border]="page !== currentPage"
+              [class.border-gray-200]="page !== currentPage"
+              [class.hover:bg-primary-50]="page !== currentPage"
+              [class.hover:border-primary-300]="page !== currentPage">
+              {{ page }}
+            </button>
+          </div>
+
+          <button
+            (click)="goToPage(currentPage + 1)"
+            [disabled]="currentPage === totalPages"
+            class="p-2 rounded-xl border border-gray-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Subscription Section -->
+    <section class="bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400 py-16">
+      <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4"> {{ 'PUBLICATIONS.NEWSLETTER_TITLE' | translate }} </h2>
+        <p class="text-primary-100 mb-8 max-w-2xl mx-auto"> {{ 'PUBLICATIONS.NEWSLETTER_DESCRIPTION' | translate }} </p>
+
+        <div class="max-w-md mx-auto">
+          <div class="flex gap-2">
+            <input type="email" [placeholder]="'PUBLICATIONS.EMAIL_PLACEHOLDER' | translate" class="flex-1 px-4 py-3 rounded-xl border-0 focus:ring-2 focus:ring-primary-300 outline-none" />
+            <button class="bg-white text-primary-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-colors"> {{ 'PUBLICATIONS.SUBSCRIBE' | translate }} </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <app-footer></app-footer>
+</div>

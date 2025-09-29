@@ -4,7 +4,7 @@
   <ng-template #header>
     <div class="flex items-center justify-between w-full">
       <h3 class="text-xl font-semibold text-gray-900">
-        Корзина
+        {{ 'CART.TITLE' | translate }}
         <span *ngIf="cart.totalItems > 0" class="text-sm text-gray-500 font-normal">({{ cart.totalItems }})</span>
       </h3>
     </div>
@@ -23,9 +23,11 @@
               stroke-width="1.5"
               d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0H17M9 19.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM20.5 19.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
           </svg>
-          <h3 class="text-lg font-medium text-gray-900 mb-2">Корзина пуста</h3>
-          <p class="text-gray-600 mb-6">Добавьте товары для оформления заказа</p>
-          <button (click)="continueShopping()" class="bg-primary-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-primary-700 transition-colors"> К каталогу </button>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">{{ 'CART.EMPTY' | translate }}</h3>
+          <p class="text-gray-600 mb-6">{{ 'CART.EMPTY_DESCRIPTION' | translate }}</p>
+          <button (click)="continueShopping()" class="bg-primary-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-primary-700 transition-colors">
+            {{ 'CART.GO_TO_CATALOG' | translate }}
+          </button>
         </div>
       </div>
 
@@ -87,7 +89,7 @@
       <div *ngIf="cart.items.length > 0" class="border-t border-gray-200 pt-4 mt-4">
         <!-- Subtotal -->
         <div class="flex justify-between items-center mb-4">
-          <span class="text-base font-medium text-gray-900">Итого:</span>
+          <span class="text-base font-medium text-gray-900">{{ 'CART.TOTAL' | translate }}:</span>
           <span class="text-xl font-bold text-gray-900">{{ formatPrice(cart.subtotal) }} сум</span>
         </div>
 
@@ -98,15 +100,19 @@
               <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
             </svg>
             <p class="text-xs text-blue-800">
-              До бесплатной доставки: <strong>{{ formatPrice(500000 - cart.subtotal) }} сум</strong>
+              {{ 'CART.FREE_SHIPPING_NOTICE' | translate }} <strong>{{ formatPrice(500000 - cart.subtotal) }} сум</strong>
             </p>
           </div>
         </div>
 
         <!-- Action Buttons -->
         <div class="space-y-3">
-          <button (click)="proceedToCheckout()" class="w-full bg-primary-600 text-white py-3 px-4 rounded-xl font-semibold hover:bg-primary-700 transition-colors"> Оформить заказ </button>
-          <button (click)="viewCart()" class="w-full border border-gray-200 text-gray-900 py-2.5 px-4 rounded-xl font-medium hover:bg-gray-50 transition-colors"> Перейти в корзину </button>
+          <button (click)="proceedToCheckout()" class="w-full bg-primary-600 text-white py-3 px-4 rounded-xl font-semibold hover:bg-primary-700 transition-colors">
+            {{ 'CART.CHECKOUT' | translate }}
+          </button>
+          <button (click)="viewCart()" class="w-full border border-gray-200 text-gray-900 py-2.5 px-4 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+            {{ 'CART.VIEW_CART' | translate }}
+          </button>
         </div>
       </div>
     </div>

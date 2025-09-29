@@ -2,6 +2,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { Product } from '../../../../shared/models/product.model';
 import { CompareService } from '../../../../shared/services/compare.service';
 import { CartService } from '../../../../shared/services/cart.service';
@@ -14,17 +15,25 @@ import { CompareItem, CompareList } from '../../../../shared/models/compare.mode
   styleUrls: ['./compare.component.scss'],
 })
 export class CompareComponent implements OnInit, OnDestroy {
-  pageTitle = 'Сравнение товаров';
+  pageTitle = '';
   compare: CompareList = { items: [], totalItems: 0, lastUpdated: new Date() };
   compareProducts: Product[] = [];
   maxCompareItems = 4;
   private destroy$ = new Subject<void>();
 
-  constructor(private compareService: CompareService, private cartService: CartService, private router: Router) {}
+  constructor(private compareService: CompareService, private cartService: CartService, private router: Router, private translate: TranslateService) {}
 
   ngOnInit(): void {
+    this.pageTitle = this.translate.instant('COMPARE.TITLE');
     this.maxCompareItems = this.compareService.getMaxItems();
     this.loadCompareData();
+    this.subscribeToLanguageChanges();
+  }
+
+  private subscribeToLanguageChanges(): void {
+    this.translate.onLangChange.subscribe(() => {
+      this.pageTitle = this.translate.instant('COMPARE.TITLE');
+    });
   }
 
   ngOnDestroy(): void {

@@ -1,9 +1,11 @@
 // src/app/features/catalog/pages/product-detail/product-detail.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { Subject, takeUntil } from 'rxjs';
 import { CartService } from '../../../../shared/services/cart.service';
 import { ProductActionsService } from '../../../../shared/services/product-actions.service';
+import { TranslateService } from '@ngx-translate/core';
 
 interface ProductVariant {
   id: string;
@@ -42,8 +44,9 @@ interface PaymentProvider {
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss'],
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductDetailComponent implements OnInit, OnDestroy {
   private _cachedStars: Map<number, ('full' | 'empty' | 'half')[]> = new Map();
+  private destroy$ = new Subject<void>();
 
   productId: string = '';
   selectedImageIndex = 0;
@@ -51,7 +54,7 @@ export class ProductDetailComponent implements OnInit {
   selectedColor = '';
   selectedMemory = '';
   activeTab = 'description';
-  quantity = 1;
+  quantity = 0;
 
   // PrimeNG Breadcrumb
   breadcrumbItems: MenuItem[] = [];
@@ -180,15 +183,29 @@ export class ProductDetailComponent implements OnInit {
   selectedPaymentProvider = this.paymentProviders[0];
 
   tabs = [
-    { id: 'description', name: 'О товаре', active: true },
-    { id: 'specifications', name: 'Характеристики', active: false },
-    { id: 'reviews', name: 'Отзывы', active: false },
-    { id: 'payment', name: 'Оплата', active: false },
-    { id: 'delivery', name: 'Доставка', active: false },
-    { id: 'discounts', name: 'Скидки и бонусы', active: false },
+    { id: 'description', name: '', active: true },
+    { id: 'specifications', name: '', active: false },
+    { id: 'reviews', name: '', active: false },
+    { id: 'payment', name: '', active: false },
+    { id: 'delivery', name: '', active: false },
+    { id: 'discounts', name: '', active: false },
   ];
 
-  constructor(private route: ActivatedRoute, private cartService: CartService, private productActions: ProductActionsService) {}
+  constructor(private route: ActivatedRoute, private cartService: CartService, private productActions: ProductActionsService, private translate: TranslateService) {
+    this.initializeTabNames();
+    this.translate.onLangChange.subscribe(() => {
+      this.initializeTabNames();
+    });
+  }
+
+  initializeTabNames(): void {
+    this.tabs[0].name = this.translate.instant('PRODUCTS.TABS.ABOUT_PRODUCT');
+    this.tabs[1].name = this.translate.instant('PRODUCTS.TABS.SPECIFICATIONS');
+    this.tabs[2].name = this.translate.instant('PRODUCTS.TABS.REVIEWS');
+    this.tabs[3].name = this.translate.instant('PRODUCTS.TABS.PAYMENT');
+    this.tabs[4].name = this.translate.instant('PRODUCTS.TABS.DELIVERY');
+    this.tabs[5].name = this.translate.instant('PRODUCTS.TABS.DISCOUNTS_BONUSES');
+  }
 
   loadProduct(): void {
     // Load product data from API
@@ -206,11 +223,13 @@ export class ProductDetailComponent implements OnInit {
   selectColor(color: string): void {
     this.selectedColor = color;
     this.updateSelectedVariant();
+    this.updateQuantityFromCart(); // Update quantity when variant changes
   }
 
   selectMemory(memory: string): void {
     this.selectedMemory = memory;
     this.updateSelectedVariant();
+    this.updateQuantityFromCart(); // Update quantity when variant changes
   }
 
   updateSelectedVariant(): void {
@@ -227,30 +246,74 @@ export class ProductDetailComponent implements OnInit {
 
   increaseQuantity(): void {
     this.quantity++;
+    this.syncWithCart();
   }
 
   decreaseQuantity(): void {
-    if (this.quantity > 1) {
+    if (this.quantity > 0) {
       this.quantity--;
+      this.syncWithCart();
     }
   }
 
-  addToCart(): void {
-    const cartItem = {
-      productId: parseInt(this.productId) || 1,
-      name: this.product.name,
-      image: this.product.images[0],
-      price: this.selectedVariant?.price || this.product.variants[0].price,
-      oldPrice: this.selectedVariant?.oldPrice || this.product.variants[0].oldPrice,
-      quantity: this.quantity,
-      selectedVariant: {
-        color: this.selectedColor,
-        memory: this.selectedMemory,
-      },
-      inStock: this.selectedVariant?.inStock || this.product.variants[0].inStock,
-    };
+  private syncWithCart(): void {
+    // Find the current cart item based on productId and variant
+    const currentCart = this.cartService.getCart();
+    const existingItem = currentCart.items.find(
+      (item) =>
+        item.productId === (parseInt(this.productId) || 1) &&
+        JSON.stringify(item.selectedVariant) ===
+          JSON.stringify({
+            color: this.selectedColor,
+            memory: this.selectedMemory,
+          })
+    );
 
-    this.cartService.addToCart(cartItem);
+    if (existingItem && this.quantity > 0) {
+      // Update existing item quantity
+      this.cartService.updateQuantity(existingItem.id, this.quantity);
+    } else if (existingItem && this.quantity === 0) {
+      // Remove item if quantity is 0
+      this.cartService.removeFromCart(existingItem.id);
+    }
+    // If no existing item and quantity > 0, addToCart will be called from the cart button
+  }
+
+  private updateQuantityFromCart(): void {
+    // Update local quantity based on cart state
+    const currentCart = this.cartService.getCart();
+    const existingItem = currentCart.items.find(
+      (item) =>
+        item.productId === (parseInt(this.productId) || 1) &&
+        JSON.stringify(item.selectedVariant) ===
+          JSON.stringify({
+            color: this.selectedColor,
+            memory: this.selectedMemory,
+          })
+    );
+
+    this.quantity = existingItem ? existingItem.quantity : 0;
+  }
+
+  addToCart(): void {
+    if (this.quantity === 0) {
+      this.quantity++;
+      const cartItem = {
+        productId: parseInt(this.productId) || 1,
+        name: this.product.name,
+        image: this.product.images[0],
+        price: this.selectedVariant?.price || this.product.variants[0].price,
+        oldPrice: this.selectedVariant?.oldPrice || this.product.variants[0].oldPrice,
+        quantity: this.quantity,
+        selectedVariant: {
+          color: this.selectedColor,
+          memory: this.selectedMemory,
+        },
+        inStock: this.selectedVariant?.inStock || this.product.variants[0].inStock,
+      };
+
+      this.cartService.addToCart(cartItem);
+    }
   }
 
   buyNow(): void {
@@ -381,5 +444,37 @@ export class ProductDetailComponent implements OnInit {
     this.selectedVariant = this.product.variants[0];
     this.selectedColor = this.selectedVariant.color;
     this.selectedMemory = this.selectedVariant.memory;
+
+    // Initialize quantity from cart
+    this.updateQuantityFromCart();
+
+    // Subscribe to cart changes to keep quantity in sync
+    this.cartService.cart$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.updateQuantityFromCart();
+    });
+  }
+
+  // Translation utility methods
+  getCurrency(): string {
+    return this.translate.instant('COMMON.CURRENCY');
+  }
+
+  getReviewText(count: number): string {
+    if (count === 1) {
+      return this.translate.instant('PRODUCTS.REVIEW_SINGULAR');
+    } else if (count >= 2 && count <= 4) {
+      return this.translate.instant('PRODUCTS.REVIEW_FEW');
+    } else {
+      return this.translate.instant('PRODUCTS.REVIEW_MANY');
+    }
+  }
+
+  getBonusText(): string {
+    return this.translate.instant('PRODUCTS.BONUS_POINTS');
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

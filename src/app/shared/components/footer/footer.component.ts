@@ -1,5 +1,6 @@
 // src/app/shared/components/footer/footer.component.ts
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-footer',
@@ -8,20 +9,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
+  constructor(private translateService: TranslateService) {}
   // Footer links sections
   footerSections = [
     {
-      title: 'Быстрые ссылки',
+      title: 'FOOTER.QUICK_LINKS',
       links: [
-        { name: 'О нас', url: '/about' },
-        { name: 'Доставка', url: '/delivery' },
-        { name: 'Способы оплаты', url: '/payment' },
-        { name: 'Гарантия', url: '/warranty' },
-        { name: 'Контакты', url: '/contact' },
+        { name: 'FOOTER.ABOUT', url: '/about' },
+        { name: 'FOOTER.DELIVERY', url: '/delivery' },
+        { name: 'FOOTER.PAYMENT', url: '/payment' },
+        { name: 'FOOTER.WARRANTY', url: '/warranty' },
+        { name: 'FOOTER.CONTACT', url: '/contact' },
       ],
     },
     {
-      title: 'Категории',
+      title: 'FOOTER.CATEGORIES',
       links: [
         { name: 'Телефоны и гаджеты', url: '/catalog/smartphones' },
         { name: 'Ноутбуки', url: '/catalog/laptops' },
