@@ -60,9 +60,9 @@
       <!-- Product Main Section -->
       <div class="max-w-screen-2xl flex flex-col xl:flex-row items-stretch gap-6 mb-8">
         <div class="flex-1 md:bg-white rounded-3xl md:shadow-sm md:p-6">
-          <div class="product-main-section flex flex-col md:flex-row items-start gap-8">
+          <div class="product-main-section flex flex-col md:flex-row md:items-start gap-8">
             <!-- Product Images -->
-            <div class="galary flex-1 flex gap-4">
+            <div class="galary md:flex-[5] flex gap-4">
               <!-- Thumbnail Images Gallery (Left Side) -->
               <div class="thumbnail-images flex-shrink-0 flex flex-col gap-2 overflow-x-hidden overflow-y-auto pr-1 scrollable">
                 <button
@@ -78,7 +78,7 @@
               </div>
 
               <!-- Main Image Carousel (Right Side) -->
-              <div class="main-image md:aspect-[5/6] h-80 md:h-auto rounded-2xl bg-white md:bg-gray-100 py-6 md:py-0 overflow-hidden relative">
+              <div class="main-image md:aspect-square h-80 md:h-auto rounded-2xl bg-white md:bg-gray-100 py-6 md:py-0 overflow-hidden relative">
                 <p-carousel
                   [value]="product.images"
                   [numVisible]="1"
@@ -99,18 +99,18 @@
               </div>
             </div>
 
-            <div class="product-info flex-1">
+            <div class="product-info md:flex-[3] flex flex-col">
               <!-- Price -->
               <div class="flex flex-col border-b border-gray-200 pb-4 gap-3">
                 <div class="flex flex-col gap-1">
-                  <div class="price-info flex items-baseline gap-3">
+                  <div class="price-info flex md:flex-col items-baseline gap-3 md:gap-0">
                     <span class="text-2xl font-bold text-gray-900">{{ formatPrice(selectedVariant?.price || 0) }} сум</span>
                     <span *ngIf="selectedVariant?.oldPrice" class="text-lg text-gray-500 line-through"> {{ formatPrice(selectedVariant.oldPrice) }} сум </span>
                   </div>
                   <div class="text-sm font-medium text-green-600">+ {{ formatPrice(product.bonusPoints) }} бонусов</div>
                 </div>
 
-                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-2">
+                <div class="max-w-88 md:max-w-full bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-2">
                   <div class="text-orange-600 font-medium text-xs">Выгодная рассрочка:</div>
                   <div class="text-orange-700 text-base font-bold"> от {{ formatPrice(selectedInstallmentPlan.monthlyPayment + selectedPaymentProvider.additionalFee) }} сум / мес* </div>
                 </div>
@@ -160,28 +160,27 @@
                 </div>
               </div>
 
-              <!-- Quantity -->
-              <div class="flex items-center gap-3">
-                <label class="text-sm font-medium text-gray-900">Количество:</label>
-                <div class="h-9 flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                  <button (click)="decreaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
-                    <i class="pi pi-minus text-sm"></i>
-                  </button>
-                  <span class="px-3 text-center text-sm">{{ quantity }}</span>
-                  <button (click)="increaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
-                    <i class="pi pi-plus text-sm"></i>
-                  </button>
-                </div>
-              </div>
-
               <!-- Action Buttons - Компактные в один ряд -->
-              <div class="flex gap-4 py-4">
-                <button
-                  (click)="addToCart()"
-                  class="cart-button flex-1 bg-gradient-to-r from-primary-500 to-primary-600 text-sm lg:base text-white py-2 lg:py-3 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-700 transition-all flex items-center justify-center gap-2">
-                  <i class="pi pi-shopping-cart"></i>
-                  <span>В корзину</span>
-                </button>
+              <div class="flex flex-col gap-4 py-4 max-w-88 md:max-w-full">
+                <div class="flex items-stretch gap-4">
+                  <button
+                    (click)="quantity == 0 && addToCart()"
+                    class="cart-button flex-1 bg-gradient-to-r from-primary-500 to-primary-600 text-sm lg:base text-white py-2 lg:py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
+                    [ngClass]="{ 'hover:from-primary-600 hover:to-primary-700': quantity == 0 }">
+                    <i class="pi pi-shopping-cart"></i>
+                    <span *ngIf="quantity == 0">В корзину</span>
+                    <span *ngIf="quantity > 0">В корзине</span>
+                  </button>
+                  <div *ngIf="quantity > 0" class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <button (click)="decreaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
+                      <i class="pi pi-minus text-sm"></i>
+                    </button>
+                    <span class="px-3 text-center text-sm">{{ quantity }}</span>
+                    <button (click)="increaseQuantity()" class="w-8 h-full hover:bg-gray-100 transition-colors">
+                      <i class="pi pi-plus text-sm"></i>
+                    </button>
+                  </div>
+                </div>
 
                 <button
                   (click)="buyNow()"
