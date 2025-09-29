@@ -87,6 +87,14 @@ export class HeaderComponent implements OnInit {
         }
       }
     }
+
+    // Set active state for publications page
+    if (currentUrl.includes('/home/publications')) {
+      const publicationsItem = this.navItems.find((item) => item.link === '/home/publications');
+      if (publicationsItem) {
+        publicationsItem.isActive = true;
+      }
+    }
   }
 
   // Navigation items
@@ -116,6 +124,11 @@ export class HeaderComponent implements OnInit {
       queryParams: { filter: 'discount' },
       isActive: false,
       isSpecial: true,
+    },
+    {
+      title: 'Публикации',
+      link: '/home/publications',
+      isActive: false,
     },
   ];
 
@@ -191,9 +204,9 @@ export class HeaderComponent implements OnInit {
       type: 'icon',
       url: 'pi pi-book',
       name: 'news',
-      title: 'Новости',
+      title: 'Публикации',
       count: 0,
-      link: '/',
+      link: '/home/publications',
       main: false,
       hamburger: true,
       footer: false,

@@ -1,5 +1,6 @@
 // src/app/features/home/components/publications/publications.component.ts
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Publication {
   id: number;
@@ -21,6 +22,8 @@ export class PublicationsComponent implements OnInit {
   activeCategory: string = 'Все';
 
   categories: string[] = ['Все', 'Обзоры', 'Новости'];
+
+  constructor(private router: Router) {}
 
   publications: Publication[] = [
     {
@@ -47,10 +50,10 @@ export class PublicationsComponent implements OnInit {
     },
     {
       id: 4,
-      title: 'Новое поступление стиральных машин Hisense',
-      date: '10 марта 2025',
-      image: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      category: 'Новости',
+      title: 'Руководство по выбору смартфона в 2025 году',
+      date: '15 марта 2025',
+      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
+      category: 'Обзоры',
     },
   ];
 
@@ -74,7 +77,13 @@ export class PublicationsComponent implements OnInit {
   }
 
   onPublicationClick(publication: Publication): void {
-    console.log('Открытие публикации:', publication.title);
-    // Navigate to publication detail page
+    // If the publication has an external link, open it in a new tab
+    if (publication.link) {
+      window.open(publication.link, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    // Navigate to the publication detail page
+    this.router.navigate(['/home/publications', publication.id]);
   }
 }
