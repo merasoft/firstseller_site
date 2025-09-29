@@ -3,10 +3,10 @@
     <!-- Section Header -->
     <div class="flex items-center justify-between mb-4 sm:mb-6">
       <div class="flex items-center space-x-4">
-        <h2 class="section-title text-xl sm:text-2xl font-bold text-gray-900">Супер цена</h2>
-        <div class="section-tag bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold"> 🔥 Скидки </div>
+        <h2 class="section-title text-xl sm:text-2xl font-bold text-gray-900">{{ 'HOME.SUPER_DEALS' | translate }}</h2>
+        <div class="section-tag bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold"> 🔥 {{ 'HOME.DISCOUNTS' | translate }} </div>
       </div>
-      <a [routerLink]="['/catalog']" class="text-sm sm:text-base text-primary-600 hover:text-primary-700 font-medium flex items-center space-x-1"> Все товары </a>
+      <a [routerLink]="['/catalog']" class="text-sm sm:text-base text-primary-600 hover:text-primary-700 font-medium flex items-center space-x-1"> {{ 'COMMON.ALL_PRODUCTS' | translate }} </a>
     </div>
 
     <!-- Slider Container -->
@@ -35,9 +35,9 @@
                 <!-- Prices -->
                 <div class="mb-2">
                   <div class="flex items-center space-x-2">
-                    <span class="text-sm text-gray-400 line-through"> {{ formatPrice(deal.oldPrice) }} сум </span>
+                    <span class="text-sm text-gray-400 line-through"> {{ formatPrice(deal.oldPrice) }} {{ 'COMMON.CURRENCY' | translate }} </span>
                   </div>
-                  <div class="text-sm font-bold text-primary-600"> {{ formatPrice(deal.newPrice) }} сум </div>
+                  <div class="text-sm font-bold text-primary-600"> {{ formatPrice(deal.newPrice) }} {{ 'COMMON.CURRENCY' | translate }} </div>
                 </div>
 
                 <!-- End Date -->
@@ -82,9 +82,9 @@
                   <!-- Prices -->
                   <div class="mb-2">
                     <div class="flex items-center space-x-2">
-                      <span class="text-sm text-gray-400 line-through"> {{ formatPrice(deal.oldPrice) }} сум </span>
+                      <span class="text-sm text-gray-400 line-through"> {{ formatPrice(deal.oldPrice) }} {{ 'COMMON.CURRENCY' | translate }} </span>
                     </div>
-                    <div class="text-sm font-bold text-primary-600"> {{ formatPrice(deal.newPrice) }} сум </div>
+                    <div class="text-sm font-bold text-primary-600"> {{ formatPrice(deal.newPrice) }} {{ 'COMMON.CURRENCY' | translate }} </div>
                   </div>
 
                   <!-- End Date -->

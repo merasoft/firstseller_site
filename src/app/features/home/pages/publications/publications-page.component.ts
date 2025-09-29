@@ -1,6 +1,7 @@
 // src/app/features/home/pages/publications/publications-page.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Publication {
   id: number;
@@ -23,7 +24,7 @@ interface Publication {
 })
 export class PublicationsPageComponent implements OnInit {
   // Filter and search properties
-  activeCategory: string = 'Все';
+  activeCategory: string = 'PUBLICATIONS.ALL';
   searchQuery: string = '';
   isLoading: boolean = false;
 
@@ -36,7 +37,7 @@ export class PublicationsPageComponent implements OnInit {
   itemsPerPage: number = 12;
   totalPages: number = 1;
 
-  categories: string[] = ['Все', 'Новости', 'Обзоры', 'Руководства', 'Акции', 'События'];
+  categories: string[] = ['PUBLICATIONS.ALL', 'PUBLICATIONS.NEWS', 'PUBLICATIONS.REVIEWS', 'PUBLICATIONS.GUIDES', 'PUBLICATIONS.SALES', 'PUBLICATIONS.EVENTS'];
 
   publications: Publication[] = [
     {
@@ -47,7 +48,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Команда CA Store',
       readTime: 3,
       image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      category: 'Новости',
+      category: 'news',
       featured: true,
     },
     {
@@ -57,8 +58,8 @@ export class PublicationsPageComponent implements OnInit {
       date: '2025-03-10',
       author: 'Отдел игровых консолей',
       readTime: 5,
-      image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      category: 'Новости',
+      image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1WYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      category: 'news',
       featured: true,
     },
     {
@@ -69,7 +70,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Партнерский отдел',
       readTime: 4,
       image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      category: 'Обзоры',
+      category: 'reviews',
     },
     {
       id: 4,
@@ -79,7 +80,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Отдел бытовой техники',
       readTime: 6,
       image: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      category: 'Новости',
+      category: 'news',
     },
     {
       id: 5,
@@ -89,7 +90,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Экспертная команда',
       readTime: 12,
       image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      category: 'Руководства',
+      category: 'guides',
       featured: true,
     },
     {
@@ -100,7 +101,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Отдел маркетинга',
       readTime: 2,
       image: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      category: 'Акции',
+      category: 'sales',
     },
     {
       id: 7,
@@ -110,7 +111,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Технический обозреватель',
       readTime: 8,
       image: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      category: 'Обзоры',
+      category: 'reviews',
     },
     {
       id: 8,
@@ -120,7 +121,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Организационный комитет',
       readTime: 3,
       image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      category: 'События',
+      category: 'events',
     },
     {
       id: 9,
@@ -130,7 +131,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Эксперт по IoT',
       readTime: 15,
       image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      category: 'Руководства',
+      category: 'guides',
     },
     {
       id: 10,
@@ -140,7 +141,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Команда обозревателей',
       readTime: 7,
       image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      category: 'Обзоры',
+      category: 'reviews',
     },
     {
       id: 11,
@@ -150,7 +151,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Логистический отдел',
       readTime: 4,
       image: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      category: 'Новости',
+      category: 'news',
     },
     {
       id: 12,
@@ -160,7 +161,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Консультант по бытовой технике',
       readTime: 10,
       image: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      category: 'Руководства',
+      category: 'guides',
     },
     {
       id: 4,
@@ -170,7 +171,7 @@ export class PublicationsPageComponent implements OnInit {
       author: 'Tech Expert',
       readTime: 8,
       image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-      category: 'Руководства',
+      category: 'guides',
       featured: true,
     },
   ];
@@ -180,7 +181,7 @@ export class PublicationsPageComponent implements OnInit {
   paginatedPublications: Publication[] = [];
   featuredPublications: Publication[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.featuredPublications = this.publications.filter((pub) => pub.featured);
@@ -202,8 +203,17 @@ export class PublicationsPageComponent implements OnInit {
     let filtered = [...this.publications];
 
     // Filter by category
-    if (this.activeCategory !== 'Все') {
-      filtered = filtered.filter((pub) => pub.category === this.activeCategory);
+    if (this.activeCategory !== 'PUBLICATIONS.ALL') {
+      // Map translation key to English category
+      const categoryMap: { [key: string]: string } = {
+        'PUBLICATIONS.NEWS': 'news',
+        'PUBLICATIONS.REVIEWS': 'reviews',
+        'PUBLICATIONS.GUIDES': 'guides',
+        'PUBLICATIONS.SALES': 'sales',
+        'PUBLICATIONS.EVENTS': 'events',
+      };
+      const englishCategory = categoryMap[this.activeCategory];
+      filtered = filtered.filter((pub) => pub.category === englishCategory);
     }
 
     // Filter by search query
@@ -249,30 +259,32 @@ export class PublicationsPageComponent implements OnInit {
 
   getCategoryBadgeClass(category: string): string {
     const classes: { [key: string]: string } = {
-      Новости: 'bg-blue-500',
-      Обзоры: 'bg-purple-500',
-      Руководства: 'bg-green-500',
-      Акции: 'bg-red-500',
-      События: 'bg-orange-500',
+      news: 'bg-blue-500',
+      reviews: 'bg-purple-500',
+      guides: 'bg-green-500',
+      sales: 'bg-red-500',
+      events: 'bg-orange-500',
     };
     return classes[category] || 'bg-gray-500';
   }
 
   formatDate(dateString: string): string {
     const date = new Date(dateString);
-    const now = new Date();
-    const diffTime = Math.abs(now.getTime() - date.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const currentLang = this.translateService.currentLang || 'ru';
 
-    if (diffDays === 1) return 'Вчера';
-    if (diffDays < 7) return `${diffDays} дн. назад`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} нед. назад`;
-
-    return date.toLocaleDateString('ru-RU', {
-      day: 'numeric',
-      month: 'short',
+    const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
-    });
+      month: 'long',
+      day: 'numeric',
+    };
+
+    if (currentLang === 'en') {
+      return date.toLocaleDateString('en-US', options);
+    } else if (currentLang === 'uz') {
+      return date.toLocaleDateString('uz-UZ', options);
+    } else {
+      return date.toLocaleDateString('ru-RU', options);
+    }
   }
 
   onPublicationClick(publication: Publication): void {

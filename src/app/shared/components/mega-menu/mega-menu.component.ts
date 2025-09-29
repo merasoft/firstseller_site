@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Popover } from 'primeng/popover';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Category {
   id: number;
@@ -43,7 +44,7 @@ export class MegaMenuComponent implements OnInit {
   isDialogOpen = false;
   openPanels = new Set<number>();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private translate: TranslateService) {}
 
   async loadCatalogData() {
     try {

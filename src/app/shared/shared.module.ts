@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+// ngx-translate
+import { TranslateModule } from '@ngx-translate/core';
+
 // PrimeNG Imports
 import { AccordionModule } from 'primeng/accordion';
 import { BadgeModule } from 'primeng/badge';
@@ -78,7 +81,7 @@ const PRIMENG_MODULES = [
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent, CartDrawerComponent],
-  imports: [CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
-  exports: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent, CartDrawerComponent, CommonModule, FormsModule, RouterModule, ...PRIMENG_MODULES],
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, ...PRIMENG_MODULES],
+  exports: [HeaderComponent, FooterComponent, MegaMenuComponent, ProductCardComponent, CartDrawerComponent, CommonModule, FormsModule, RouterModule, TranslateModule, ...PRIMENG_MODULES],
 })
 export class SharedModule {}

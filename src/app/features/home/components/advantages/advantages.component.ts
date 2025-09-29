@@ -1,5 +1,6 @@
 // src/app/features/home/components/advantages/advantages.component.ts
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Advantage {
   id: number;
@@ -15,53 +16,55 @@ interface Advantage {
   styleUrls: ['./advantages.component.scss'],
 })
 export class AdvantagesComponent {
+  constructor(private translate: TranslateService) {}
+
   advantages: Advantage[] = [
     {
       id: 1,
-      title: 'Доставка',
-      description: 'Доставка осуществляется во все дни без учета выходных и праздников по Узбекистану.',
+      title: 'ADVANTAGES.DELIVERY.TITLE',
+      description: 'ADVANTAGES.DELIVERY.DESCRIPTION',
       icon: 'truck',
     },
     {
       id: 2,
-      title: 'Оплата',
-      description: 'Удобные способы оплаты в личном кабинете, по ID договора или через Telegram бот.',
+      title: 'ADVANTAGES.PAYMENT.TITLE',
+      description: 'ADVANTAGES.PAYMENT.DESCRIPTION',
       icon: 'credit-card',
     },
     {
       id: 3,
-      title: 'Рассрочка',
-      description: 'Возможность оформить покупку в рассрочку без переплат по тарифам: 0:0:3, 0:0:6, 0:0:9 и 0:0:12.',
+      title: 'ADVANTAGES.INSTALLMENT.TITLE',
+      description: 'ADVANTAGES.INSTALLMENT.DESCRIPTION',
       icon: 'clock',
     },
     {
       id: 4,
-      title: 'Гарантийное обслуживание',
-      description: 'Предоставляем гарантию на все товары магазина и услуги постгарантийное обслуживание.',
+      title: 'ADVANTAGES.WARRANTY.TITLE',
+      description: 'ADVANTAGES.WARRANTY.DESCRIPTION',
       icon: 'shield-check',
     },
     {
       id: 5,
-      title: 'Магазины',
-      description: 'Наша компания представлена в виде 14 магазинов по всему Ташкенту.',
+      title: 'ADVANTAGES.STORES.TITLE',
+      description: 'ADVANTAGES.STORES.DESCRIPTION',
       icon: 'shopping-cart',
     },
     {
       id: 6,
-      title: 'Акции и скидки',
-      description: 'У нас постоянно действуют различные акции и скидки — покупайте выгодно!',
+      title: 'ADVANTAGES.PROMOTIONS.TITLE',
+      description: 'ADVANTAGES.PROMOTIONS.DESCRIPTION',
       icon: 'percent',
     },
     {
       id: 7,
-      title: 'Обмен и возврат',
-      description: 'В случае покупки товара ненадлежащего качества, Вы можете произвести обмен или возврат в течении 10 дней.',
+      title: 'ADVANTAGES.EXCHANGE.TITLE',
+      description: 'ADVANTAGES.EXCHANGE.DESCRIPTION',
       icon: 'refresh-cw',
     },
     {
       id: 8,
-      title: 'Бонусы',
-      description: 'Дарим до 10% бонусов при каждой своевременной оплате обладателям бонусной карты.',
+      title: 'ADVANTAGES.BONUSES.TITLE',
+      description: 'ADVANTAGES.BONUSES.DESCRIPTION',
       icon: 'smile',
     },
   ];

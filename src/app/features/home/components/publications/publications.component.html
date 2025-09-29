@@ -1,20 +1,18 @@
 <section class="py-10 sm:py-16 bg-white">
   <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-8">Публикации</h2>
+    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-8">{{ 'HOME.PUBLICATIONS' | translate }}</h2>
 
     <!-- Category Tabs -->
     <div class="flex flex-wrap gap-2 mb-8">
       <button
         *ngFor="let category of categories"
         (click)="setActiveCategory(category)"
-        class="px-6 py-2 rounded-full text-sm font-medium transition-all duration-300"
-        [class.bg-primary-600]="activeCategory === category"
-        [class.text-white]="activeCategory === category"
-        [class.bg-gray-100]="activeCategory !== category"
-        [class.text-gray-700]="activeCategory !== category"
-        [class.hover:bg-primary-500]="activeCategory === category"
-        [class.hover:bg-gray-200]="activeCategory !== category">
-        {{ category }}
+        class="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
+        [ngClass]="{
+          'bg-primary-600 text-white shadow-green': activeCategory === category,
+          'bg-white text-gray-700 border border-gray-200 hover:bg-primary-50 hover:border-primary-300': activeCategory !== category
+        }">
+        {{ category | translate }}
       </button>
     </div>
 
@@ -33,10 +31,16 @@
 
         <!-- Content overlay -->
         <div class="relative z-10 h-full flex flex-col justify-between p-6">
-          <!-- Category Badge -->
-          <div class="flex justify-start">
-            <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-white text-sm font-medium">
-              {{ publication.category }}
+          <!-- Top badges -->
+          <div class="flex justify-between items-start">
+            <!-- Category Badge -->
+            <span class="inline-block text-xs font-medium px-2.5 py-1 rounded-full text-white shadow-lg" [ngClass]="getCategoryBadgeClass(publication.category)">
+              {{ publication.category | translate }}
+            </span>
+
+            <!-- Date Badge -->
+            <span class="inline-block bg-white/90 backdrop-blur-sm text-gray-800 px-2.5 py-1 rounded-full text-xs font-medium shadow-lg">
+              {{ formatDate(publication.date) }}
             </span>
           </div>
 
@@ -49,10 +53,6 @@
             <p *ngIf="publication.description" class="text-gray-200 text-sm mb-3 line-clamp-2">
               {{ publication.description }}
             </p>
-
-            <div class="text-sm text-gray-300">
-              {{ publication.date }}
-            </div>
           </div>
         </div>
       </div>
@@ -60,7 +60,9 @@
 
     <!-- Load More Button -->
     <div class="text-center mt-12">
-      <a routerLink="/home/publications" class="inline-block bg-primary-600 text-white px-8 py-3 rounded-xl font-medium hover:bg-primary-700 transition-colors"> Посмотреть все публикации </a>
+      <a routerLink="/home/publications" class="inline-block bg-primary-600 text-white px-8 py-3 rounded-xl font-medium hover:bg-primary-700 transition-colors">
+        {{ 'PUBLICATIONS.VIEW_ALL' | translate }}
+      </a>
     </div>
   </div>
 </section>

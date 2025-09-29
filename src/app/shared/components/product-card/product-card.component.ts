@@ -2,6 +2,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductActionsService } from '../../services/product-actions.service';
 import { Carousel } from 'primeng/carousel';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-card',
@@ -16,7 +17,7 @@ export class ProductCardComponent {
   // Cached stars array to prevent recreation on every change detection
   private _cachedStars: Map<number, ('full' | 'empty' | 'half')[]> = new Map();
 
-  constructor(private productActions: ProductActionsService) {}
+  constructor(private productActions: ProductActionsService, private translate: TranslateService) {}
 
   // Handle carousel page change event
   onCarouselPageChange(event: any): void {
@@ -53,6 +54,36 @@ export class ProductCardComponent {
   // Utility functions
   formatPrice(price: number): string {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
+  getCurrency(): string {
+    return this.translate.instant('COMMON.CURRENCY');
+  }
+
+  getTranslatedBadge(badgeText: string, badgeType?: string): string {
+    // Translate common badge types
+    switch (badgeType) {
+      case 'super-price':
+        return this.translate.instant('CATALOG.BADGES.SUPER_PRICE');
+      case 'discount':
+        return this.translate.instant('CATALOG.BADGES.DISCOUNT');
+      case 'new':
+        return this.translate.instant('CATALOG.BADGES.NEW');
+      case 'top':
+        return this.translate.instant('CATALOG.BADGES.HIT');
+      default:
+        return badgeText; // Return original text for unknown badges
+    }
+  }
+
+  getReviewText(count: number): string {
+    if (count === 1) {
+      return this.translate.instant('PRODUCTS.REVIEW_SINGULAR');
+    } else if (count >= 2 && count <= 4) {
+      return this.translate.instant('PRODUCTS.REVIEW_FEW');
+    } else {
+      return this.translate.instant('PRODUCTS.REVIEW_MANY');
+    }
   }
 
   getStars(rating: number): ('full' | 'empty' | 'half')[] {

@@ -5,6 +5,7 @@ import { MenuItem } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { CartService } from '../../../../shared/services/cart.service';
 import { ProductActionsService } from '../../../../shared/services/product-actions.service';
+import { TranslateService } from '@ngx-translate/core';
 
 interface ProductVariant {
   id: string;
@@ -182,15 +183,29 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   selectedPaymentProvider = this.paymentProviders[0];
 
   tabs = [
-    { id: 'description', name: 'О товаре', active: true },
-    { id: 'specifications', name: 'Характеристики', active: false },
-    { id: 'reviews', name: 'Отзывы', active: false },
-    { id: 'payment', name: 'Оплата', active: false },
-    { id: 'delivery', name: 'Доставка', active: false },
-    { id: 'discounts', name: 'Скидки и бонусы', active: false },
+    { id: 'description', name: '', active: true },
+    { id: 'specifications', name: '', active: false },
+    { id: 'reviews', name: '', active: false },
+    { id: 'payment', name: '', active: false },
+    { id: 'delivery', name: '', active: false },
+    { id: 'discounts', name: '', active: false },
   ];
 
-  constructor(private route: ActivatedRoute, private cartService: CartService, private productActions: ProductActionsService) {}
+  constructor(private route: ActivatedRoute, private cartService: CartService, private productActions: ProductActionsService, private translate: TranslateService) {
+    this.initializeTabNames();
+    this.translate.onLangChange.subscribe(() => {
+      this.initializeTabNames();
+    });
+  }
+
+  initializeTabNames(): void {
+    this.tabs[0].name = this.translate.instant('PRODUCTS.TABS.ABOUT_PRODUCT');
+    this.tabs[1].name = this.translate.instant('PRODUCTS.TABS.SPECIFICATIONS');
+    this.tabs[2].name = this.translate.instant('PRODUCTS.TABS.REVIEWS');
+    this.tabs[3].name = this.translate.instant('PRODUCTS.TABS.PAYMENT');
+    this.tabs[4].name = this.translate.instant('PRODUCTS.TABS.DELIVERY');
+    this.tabs[5].name = this.translate.instant('PRODUCTS.TABS.DISCOUNTS_BONUSES');
+  }
 
   loadProduct(): void {
     // Load product data from API
@@ -437,6 +452,25 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.cartService.cart$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.updateQuantityFromCart();
     });
+  }
+
+  // Translation utility methods
+  getCurrency(): string {
+    return this.translate.instant('COMMON.CURRENCY');
+  }
+
+  getReviewText(count: number): string {
+    if (count === 1) {
+      return this.translate.instant('PRODUCTS.REVIEW_SINGULAR');
+    } else if (count >= 2 && count <= 4) {
+      return this.translate.instant('PRODUCTS.REVIEW_FEW');
+    } else {
+      return this.translate.instant('PRODUCTS.REVIEW_MANY');
+    }
+  }
+
+  getBonusText(): string {
+    return this.translate.instant('PRODUCTS.BONUS_POINTS');
   }
 
   ngOnDestroy(): void {

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { MenuItem } from 'primeng/api';
 import { Product } from '../../../../shared/models/product.model';
 import { combineLatest } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Filter {
   id: string;
@@ -48,7 +49,7 @@ interface QuickFilter {
   styleUrls: ['./catalog.component.scss'],
 })
 export class CatalogComponent implements OnInit {
-  pageTitle = 'Каталог товаров';
+  pageTitle = '';
   totalProducts = 518;
   filtersOpen = false;
   mobileScreen = window.innerWidth <= 640;
@@ -72,7 +73,7 @@ export class CatalogComponent implements OnInit {
 
   breadcrumbs: { name: string; url: string }[] = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private translate: TranslateService) {}
 
   // Filtering properties
   filteredProducts: Product[] = [];
@@ -718,6 +719,9 @@ export class CatalogComponent implements OnInit {
     return values;
   }
   ngOnInit(): void {
+    this.pageTitle = this.translate.instant('CATALOG.PAGE_TITLE'); // Initialize immediately
+    this.initializeTranslations();
+    this.subscribeToLanguageChanges();
     this.loadCategories();
     this.subscribeToRouteAndQueryParams();
     this.applyFilters(); // Initialize filtered products
@@ -792,13 +796,13 @@ export class CatalogComponent implements OnInit {
     if (this.filterType) {
       switch (this.filterType) {
         case 'hit':
-          this.pageTitle = 'Хит продаж';
+          this.pageTitle = this.translate.instant('CATALOG.BREADCRUMBS.HIT_PRODUCTS');
           break;
         case 'top':
-          this.pageTitle = 'Топ продукты';
+          this.pageTitle = this.translate.instant('CATALOG.BREADCRUMBS.TOP_PRODUCTS');
           break;
         case 'discount':
-          this.pageTitle = 'Скидки';
+          this.pageTitle = this.translate.instant('CATALOG.BREADCRUMBS.DISCOUNTS');
           break;
         default:
           this.setDefaultContent();
@@ -831,13 +835,13 @@ export class CatalogComponent implements OnInit {
       let filterName = '';
       switch (this.filterType) {
         case 'hit':
-          filterName = 'Хит продаж';
+          filterName = this.translate.instant('CATALOG.BREADCRUMBS.HIT_PRODUCTS');
           break;
         case 'top':
-          filterName = 'Топ продукты';
+          filterName = this.translate.instant('CATALOG.BREADCRUMBS.TOP_PRODUCTS');
           break;
         case 'discount':
-          filterName = 'Скидки';
+          filterName = this.translate.instant('CATALOG.BREADCRUMBS.DISCOUNTS');
           break;
       }
       if (filterName) {
@@ -869,9 +873,95 @@ export class CatalogComponent implements OnInit {
   }
 
   private setDefaultContent(): void {
-    this.pageTitle = 'Каталог товаров';
+    this.pageTitle = this.translate.instant('CATALOG.PAGE_TITLE');
     this.totalProducts = 518;
     this.breadcrumbs = [{ name: 'Главная', url: '/' }];
     this.breadcrumbItems = [];
+  }
+
+  private initializeTranslations(): void {
+    // Update page title
+    this.pageTitle = this.translate.instant('CATALOG.PAGE_TITLE');
+
+    // Update sort options
+    this.sortOptions = [
+      { value: 'popular', label: this.translate.instant('CATALOG.SORT.BY_POPULARITY') },
+      { value: 'price-asc', label: this.translate.instant('CATALOG.SORT.BY_PRICE_ASC') },
+      { value: 'price-desc', label: this.translate.instant('CATALOG.SORT.BY_PRICE_DESC') },
+      { value: 'rating', label: this.translate.instant('CATALOG.SORT.BY_RATING') },
+      { value: 'new', label: this.translate.instant('CATALOG.SORT.BY_NEW') },
+    ];
+
+    // Update filter names
+    this.filters = this.filters.map((filter) => ({
+      ...filter,
+      name: this.getFilterName(filter.id),
+    }));
+
+    // Update quick filters (only for price-related filters, keep original names for categories/brands)
+    this.quickFilters = this.quickFilters.map((filter) => ({
+      ...filter,
+      name: this.shouldTranslateQuickFilter(filter.type) ? this.getQuickFilterName(filter.id) : this.getOriginalQuickFilterName(filter.id),
+    }));
+  }
+
+  private getFilterName(filterId: string): string {
+    switch (filterId) {
+      case 'price':
+        return this.translate.instant('CATALOG.PRICE_FILTER');
+      case 'brand':
+        return this.translate.instant('CATALOG.BRAND_FILTER');
+      case 'memory':
+        return this.translate.instant('CATALOG.MEMORY_FILTER');
+      case 'processor':
+        return this.translate.instant('CATALOG.PROCESSOR_FILTER');
+      default:
+        return filterId;
+    }
+  }
+
+  private getQuickFilterName(filterId: string): string {
+    switch (filterId) {
+      case 'under-5m':
+        return this.translate.instant('CATALOG.QUICK_FILTERS.UNDER_5M');
+      case 'premium':
+        return this.translate.instant('CATALOG.QUICK_FILTERS.PREMIUM');
+      default:
+        return filterId; // Keep original names for categories, brands, etc.
+    }
+  }
+
+  private shouldTranslateQuickFilter(filterType: string): boolean {
+    // Only translate price filters, keep original names for categories, brands, memory, processor
+    return filterType === 'price';
+  }
+
+  private getOriginalQuickFilterName(filterId: string): string {
+    // Return original hardcoded names for categories, brands, etc.
+    switch (filterId) {
+      case 'samsung-galaxy':
+        return 'Samsung Galaxy';
+      case 'honor-phones':
+        return 'Honor';
+      case 'apple-products':
+        return 'Apple';
+      case 'high-memory':
+        return '12GB RAM';
+      case 'snapdragon':
+        return 'Snapdragon';
+      case 'laptops':
+        return 'Ноутбуки';
+      default:
+        return filterId;
+    }
+  }
+
+  private subscribeToLanguageChanges(): void {
+    this.translate.onLangChange.subscribe(() => {
+      this.initializeTranslations();
+      // Update current page title and breadcrumbs with new language
+      this.updatePageTitle();
+      this.updateBreadcrumbs();
+    });
   }
 }

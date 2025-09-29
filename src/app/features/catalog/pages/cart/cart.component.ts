@@ -1,6 +1,7 @@
 // src/app/features/catalog/pages/cart/cart.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { CartService } from '../../../../shared/services/cart.service';
 import { Cart, CartItem } from '../../../../shared/models/cart.model';
 
@@ -20,7 +21,7 @@ export class CartComponent implements OnInit {
     total: 0,
   };
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private cartService: CartService, private router: Router, private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.cartService.cart$.subscribe((cart) => {
@@ -69,5 +70,9 @@ export class CartComponent implements OnInit {
 
   trackByItemId(index: number, item: CartItem): string {
     return item.id;
+  }
+
+  getFreeShippingMessage(amount: number): string {
+    return this.translate.instant('CART.FREE_SHIPPING_ADD', { amount: this.formatPrice(amount) });
   }
 }

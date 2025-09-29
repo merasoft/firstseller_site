@@ -1,6 +1,7 @@
 // src/app/shared/components/cart-drawer/cart-drawer.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { CartService } from '../../services/cart.service';
 import { Cart, CartItem } from '../../models/cart.model';
 
@@ -21,7 +22,7 @@ export class CartDrawerComponent implements OnInit {
   };
   isOpen = false;
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private cartService: CartService, private router: Router, private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.cartService.cart$.subscribe((cart) => {

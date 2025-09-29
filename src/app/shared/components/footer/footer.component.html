@@ -8,7 +8,7 @@
           <img src="/assets/images/logo_white.png" alt="Logo" class="h-full object-cover object-left" />
         </div>
 
-        <p class="text-gray-300 text-sm mb-6 leading-relaxed"> Интернет-магазин электроники и бытовой техники. Высокое качество и лучшие цены. </p>
+        <p class="text-gray-300 text-sm mb-6 leading-relaxed"> {{ 'FOOTER.COMPANY_DESCRIPTION' | translate }} </p>
 
         <!-- Contact Info -->
         <div class="space-y-3">
@@ -32,18 +32,18 @@
             <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
             </svg>
-            <span class="text-gray-300">Ташкент, Узбекистан</span>
+            <span class="text-gray-300">{{ 'FOOTER.LOCATION' | translate }}</span>
           </div>
         </div>
       </div>
 
       <!-- Quick Links -->
       <div>
-        <h3 class="text-lg font-semibold mb-6">Быстрые ссылки</h3>
+        <h3 class="text-lg font-semibold mb-6">{{ 'FOOTER.QUICK_LINKS' | translate }}</h3>
         <ul class="space-y-3">
           <li *ngFor="let link of footerSections[0].links">
             <a [routerLink]="link.url" class="text-gray-300 hover:text-green-400 transition-colors text-sm">
-              {{ link.name }}
+              {{ link.name | translate }}
             </a>
           </li>
         </ul>
@@ -51,7 +51,7 @@
 
       <!-- Categories -->
       <div>
-        <h3 class="text-lg font-semibold mb-6">Категории</h3>
+        <h3 class="text-lg font-semibold mb-6">{{ footerSections[1].title | translate }}</h3>
         <ul class="space-y-3">
           <li *ngFor="let link of footerSections[1].links">
             <a [routerLink]="link.url" class="text-gray-300 hover:text-green-400 transition-colors text-sm">
@@ -63,7 +63,7 @@
 
       <!-- Social & Apps -->
       <div>
-        <h3 class="text-lg font-semibold mb-6">Социальные сети</h3>
+        <h3 class="text-lg font-semibold mb-6">{{ 'FOOTER.SOCIAL_NETWORKS' | translate }}</h3>
 
         <!-- Social Links -->
         <div class="flex items-center gap-3 mb-6">
@@ -100,7 +100,7 @@
           </button>
         </div>
 
-        <p class="text-sm text-gray-300 mb-4">Скачайте наше мобильное приложение:</p>
+        <p class="text-sm text-gray-300 mb-4">{{ 'FOOTER.DOWNLOAD_APP' | translate }}:</p>
 
         <!-- App Download Links -->
         <div class="space-y-3">
@@ -109,7 +109,7 @@
               <i class="text-xl text-gray-700 pi pi-apple"></i>
             </div>
             <div class="text-left">
-              <div class="text-xs text-gray-400">Загрузить в</div>
+              <div class="text-xs text-gray-400">{{ 'FOOTER.DOWNLOAD_ON' | translate }}</div>
               <div class="text-sm font-semibold">App Store</div>
             </div>
           </button>
@@ -119,7 +119,7 @@
               <img class="w-5 h-5" [src]="appDownloads[1].image" alt="" />
             </div>
             <div class="text-left">
-              <div class="text-xs text-gray-400">Скачать с</div>
+              <div class="text-xs text-gray-400">{{ 'FOOTER.GET_IT_ON' | translate }}</div>
               <div class="text-sm font-semibold">Google Play</div>
             </div>
           </button>
@@ -130,11 +130,11 @@
     <!-- Bottom Section -->
     <div class="border-t border-gray-800 pt-8 mt-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div class="text-sm text-gray-400"> © {{ currentYear }} Firstseller.uz. Все права защищены. </div>
+        <div class="text-sm text-gray-400"> © {{ currentYear }} Firstseller.uz. {{ 'FOOTER.ALL_RIGHTS_RESERVED' | translate }}. </div>
 
         <div class="flex items-center gap-6">
-          <a href="/privacy" class="text-sm text-gray-400 hover:text-green-400 transition-colors"> Условия использования </a>
-          <a href="/terms" class="text-sm text-gray-400 hover:text-green-400 transition-colors"> Политика конфиденциальности </a>
+          <a href="/privacy" class="text-sm text-gray-400 hover:text-green-400 transition-colors"> {{ 'FOOTER.TERMS_OF_USE' | translate }} </a>
+          <a href="/terms" class="text-sm text-gray-400 hover:text-green-400 transition-colors"> {{ 'FOOTER.PRIVACY_POLICY' | translate }} </a>
         </div>
       </div>
     </div>

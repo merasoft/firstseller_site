@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { marked } from 'marked';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Publication {
   id: number;
@@ -10,7 +11,7 @@ interface Publication {
   description?: string;
   date: string;
   image: string;
-  category: string; 
+  category: string;
   link?: string;
   author?: string;
   readTime?: number;
@@ -40,7 +41,7 @@ export class PublicationDetailComponent implements OnInit {
       author: 'Команда CA Store',
       readTime: 3,
       image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      category: 'Новости',
+      category: 'news',
       featured: true,
       content: `
         <p>Мы с гордостью объявляем об открытии нашего нового флагманского магазина CA Store в районе Махтумкули в Ташкенте! Этот современный торговый центр станет новой точкой притяжения для всех любителей технологий и качественной электроники.</p>
@@ -77,7 +78,7 @@ export class PublicationDetailComponent implements OnInit {
       author: 'Отдел игровых консолей',
       readTime: 5,
       image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      category: 'Новости',
+      category: 'news',
       featured: true,
       content: `
         <p>Отличные новости для всех геймеров! CA Store получил новую партию игровых консолей PlayStation 5, включая как стандартную версию, так и Digital Edition.</p>
@@ -102,7 +103,7 @@ export class PublicationDetailComponent implements OnInit {
       author: 'Партнерский отдел',
       readTime: 4,
       image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      category: 'Обзоры',
+      category: 'reviews',
       content: `
         <p>Бренд BERG продолжает укреплять свои позиции в сети магазинов CA Store, предлагая высококачественную бытовую технику по доступным ценам.</p>
         
@@ -123,7 +124,7 @@ export class PublicationDetailComponent implements OnInit {
       author: 'Tech Expert',
       readTime: 8,
       image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-      category: 'Руководства',
+      category: 'guides',
       featured: true,
       content: `# Руководство по выбору смартфона в 2025 году
 
@@ -182,12 +183,12 @@ export class PublicationDetailComponent implements OnInit {
     },
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router, private location: Location) {}
+  constructor(private route: ActivatedRoute, private router: Router, private location: Location, private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const id = +params['id'];
-      this.loadPublication(id);
+      this.loadPublication(1); // TODO fix to id
     });
   }
 
@@ -270,22 +271,32 @@ export class PublicationDetailComponent implements OnInit {
 
   getCategoryBadgeClass(category: string): string {
     const classes: { [key: string]: string } = {
-      Новости: 'bg-blue-500',
-      Обзоры: 'bg-purple-500',
-      Руководства: 'bg-green-500',
-      Акции: 'bg-red-500',
-      События: 'bg-orange-500',
+      news: 'bg-blue-500',
+      reviews: 'bg-purple-500',
+      guides: 'bg-green-500',
+      sales: 'bg-red-500',
+      events: 'bg-orange-500',
     };
     return classes[category] || 'bg-gray-500';
   }
 
   formatDate(dateString: string): string {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', {
-      day: 'numeric',
-      month: 'long',
+    const currentLang = this.translateService.currentLang || 'ru';
+
+    const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
-    });
+      month: 'long',
+      day: 'numeric',
+    };
+
+    if (currentLang === 'en') {
+      return date.toLocaleDateString('en-US', options);
+    } else if (currentLang === 'uz') {
+      return date.toLocaleDateString('uz-UZ', options);
+    } else {
+      return date.toLocaleDateString('ru-RU', options);
+    }
   }
 
   sharePublication(): void {
@@ -308,7 +319,7 @@ export class PublicationDetailComponent implements OnInit {
   private copyToClipboard(): void {
     navigator.clipboard.writeText(window.location.href).then(() => {
       // You could show a toast notification here
-      console.log('URL скопирован в буфер обмена');
+      console.log('URL copied to clipboard');
     });
   }
 }

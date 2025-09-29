@@ -11,14 +11,16 @@
         <div class="flex items-center justify-between">
           <div>
             <h1 class="text-3xl font-bold text-gray-900">{{ pageTitle }}</h1>
-            <p class="mt-2 text-gray-600" *ngIf="compare.totalItems > 0"> {{ compare.totalItems }} товар{{ compare.totalItems === 1 ? '' : compare.totalItems < 5 ? 'а' : 'ов' }} в сравнении </p>
-            <p class="mt-1 text-sm text-blue-600" *ngIf="compare.currentCategory"> Категория: {{ compare.currentCategory }} </p>
-            <p class="mt-1 text-sm text-gray-500" *ngIf="compare.totalItems > 0"> Максимум {{ maxCompareItems }} товаров для сравнения </p>
+            <p class="mt-2 text-gray-600" *ngIf="compare.totalItems > 0">
+              {{ compare.totalItems }} товар{{ compare.totalItems === 1 ? '' : compare.totalItems < 5 ? 'а' : 'ов' }} {{ 'COMPARE.ITEMS_IN_COMPARE' | translate }}
+            </p>
+            <p class="mt-1 text-sm text-blue-600" *ngIf="compare.currentCategory"> {{ 'COMPARE.CATEGORY' | translate }}: {{ compare.currentCategory }} </p>
+            <p class="mt-1 text-sm text-gray-500" *ngIf="compare.totalItems > 0"> {{ 'COMPARE.MAXIMUM_ITEMS' | translate : { count: maxCompareItems } }} </p>
           </div>
 
           <!-- Clear Compare Button -->
           <button *ngIf="compare.totalItems > 0" (click)="clearCompare()" class="px-4 py-2 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors">
-            Очистить сравнение
+            {{ 'COMPARE.CLEAR_COMPARE' | translate }}
           </button>
         </div>
       </div>
@@ -35,10 +37,10 @@
                 stroke-width="1.5"
                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
             </svg>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">Нет товаров для сравнения</h3>
-            <p class="text-gray-600 mb-6">Добавьте товары для сравнения их характеристик</p>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ 'COMPARE.EMPTY' | translate }}</h3>
+            <p class="text-gray-600 mb-6">{{ 'COMPARE.EMPTY_DESCRIPTION' | translate }}</p>
             <button (click)="continueShopping()" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors">
-              Перейти к каталогу
+              {{ 'COMPARE.GO_TO_CATALOG' | translate }}
               <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
               </svg>
@@ -53,13 +55,13 @@
 
         <!-- Compare Table (Optional: for detailed comparison) -->
         <div *ngIf="compare.totalItems > 1" class="mt-12">
-          <h2 class="text-2xl font-bold text-gray-900 mb-6">Детальное сравнение</h2>
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">{{ 'COMPARE.DETAILED_COMPARISON' | translate }}</h2>
 
           <div class="overflow-x-auto">
             <table class="w-full table-fixed min-w-[1000px]">
               <thead>
                 <tr class="border-b border-gray-200">
-                  <th class="text-left py-4 px-4 font-medium text-gray-900 w-48">Характеристика</th>
+                  <th class="text-left py-4 px-4 font-medium text-gray-900 w-48">{{ 'COMPARE.SPECIFICATION' | translate }}</th>
                   <th *ngFor="let item of compare.items" class="text-center py-4 px-4 font-medium text-gray-900" [style.width]="100 / compare.totalItems + '%'">
                     <div class="flex flex-col items-center">
                       <img [src]="item.product.images[0]" [alt]="item.product.name" class="w-16 h-16 object-cover rounded-lg mb-2" />
@@ -71,7 +73,7 @@
               <tbody>
                 <!-- Price Row -->
                 <tr class="border-b border-gray-100">
-                  <td class="py-4 px-4 font-medium text-gray-900">Цена</td>
+                  <td class="py-4 px-4 font-medium text-gray-900">{{ 'COMPARE.PRICE' | translate }}</td>
                   <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
                     <div class="flex flex-col items-center">
                       <span class="text-lg font-bold text-gray-900">{{ formatPrice(item.product.price) }} сум</span>
@@ -82,7 +84,7 @@
 
                 <!-- Brand Row -->
                 <tr class="border-b border-gray-100">
-                  <td class="py-4 px-4 font-medium text-gray-900">Бренд</td>
+                  <td class="py-4 px-4 font-medium text-gray-900">{{ 'COMPARE.BRAND' | translate }}</td>
                   <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
                     {{ item.product.brand }}
                   </td>
@@ -90,7 +92,7 @@
 
                 <!-- Memory Row -->
                 <tr class="border-b border-gray-100" *ngIf="hasMemorySpecs()">
-                  <td class="py-4 px-4 font-medium text-gray-900">Память</td>
+                  <td class="py-4 px-4 font-medium text-gray-900">{{ 'COMPARE.MEMORY' | translate }}</td>
                   <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
                     {{ item.product.memory || '—' }}
                   </td>
@@ -98,7 +100,7 @@
 
                 <!-- Processor Row -->
                 <tr class="border-b border-gray-100" *ngIf="hasProcessorSpecs()">
-                  <td class="py-4 px-4 font-medium text-gray-900">Процессор</td>
+                  <td class="py-4 px-4 font-medium text-gray-900">{{ 'COMPARE.PROCESSOR' | translate }}</td>
                   <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
                     {{ item.product.processor || '—' }}
                   </td>
@@ -106,7 +108,7 @@
 
                 <!-- Rating Row -->
                 <tr class="border-b border-gray-100">
-                  <td class="py-4 px-4 font-medium text-gray-900">Рейтинг</td>
+                  <td class="py-4 px-4 font-medium text-gray-900">{{ 'COMPARE.RATING' | translate }}</td>
                   <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
                     <div class="flex items-center justify-center gap-1">
                       <i class="pi pi-star-fill text-yellow-400 text-sm"></i>
@@ -118,28 +120,28 @@
 
                 <!-- Availability Row -->
                 <tr class="border-b border-gray-100">
-                  <td class="py-4 px-4 font-medium text-gray-900">Наличие</td>
+                  <td class="py-4 px-4 font-medium text-gray-900">{{ 'COMPARE.AVAILABILITY' | translate }}</td>
                   <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
                     <span [class]="item.product.inStock ? 'text-green-600' : 'text-red-600'" class="font-medium">
-                      {{ item.product.inStock ? 'В наличии' : 'Нет в наличии' }}
+                      {{ item.product.inStock ? ('COMPARE.IN_STOCK' | translate) : ('COMPARE.OUT_OF_STOCK' | translate) }}
                     </span>
                   </td>
                 </tr>
 
                 <!-- Actions Row -->
                 <tr>
-                  <td class="py-4 px-4 font-medium text-gray-900">Действия</td>
+                  <td class="py-4 px-4 font-medium text-gray-900">{{ 'COMPARE.ACTIONS' | translate }}</td>
                   <td *ngFor="let item of compare.items" class="py-4 px-4 text-center">
                     <div class="space-y-2">
                       <button
                         (click)="addToCart(item)"
                         [disabled]="!item.product.inStock"
                         class="w-full py-2 px-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed text-sm">
-                        <span *ngIf="item.product.inStock">В корзину</span>
-                        <span *ngIf="!item.product.inStock">Недоступно</span>
+                        <span *ngIf="item.product.inStock">{{ 'COMPARE.ADD_TO_CART' | translate }}</span>
+                        <span *ngIf="!item.product.inStock">{{ 'COMPARE.UNAVAILABLE' | translate }}</span>
                       </button>
                       <button (click)="removeFromCompare(item.product.id)" class="w-full py-2 px-3 border border-red-300 text-red-600 font-medium rounded-lg hover:bg-red-50 transition-colors text-sm">
-                        Удалить
+                        {{ 'COMPARE.REMOVE' | translate }}
                       </button>
                     </div>
                   </td>

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Carousel } from 'primeng/carousel';
+import { TranslateService } from '@ngx-translate/core';
 
 interface SuperDeal {
   id: number;
@@ -24,6 +25,8 @@ export class SuperDealsComponent implements OnInit {
   @ViewChild('carousel') carousel!: Carousel;
 
   private _cachedStars: Map<number, ('full' | 'empty' | 'half')[]> = new Map();
+
+  constructor(private translate: TranslateService) {}
 
   superDeals: SuperDeal[] = [
     {

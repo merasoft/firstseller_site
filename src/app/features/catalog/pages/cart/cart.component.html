@@ -6,7 +6,7 @@
     <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <!-- Page Header -->
       <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Корзина</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ 'CART.TITLE' | translate }}</h1>
         <p class="mt-2 text-gray-600" *ngIf="cart.totalItems > 0"> {{ cart.totalItems }} товар{{ cart.totalItems === 1 ? '' : cart.totalItems < 5 ? 'а' : 'ов' }} в корзине </p>
       </div>
 
@@ -24,10 +24,10 @@
                   stroke-width="1.5"
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0H17M9 19.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM20.5 19.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
               </svg>
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">Ваша корзина пуста</h3>
-              <p class="text-gray-600 mb-6">Добавьте товары для оформления заказа</p>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ 'CART.YOUR_CART_EMPTY' | translate }}</h3>
+              <p class="text-gray-600 mb-6">{{ 'CART.EMPTY_DESCRIPTION' | translate }}</p>
               <button (click)="continueShopping()" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors">
-                Перейти к каталогу
+                {{ 'CART.GO_TO_CATALOG_LONG' | translate }}
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
@@ -39,8 +39,8 @@
           <div *ngIf="cart.items.length > 0" class="bg-white rounded-3xl shadow-sm overflow-hidden">
             <!-- Header -->
             <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-              <h2 class="text-lg font-semibold text-gray-900">Товары в корзине</h2>
-              <button (click)="clearCart()" class="text-sm text-red-600 hover:text-red-700 font-medium"> Очистить корзину </button>
+              <h2 class="text-lg font-semibold text-gray-900">{{ 'CART.ITEMS_IN_CART' | translate }}</h2>
+              <button (click)="clearCart()" class="text-sm text-red-600 hover:text-red-700 font-medium"> {{ 'CART.CLEAR_CART' | translate }} </button>
             </div>
 
             <!-- Items -->
@@ -56,7 +56,9 @@
                   <div class="flex-1 min-w-0">
                     <div class="flex items-start justify-between">
                       <div class="flex-1">
-                        <h3 class="text-sm font-medium text-gray-900 line-clamp-2">{{ item.name }}</h3>
+                        <a [routerLink]="['/catalog/product', item.id]" class="text-sm font-medium text-gray-900 line-clamp-2 hover:text-primary-600 transition-colors cursor-pointer">{{
+                          item.name
+                        }}</a>
                         <p *ngIf="getVariantText(item)" class="text-sm text-gray-600 mt-1">{{ getVariantText(item) }}</p>
 
                         <!-- Price -->
@@ -74,7 +76,7 @@
                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                 clip-rule="evenodd"></path>
                             </svg>
-                            В наличии
+                            {{ 'CART.IN_STOCK' | translate }}
                           </span>
                           <span *ngIf="!item.inStock" class="inline-flex items-center text-xs font-medium text-red-700 bg-red-50 px-2 py-1 rounded-full">
                             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -83,7 +85,7 @@
                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
                                 clip-rule="evenodd"></path>
                             </svg>
-                            Нет в наличии
+                            {{ 'CART.OUT_OF_STOCK' | translate }}
                           </span>
                         </div>
                       </div>
@@ -131,26 +133,26 @@
         <!-- Order Summary -->
         <div *ngIf="cart.items.length > 0" class="lg:col-span-1">
           <div class="bg-white rounded-3xl shadow-sm p-6 sticky top-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Итого к оплате</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ 'CART.SUBTOTAL_TO_PAY' | translate }}</h3>
 
             <!-- Summary Details -->
             <div class="space-y-3 mb-6">
               <div class="flex justify-between text-sm">
-                <span class="text-gray-600">Товары ({{ cart.totalItems }})</span>
+                <span class="text-gray-600">{{ 'CART.SUBTOTAL' | translate }} ({{ cart.totalItems }})</span>
                 <span class="font-medium">{{ formatPrice(cart.subtotal) }} сум</span>
               </div>
               <div class="flex justify-between text-sm">
-                <span class="text-gray-600">Доставка</span>
-                <span class="font-medium text-green-600" *ngIf="cart.shipping === 0">Бесплатно</span>
+                <span class="text-gray-600">{{ 'CART.SHIPPING' | translate }}</span>
+                <span class="font-medium text-green-600" *ngIf="cart.shipping === 0">{{ 'CART.FREE' | translate }}</span>
                 <span class="font-medium" *ngIf="cart.shipping > 0">{{ formatPrice(cart.shipping) }} сум</span>
               </div>
               <div class="flex justify-between text-sm">
-                <span class="text-gray-600">Налог</span>
+                <span class="text-gray-600">{{ 'CART.TAX' | translate }}</span>
                 <span class="font-medium">{{ formatPrice(cart.tax) }} сум</span>
               </div>
               <div class="border-t border-gray-200 pt-3">
                 <div class="flex justify-between">
-                  <span class="text-base font-semibold text-gray-900">Итого</span>
+                  <span class="text-base font-semibold text-gray-900">{{ 'CART.TOTAL' | translate }}</span>
                   <span class="text-xl font-bold text-gray-900">{{ formatPrice(cart.total) }} сум</span>
                 </div>
               </div>
@@ -166,17 +168,19 @@
                     clip-rule="evenodd"></path>
                 </svg>
                 <div>
-                  <p class="text-sm text-blue-800">
-                    Добавьте товаров на <strong>{{ formatPrice(500000 - cart.subtotal) }} сум</strong> и получите бесплатную доставку!
-                  </p>
+                  <p class="text-sm text-blue-800" [innerHTML]="getFreeShippingMessage(500000 - cart.subtotal)"> </p>
                 </div>
               </div>
             </div>
 
             <!-- Action Buttons -->
             <div class="space-y-3">
-              <button (click)="proceedToCheckout()" class="w-full bg-primary-600 text-white py-3 px-4 rounded-xl font-semibold hover:bg-primary-700 transition-colors"> Оформить заказ </button>
-              <button (click)="continueShopping()" class="w-full border border-gray-200 text-gray-900 py-3 px-4 rounded-xl font-medium hover:bg-gray-50 transition-colors"> Продолжить покупки </button>
+              <button (click)="proceedToCheckout()" class="w-full bg-primary-600 text-white py-3 px-4 rounded-xl font-semibold hover:bg-primary-700 transition-colors">
+                {{ 'CART.CHECKOUT' | translate }}
+              </button>
+              <button (click)="continueShopping()" class="w-full border border-gray-200 text-gray-900 py-3 px-4 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+                {{ 'CART.CONTINUE_SHOPPING' | translate }}
+              </button>
             </div>
           </div>
         </div>
