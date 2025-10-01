@@ -4,16 +4,10 @@ import { Router } from '@angular/router';
 interface CarouselSlide {
   id: number;
   title: string;
-  subtitle: string;
   description: string;
+  image: string;
   buttonText: string;
   buttonAction: string;
-  backgroundColor: string;
-  gradientFrom: string;
-  gradientTo: string;
-  iconType: 'phone' | 'laptop' | 'tv';
-  textColor: string;
-  accentColor: string;
 }
 
 @Component({
@@ -27,46 +21,39 @@ export class HomeComponent implements OnInit, OnDestroy {
     {
       id: 1,
       title: 'Samsung Galaxy',
-      subtitle: 'S25 FE',
       description: '866,985 сум/месяц в рассрочку',
+      image: 'https://previews.123rf.com/images/kchung/kchung1909/kchung190900083/130601427-sunscreen-product-banner-ads-on-orange-square-podium-and-paper-art-background-in-3d-illustration.jpg',
       buttonText: 'Купить',
       buttonAction: 'buy',
-      backgroundColor: 'bg-gradient-to-r from-gray-900 via-gray-800 to-black',
-      gradientFrom: 'from-black',
-      gradientTo: 'to-transparent',
-      iconType: 'phone',
-      textColor: 'text-white',
-      accentColor: 'text-primary-400',
     },
     {
       id: 2,
-      title: 'Gaming',
-      subtitle: 'Ноутбуки',
-      description: 'С видеокартой RTX 4060',
+      title: 'Macbook Pro 2024',
+      description: '866,985 сум/месяц в рассрочку',
+      image: 'https://www.appleshowroominhyderabad.com/images/apple-macbookpro-banner.png',
+      buttonText: 'Купить',
+      buttonAction: 'buy',
+    },
+  ];
+  smallAds = [
+    {
+      id: 2,
+      title: 'Iphone 16',
+      description: 'От 1,241,340 сум/месяц в рассрочку',
+      image: 'https://img.freepik.com/free-psd/smartphone-camera-control-social-media-banner-design-template_47987-25416.jpg?semt=ais_hybrid&w=740&q=80',
       buttonText: 'Каталог',
       buttonAction: 'catalog',
-      backgroundColor: 'bg-gradient-to-br from-blue-600 via-purple-600 to-purple-800',
-      gradientFrom: 'from-blue-600',
-      gradientTo: 'to-purple-800',
-      iconType: 'laptop',
-      textColor: 'text-white',
-      accentColor: 'text-blue-300',
     },
     {
       id: 3,
-      title: 'Smart TV',
-      subtitle: '4K UHD',
-      description: 'Размеры до 65"',
+      title: 'Playstation 5',
+      description: 'От 1,241,340 сум/месяц в рассрочку',
+      image: 'https://i.pcmag.com/imagery/articles/05JBwtq8rn3rI7BE6RDzF84-5..v1725998532.webp',
       buttonText: 'Смотреть',
       buttonAction: 'view',
-      backgroundColor: 'bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600',
-      gradientFrom: 'from-indigo-600',
-      gradientTo: 'to-pink-600',
-      iconType: 'tv',
-      textColor: 'text-white',
-      accentColor: 'text-purple-300',
     },
   ];
+
   top_categories: any = [];
 
   constructor(private router: Router) {}

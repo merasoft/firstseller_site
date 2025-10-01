@@ -404,5 +404,23 @@
       "TOP_PRODUCTS": "Топ продукты",
       "DISCOUNTS": "Скидки"
     }
+  },
+  "TOAST": {
+    "COMPARE": {
+      "ADDED_SUCCESS": "Добавлено в сравнение",
+      "REMOVED_SUCCESS": "Удалено из сравнения",
+      "CLEARED_SUCCESS": "Сравнение очищено",
+      "CLEARED_DETAIL": "Все товары удалены из сравнения",
+      "LIST_FULL_ERROR": "Список сравнения заполнен",
+      "LIST_FULL_DETAIL": "Максимум 4 товара для сравнения. Удалите товар чтобы добавить новый."
+    },
+    "WISHLIST": {
+      "ADDED_SUCCESS": "Добавлено в избранное",
+      "REMOVED_SUCCESS": "Удалено из избранного"
+    },
+    "CART": {
+      "ADDED_SUCCESS": "Добавлено в корзину",
+      "QUANTITY_UPDATED": "Количество обновлено"
+    }
   }
 }

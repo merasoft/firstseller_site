@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 import { WishlistItem, Wishlist } from '../models/wishlist.model';
 import { Product } from '../models/product.model';
 
@@ -14,7 +15,7 @@ export class WishlistService {
   private wishlistSubject = new BehaviorSubject<Wishlist>(this.loadWishlistFromStorage());
   public wishlist$ = this.wishlistSubject.asObservable();
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService, private translate: TranslateService) {}
 
   // Get current wishlist
   getCurrentWishlist(): Wishlist {
@@ -32,19 +33,7 @@ export class WishlistService {
       // Create new wishlist item
       const wishlistItem: WishlistItem = {
         id: Date.now(), // Simple ID generation
-        product: {
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          oldPrice: product.oldPrice,
-          images: product.images,
-          rating: product.rating,
-          reviewsCount: product.reviewsCount,
-          badge: product.badge,
-          badgeType: product.badgeType,
-          inStock: product.inStock,
-          brand: product.brand,
-        },
+        product,
         addedAt: new Date(),
       };
 
@@ -59,7 +48,7 @@ export class WishlistService {
       // Show success toast notification
       this.messageService.add({
         severity: 'success',
-        summary: 'Добавлено в избранное',
+        summary: this.translate.instant('TOAST.WISHLIST.ADDED_SUCCESS'),
         detail: `${product.name}`,
         life: 3000,
       });
@@ -84,7 +73,7 @@ export class WishlistService {
     if (removedItem) {
       this.messageService.add({
         severity: 'info',
-        summary: 'Удалено из избранного',
+        summary: this.translate.instant('TOAST.WISHLIST.REMOVED_SUCCESS'),
         detail: `${removedItem.product.name}`,
         life: 3000,
       });

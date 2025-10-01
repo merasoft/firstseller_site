@@ -49,14 +49,14 @@
     // Custom navigation buttons
     &-prev-button,
     &-next-button {
-      @apply w-8 h-8 md:w-10 md:h-10 bg-primary-50 border border-primary-500 md:border-none absolute md:bg-transparent rounded-lg md:rounded-full transition-all duration-300;
+      @apply w-10 h-10 absolute rounded-full transition-all duration-300;
       @apply flex items-center justify-center;
       z-index: 1;
     }
 
     .carousel-prev-icon,
     .carousel-next-icon {
-      @apply text-primary-500 w-5 h-5 md:w-7 md:h-7;
+      @apply text-primary-500 w-7 h-7;
     }
 
     &-prev-button {
@@ -89,10 +89,12 @@
   }
 }
 
-@media (max-width: 900px) {
-  .product-main-section .galary {
-    .thumbnail-images {
-      @apply hidden;
-    }
+@media (max-width: 1110px) {
+  .product-main-section {
+    @apply flex-col;
+  }
+
+  .installment-plan {
+    @apply w-full;
   }
 }

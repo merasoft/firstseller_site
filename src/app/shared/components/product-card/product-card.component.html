@@ -3,30 +3,16 @@
   <!-- Product Link Container -->
   <a [routerLink]="['/catalog/product', product.id]" class="flex-1 flex flex-col">
     <!-- Badge -->
-    <div *ngIf="product.badge" class="absolute top-1 left-2 sm:top-4 sm:left-4 z-10">
+    <div *ngIf="showBadge && product.badge" class="absolute top-1 left-2 sm:top-2 sm:left-2 z-10">
       <span class="inline-block text-[10px] sm:text-xs font-medium sm:font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-white shadow-sm" [ngClass]="getBadgeClasses(product.badgeType)">
         {{ getTranslatedBadge(product.badge, product.badgeType) }}
       </span>
     </div>
 
     <!-- Product Image -->
-    <div class="image-container relative aspect-square overflow-hidden group/image" (click)="$event.stopPropagation()">
-      <p-carousel
-        #imageCarousel
-        [value]="product.images"
-        [numVisible]="1"
-        [numScroll]="1"
-        [circular]="true"
-        [autoplayInterval]="0"
-        [showIndicators]="product.images.length > 1"
-        [showNavigators]="product.images.length > 1"
-        [page]="product.currentImageIndex"
-        (onPage)="onCarouselPageChange($event)"
-        class="product-image-carousel">
-        <ng-template pTemplate="item" let-image>
-          <img [src]="image" [alt]="product.name" class="w-full h-full object-cover" loading="lazy" />
-        </ng-template>
-      </p-carousel>
+    <div class="image-container relative aspect-square overflow-hidden group/image" (mouseenter)="startImageCycling()" (mouseleave)="stopImageCycling()" (click)="$event.stopPropagation()">
+      <!-- Main Image -->
+      <img [src]="product.images[currentImageIndex]" [alt]="product.name" class="w-full h-full object-cover transition-opacity duration-300" loading="lazy" />
 
       <!-- Favorite & Compare -->
       <div class="hidden md:flex flex-col gap-2 absolute top-3 right-3 translate-x-14 group-hover/image:translate-x-0 transition-all duration-300">
@@ -48,7 +34,7 @@
       </h3>
 
       <!-- Rating -->
-      <div class="flex items-center gap-2">
+      <div *ngIf="showReviews" class="flex items-center gap-2">
         <div class="flex items-center">
           <div *ngFor="let star of getStars(product.rating)" class="w-4 h-4">
             <ng-container [ngSwitch]="star">
@@ -80,13 +66,13 @@
       </div>
 
       <!-- Price -->
-      <div class="space-y-1 !mt-auto pt-2">
-        <div *ngIf="product.oldPrice" class="text-xs sm:text-sm text-gray-500 line-through"> {{ formatPrice(product.oldPrice!) }} {{ getCurrency() }} </div>
-        <div class="text-base sm:text-lg font-bold text-gray-900"> {{ formatPrice(product.price) }} {{ getCurrency() }} </div>
+      <div *ngIf="showPrice || showOldPrice" class="space-y-1 !mt-auto pt-2">
+        <div *ngIf="showOldPrice && product.oldPrice" class="text-xs sm:text-sm text-gray-500 line-through"> {{ formatPrice(product.oldPrice!) }} {{ getCurrency() }} </div>
+        <div *ngIf="showPrice" class="text-base sm:text-lg font-bold text-gray-900"> {{ formatPrice(product.price) }} {{ getCurrency() }} </div>
       </div>
 
       <!-- Monthly Payment -->
-      <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-md p-1 text-center">
+      <div *ngIf="showMonthlyPayment" class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-md p-1 text-center">
         <div class="text-orange-700 font-normal sm:font-semibold text-[11px] sm:text-sm">
           {{ formatPrice(product.monthlyPayment) }} {{ getCurrency() }} × {{ product.installmentMonths }} {{ 'PRODUCTS.MONTHLY_PAYMENT' | translate }}
         </div>
@@ -96,20 +82,27 @@
 
   <!-- Action Buttons (Outside of link) -->
   <div class="px-3 pb-3 sm:px-4 sm:pb-4 space-y-2">
-    <!-- Primary Actions -->
-    <div class="flex items-center gap-2">
-      <button
-        (click)="onBuyOneClick(product)"
-        class="flex-1 h-8 sm:h-9 bg-primary-600 hover:bg-primary-700 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02]">
-        {{ 'PRODUCTS.BUY_NOW' | translate }}
-      </button>
+    <!-- If user passed custom template -->
+    <ng-container *ngIf="actionTemplate; else defaultActions">
+      <ng-container *ngTemplateOutlet="actionTemplate; context: { $implicit: product }"></ng-container>
+    </ng-container>
 
-      <button
-        (click)="onAddToCart(product)"
-        class="w-10 h-8 sm:h-9 bg-green-500 hover:bg-green-600 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02] flex items-center justify-center gap-1"
-        [title]="'PRODUCTS.ADD_TO_CART_SHORT' | translate">
-        <i class="pi pi-shopping-cart"></i>
-      </button>
-    </div>
+    <!-- Default template -->
+    <ng-template #defaultActions>
+      <div class="flex items-center gap-2">
+        <button
+          (click)="onBuyOneClick(product)"
+          class="flex-1 h-8 sm:h-9 bg-primary-600 hover:bg-primary-700 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02]">
+          {{ 'PRODUCTS.BUY_NOW' | translate }}
+        </button>
+
+        <button
+          (click)="onAddToCart(product)"
+          class="w-10 h-8 sm:h-9 bg-green-500 hover:bg-green-600 text-white rounded-md sm:rounded-lg font-medium text-sm transition-all duration-200 hover:transform hover:scale-[1.02] flex items-center justify-center gap-1"
+          [title]="'PRODUCTS.ADD_TO_CART_SHORT' | translate">
+          <i class="pi pi-shopping-cart"></i>
+        </button>
+      </div>
+    </ng-template>
   </div>
 </article>

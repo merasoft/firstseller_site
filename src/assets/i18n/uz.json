@@ -80,7 +80,7 @@
     "FAST_DELIVERY": "Barcha hududlarga tez yetkazib berish",
     "SEARCH_PLACEHOLDER": "Mahsulotlarni qidiring...",
     "SEARCH_BUTTON": "Qidirish",
-    "CATALOG": "Mahsulotlar katalogi",
+    "CATALOG": "Katalog",
     "HOME": "Bosh sahifa",
     "ABOUT": "Biz haqimizda",
     "CONTACTS": "Aloqa",
@@ -403,6 +403,24 @@
       "HIT_PRODUCTS": "Xit mahsulotlar",
       "TOP_PRODUCTS": "Top mahsulotlar",
       "DISCOUNTS": "Chegirmalar"
+    }
+  },
+  "TOAST": {
+    "COMPARE": {
+      "ADDED_SUCCESS": "Taqqoslashga qo'shildi",
+      "REMOVED_SUCCESS": "Taqqoslashdan olib tashlandi",
+      "CLEARED_SUCCESS": "Taqqoslash tozalandi",
+      "CLEARED_DETAIL": "Barcha mahsulotlar taqqoslashdan olib tashlandi",
+      "LIST_FULL_ERROR": "Taqqoslash ro'yxati to'la",
+      "LIST_FULL_DETAIL": "Taqqoslash uchun maksimum 4 ta mahsulot. Yangisini qo'shish uchun mahsulotni olib tashlang."
+    },
+    "WISHLIST": {
+      "ADDED_SUCCESS": "Sevimlilar ro'yxatiga qo'shildi",
+      "REMOVED_SUCCESS": "Sevimlilar ro'yxatidan olib tashlandi"
+    },
+    "CART": {
+      "ADDED_SUCCESS": "Savatchaga qo'shildi",
+      "QUANTITY_UPDATED": "Miqdori yangilandi"
     }
   }
 }

@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 import { Cart, CartItem } from '../models/cart.model';
 
 @Injectable({
@@ -14,7 +15,7 @@ export class CartService {
   private isCartDrawerOpenSubject = new BehaviorSubject<boolean>(false);
   public isCartDrawerOpen$ = this.isCartDrawerOpenSubject.asObservable();
 
-  constructor(private messageService: MessageService) {
+  constructor(private messageService: MessageService, private translate: TranslateService) {
     this.loadCartFromStorage();
   }
 
@@ -89,7 +90,7 @@ export class CartService {
     // Show success toast notification
     this.messageService.add({
       severity: 'success',
-      summary: isNewItem ? 'Добавлено в корзину' : 'Количество обновлено',
+      summary: isNewItem ? this.translate.instant('TOAST.CART.ADDED_SUCCESS') : this.translate.instant('TOAST.CART.QUANTITY_UPDATED'),
       detail: `${item.name}`,
       life: 3000,
     });

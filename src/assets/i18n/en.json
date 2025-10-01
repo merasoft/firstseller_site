@@ -404,5 +404,23 @@
       "TOP_PRODUCTS": "Top Products",
       "DISCOUNTS": "Discounts"
     }
+  },
+  "TOAST": {
+    "COMPARE": {
+      "ADDED_SUCCESS": "Added to comparison",
+      "REMOVED_SUCCESS": "Removed from comparison",
+      "CLEARED_SUCCESS": "Comparison cleared",
+      "CLEARED_DETAIL": "All products removed from comparison",
+      "LIST_FULL_ERROR": "Comparison list is full",
+      "LIST_FULL_DETAIL": "Maximum 4 products for comparison. Remove a product to add a new one."
+    },
+    "WISHLIST": {
+      "ADDED_SUCCESS": "Added to wishlist",
+      "REMOVED_SUCCESS": "Removed from wishlist"
+    },
+    "CART": {
+      "ADDED_SUCCESS": "Added to cart",
+      "QUANTITY_UPDATED": "Quantity updated"
+    }
   }
 }

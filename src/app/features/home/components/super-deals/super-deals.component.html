@@ -1,7 +1,7 @@
-<section class="py-8">
+<section class="pt-8">
   <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Section Header -->
-    <div class="flex items-center justify-between mb-4 sm:mb-6">
+    <div class="flex items-center justify-between mb-4">
       <div class="flex items-center space-x-4">
         <h2 class="section-title text-xl sm:text-2xl font-bold text-gray-900">{{ 'HOME.SUPER_DEALS' | translate }}</h2>
         <div class="section-tag bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold"> 🔥 {{ 'HOME.DISCOUNTS' | translate }} </div>
@@ -30,6 +30,7 @@
           [numScroll]="2"
           [responsiveOptions]="responsiveOptions"
           [showNavigators]="false"
+          [showIndicators]="false"
           class="super-deals-carousel"
           [style]="{ 'margin-top': '1rem' }">
           <ng-template let-deal #item>

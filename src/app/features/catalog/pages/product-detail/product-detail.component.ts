@@ -73,6 +73,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     isInStock: true,
     warranty: '1 год',
     freeDelivery: true,
+    categoryId: 1,
+    category: 'Телефоны и гаджеты',
 
     images: [
       'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
@@ -86,6 +88,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         id: 'navy-256',
         color: 'Синий',
         colorCode: '#1e3a8a',
+        ram: '8 ГБ',
         memory: '256 ГБ',
         price: 14046200,
         oldPrice: 15500000,
@@ -95,6 +98,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         id: 'graphite-256',
         color: 'Графитовый',
         colorCode: '#374151',
+        ram: '8 ГБ',
         memory: '256 ГБ',
         price: 14046200,
         oldPrice: 15500000,
@@ -104,6 +108,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         id: 'silver-256',
         color: 'Серебристый',
         colorCode: '#e5e7eb',
+        ram: '8 ГБ',
         memory: '256 ГБ',
         price: 14046200,
         oldPrice: 15500000,
@@ -113,6 +118,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         id: 'navy-512',
         color: 'Синий',
         colorCode: '#1e3a8a',
+        ram: '12 ГБ',
         memory: '512 ГБ',
         price: 16046200,
         oldPrice: 17500000,
@@ -218,6 +224,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   onCarouselPageChange(event: any): void {
     this.selectedImageIndex = event.page;
+    document.querySelector('.prod-image-button.active')?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
   }
 
   selectColor(color: string): void {
@@ -339,9 +346,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       badge: this.selectedVariant?.oldPrice ? `${Math.round((1 - this.selectedVariant.price / this.selectedVariant.oldPrice) * 100)}%` : undefined,
       badgeType: this.selectedVariant?.oldPrice ? ('discount' as const) : undefined,
       brand: this.product.brand,
+      ram: this.product.variants[0].ram,
       memory: this.selectedMemory || this.product.variants[0].memory,
       processor: 'Snapdragon', // Default processor
       inStock: this.selectedVariant?.inStock || this.product.variants[0].inStock,
+      categoryId: 1, // Default to smartphones category
+      category: 'Телефоны и гаджеты',
     };
 
     this.productActions.addToFavorites(productForWishlist);
@@ -362,9 +372,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       badge: this.selectedVariant?.oldPrice ? `${Math.round((1 - this.selectedVariant.price / this.selectedVariant.oldPrice) * 100)}%` : undefined,
       badgeType: this.selectedVariant?.oldPrice ? ('discount' as const) : undefined,
       brand: this.product.brand,
+      ram: this.product.variants[0].ram,
       memory: this.selectedMemory || this.product.variants[0].memory,
       processor: 'Snapdragon', // Default processor
       inStock: this.selectedVariant?.inStock || this.product.variants[0].inStock,
+      categoryId: 1, // Default to smartphones category
+      category: 'Телефоны и гаджеты',
     };
 
     this.productActions.addToCompare(productForCompare);
@@ -377,7 +390,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   isInCompare(): boolean {
     const productId = parseInt(this.product.id.split('-')[0]) || 1;
-    return this.productActions.isInCompare(productId);
+    return this.productActions.isInCompare(this.product.categoryId, productId);
   }
 
   shareProduct(): void {

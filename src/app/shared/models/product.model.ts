@@ -13,9 +13,10 @@ export interface Product {
   badge?: string;
   badgeType?: 'discount' | 'super-price' | 'new' | 'top';
   brand: string;
+  ram: string;
   memory: string;
   processor: string;
   inStock: boolean;
-  categoryId?: number;
-  category?: string;
+  categoryId: number;
+  category: string;
 }

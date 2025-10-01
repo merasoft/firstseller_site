@@ -1,45 +1,8 @@
 /* src/app/features/catalog/pages/compare/compare.component.scss */
-table {
-  @media (max-width: 768px) {
-    font-size: 0.875rem;
-
-    th,
-    td {
-      padding: 0.5rem;
-    }
-
-    .min-w-64 {
-      min-width: 12rem;
-    }
-  }
-}
-
-// Product comparison cards
-.product-compare-card {
-  @apply bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all;
-
-  .product-image {
-    @apply aspect-square bg-gray-50 relative overflow-hidden;
-
-    &:hover img {
-      @apply scale-105;
-    }
-
-    img {
-      @apply w-full h-full object-cover transition-transform duration-300;
-    }
-  }
-
-  .product-info {
-    @apply p-4;
-
-    h3 {
-      @apply font-medium text-gray-900 mb-2 text-sm;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+:host ::ng-deep {
+  .p-carousel {
+    &-item-list {
+      @apply max-w-[calc(var(--item-count)*275px)];
     }
   }
 }

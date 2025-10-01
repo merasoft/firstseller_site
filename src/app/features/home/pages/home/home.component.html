@@ -2,112 +2,30 @@
   <app-header></app-header>
 
   <!-- New Compact Hero Section -->
-  <app-super-deals></app-super-deals>
-
-  <section class="bg-gradient-to-br py-8">
+  <section class="pt-8">
     <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex gap-6">
-        <!-- Left Small Card - Special Offer -->
-        <div class="hidden xl:block w-72 flex-shrink-0 xl:flex-1">
-          <div class="relative h-64 bg-gradient-to-br from-accent-orange to-red-600 rounded-2xl overflow-hidden group cursor-pointer">
-            <!-- Discount Badge -->
-            <div class="absolute top-4 left-4 z-10">
-              <span class="bg-white text-accent-orange px-3 py-1 rounded-full text-sm font-bold"> 50% OFF </span>
-            </div>
-
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 opacity-20">
-              <div class="absolute top-8 right-8 w-24 h-24 border-4 border-white rounded-full"></div>
-              <div class="absolute bottom-8 left-8 w-16 h-16 border-4 border-white rounded-full"></div>
-            </div>
-
-            <!-- Content -->
-            <div class="relative z-10 p-6 h-full flex flex-col justify-end text-white">
-              <h3 class="text-xl font-bold mb-2"> Mega Sale! </h3>
-              <p class="text-sm opacity-90 mb-4"> Скидки во всех категориях </p>
-              <button class="bg-white text-accent-orange px-4 py-2 rounded-xl font-semibold text-sm hover:bg-gray-100 transition-colors w-fit"> Смотреть </button>
-            </div>
-          </div>
-        </div>
-
+      <div class="flex items-stretch gap-4 h-52 sm:h-80 lg:h-96">
         <!-- Center Large Carousel -->
-        <div class="flex-1 xl:flex-[2] min-w-0">
+        <div class="flex-1 rounded-2xl overflow-hidden">
           <p-carousel [value]="carouselSlides" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [showIndicators]="true" [showNavigators]="true" class="custom-carousel">
             <ng-template let-slide #item>
-              <div class="h-56 sm:h-64 relative rounded-2xl overflow-hidden cursor-pointer" [ngClass]="slide.backgroundColor">
-                <!-- Icon Illustration -->
-                <div class="absolute right-11 sm:right-14 xl:right-11 top-1/2 transform -translate-y-1/2">
-                  <!-- Phone Icon -->
-                  <div
-                    *ngIf="slide.iconType === 'phone'"
-                    class="w-32 h-52 bg-gradient-to-b from-primary-400 to-primary-600 rounded-2xl shadow-2xl transform rotate-12 hover:rotate-6 transition-transform duration-500">
-                    <div class="w-full h-full bg-black rounded-2xl m-1 relative overflow-hidden">
-                      <div class="absolute top-4 left-1/2 transform -translate-x-1/2 w-12 h-4 bg-gray-800 rounded-full"></div>
-                      <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full opacity-80"></div>
-                    </div>
-                  </div>
-
-                  <!-- Laptop Icon -->
-                  <div *ngIf="slide.iconType === 'laptop'" class="w-40 h-24 bg-gray-800 rounded-lg transform perspective-1000 rotate-y-12">
-                    <div class="w-full h-3 bg-gray-700 rounded-t-lg"></div>
-                    <div class="w-full h-21 bg-black rounded-b-lg relative">
-                      <div class="absolute inset-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded"></div>
-                    </div>
-                  </div>
-
-                  <!-- TV Icon -->
-                  <div *ngIf="slide.iconType === 'tv'" class="w-36 h-20 bg-black rounded-lg relative">
-                    <div class="absolute inset-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded"></div>
-                    <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-2 bg-gray-600 rounded"></div>
-                    <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-16 h-2 bg-gray-400 rounded"></div>
-                  </div>
-                </div>
-
-                <!-- Content -->
-                <div class="relative z-10 py-8 px-11 sm:px-14 xl:px-11 h-full flex flex-col justify-center" [ngClass]="slide.textColor">
-                  <h2 class="text-lg sm:text-2xl font-bold mb-2">
-                    {{ slide.title }}
-                    <span class="block" [ngClass]="slide.accentColor">{{ slide.subtitle }}</span>
-                  </h2>
-                  <p class="text-sm sm:text-base text-gray-300 mb-4">{{ slide.description }}</p>
-                  <button
-                    class="bg-primary-500 hover:bg-primary-600 text-white text-sm sm:text-base px-4 sm:px-6 py-1 sm:py-3 rounded-md sm:rounded-xl font-semibold transition-colors w-fit"
-                    (click)="onCarouselSlideClick(slide)">
-                    {{ slide.buttonText }}
-                  </button>
-                </div>
+              <div class="w-full h-full">
+                <img [src]="slide.image" [alt]="slide.title" class="w-full h-full object-cover" loading="lazy" />
               </div>
             </ng-template>
           </p-carousel>
         </div>
 
-        <!-- Right Small Card - Free Delivery -->
-        <div class="hidden xl:block w-72 flex-shrink-0 xl:flex-1">
-          <div class="relative h-64 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl overflow-hidden group cursor-pointer">
-            <!-- Icon -->
-            <div class="absolute top-6 right-6">
-              <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                <i class="text-xl text-white pi pi-box"></i>
-              </div>
-            </div>
-
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 opacity-10">
-              <div class="absolute top-4 left-4 w-20 h-20 border-2 border-white rounded-full"></div>
-              <div class="absolute bottom-4 right-4 w-12 h-12 border-2 border-white rounded-full"></div>
-            </div>
-
-            <!-- Content -->
-            <div class="relative z-10 p-6 h-full flex flex-col justify-end text-white">
-              <h3 class="text-xl font-bold mb-2"> Бесплатная доставка </h3>
-              <p class="text-sm opacity-90 mb-4"> При покупке от 500,000 сум </p>
-              <button class="bg-white text-primary-600 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-primary-50 transition-colors w-fit"> Подробнее </button>
-            </div>
+        <div class="w-88 hidden lg:flex flex-col gap-4">
+          <div *ngFor="let ad of smallAds" class="flex-1 rounded-2xl overflow-hidden">
+            <img [src]="ad.image" [alt]="ad.title" class="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <app-super-deals></app-super-deals>
 
   <section class="pt-8">
     <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -115,7 +33,7 @@
         <a
           *ngFor="let category of top_categories"
           [routerLink]="getCategoryUrl(category)"
-          class="last:col-start-3 md:last:col-start-7 lg:last:col-start-8 col-span-1 md:col-span-2 lg:col-span-1 flex flex-col gap-2 p-2 items-center text-center bg-white rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+          class="last:col-start-3 md:last:col-start-7 lg:last:col-start-8 col-span-1 md:col-span-2 lg:col-span-1 flex flex-col gap-2 p-2 items-center text-center bg-white rounded-lg border border-gray-200 shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
           <img [src]="category.image" alt="{{ category.name }}" class="object-cover" />
           <p class="text-sm font-medium text-gray-700 w-full line-clamp-2 text-ellipsis">{{ category.name }}</p>
         </a>
