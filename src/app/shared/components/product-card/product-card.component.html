@@ -10,7 +10,11 @@
     </div>
 
     <!-- Product Image -->
-    <div class="image-container relative aspect-square overflow-hidden group/image" (mouseenter)="startImageCycling()" (mouseleave)="stopImageCycling()" (click)="$event.stopPropagation()">
+    <div
+      class="hidden lg:block image-container relative aspect-square overflow-hidden group/image"
+      (mouseenter)="startImageCycling()"
+      (mouseleave)="stopImageCycling()"
+      (click)="$event.stopPropagation()">
       <!-- Main Image -->
       <img [src]="product.images[currentImageIndex]" [alt]="product.name" class="w-full h-full object-cover transition-opacity duration-300" loading="lazy" />
 
@@ -24,6 +28,14 @@
           <i class="text-base transition-colors" [class]="isInCompare() ? 'text-blue-500 fa-solid fa-scale-balanced' : 'text-gray-700 group-hover/comp:text-blue-500 fa-solid fa-scale-balanced'"></i>
         </button>
       </div>
+    </div>
+
+    <div class="lg:hidden image-container-carousel relative" (click)="$event.stopPropagation()">
+      <p-carousel [value]="product.images" [numVisible]="1" [numScroll]="1" [circular]="true" [showNavigators]="false" [showIndicators]="true" class="card-image-carousel">
+        <ng-template let-image pTemplate="item">
+          <img [src]="image" class="w-full aspect-square object-cover" loading="lazy" />
+        </ng-template>
+      </p-carousel>
     </div>
 
     <!-- Product Info -->
