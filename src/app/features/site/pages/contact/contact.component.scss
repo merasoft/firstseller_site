@@ -1,0 +1,59 @@
+// Contact component styles
+.contact-card {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply -translate-y-1 shadow-2xl;
+  }
+}
+
+.form-input {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:focus {
+    @apply -translate-y-1 shadow-lg shadow-green-100;
+  }
+}
+
+.office-card {
+  @apply transition-all duration-300 ease-in-out border-2 border-transparent;
+
+  &:hover {
+    @apply border-green-500 -translate-y-1;
+  }
+}
+
+.social-button {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply -translate-y-1 scale-105 shadow-xl;
+  }
+}
+
+.map-placeholder {
+  @apply bg-gradient-to-br from-gray-200 to-gray-300;
+  animation: pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.contact-info-icon {
+  animation: bounce 2s infinite;
+  animation-delay: calc(var(--index) * 0.2s);
+}
+
+.submit-button {
+  @apply bg-gradient-to-br from-green-600 to-green-800 transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply bg-gradient-to-br from-green-800 to-green-900 -translate-y-1 shadow-xl shadow-green-200;
+  }
+}

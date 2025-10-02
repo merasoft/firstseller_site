@@ -7,11 +7,11 @@
       <!-- Breadcrumbs -->
       <p-breadcrumb [model]="breadcrumbItems" [home]="home" styleClass="mb-4" />
 
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-3">
         <h1 class="text-lg sm:text-xl font-bold text-gray-900 leading-tight">{{ product.name }}</h1>
 
-        <div class="flex items-center gap-4 mb-3">
-          <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 sm:gap-4 flex-wrap-reverse sm:flex-nowrap mb-3">
+          <div class="w-full sm:w-auto flex items-center gap-2">
             <div class="flex items-center">
               <div *ngFor="let star of getStars(product.rating)" class="w-4 h-4">
                 <ng-container [ngSwitch]="star">
@@ -37,9 +37,7 @@
                 </ng-container>
               </div>
             </div>
-            <span class="text-xs text-gray-500">
-              ( {{ product.reviewsCount }} <span class="hidden sm:inline">{{ getReviewText(product.reviewsCount) }} </span>)
-            </span>
+            <span class="text-xs text-gray-500"> ({{ product.reviewsCount }} {{ getReviewText(product.reviewsCount) }}) </span>
           </div>
 
           <div class="flex items-center gap-2">
@@ -58,27 +56,27 @@
       </div>
 
       <!-- Product Main Section -->
-      <div class="max-w-screen-2xl flex flex-col xl:flex-row items-stretch gap-6 mb-8">
+      <div class="product-main-section max-w-screen-2xl flex items-stretch gap-6 mb-8">
         <div class="flex-1 md:bg-white rounded-3xl md:shadow-sm md:p-6">
-          <div class="product-main-section flex flex-col md:flex-row md:items-start gap-8">
+          <div class="flex flex-col sm:flex-row sm:items-start gap-8">
             <!-- Product Images -->
-            <div class="galary md:flex-[5] flex gap-4">
+            <div class="galary sm:min-w-72 flex-1 xl:flex-[5] flex flex-col-reverse xl:flex-row gap-4">
               <!-- Thumbnail Images Gallery (Left Side) -->
-              <div class="thumbnail-images flex-shrink-0 flex flex-col gap-2 overflow-x-hidden overflow-y-auto pr-1 scrollable">
+              <div class="thumbnail-images flex xl:flex-col gap-2 overflow-x-auto overflow-y-hidden xl:overflow-x-hidden xl:overflow-y-auto pb-1 sm:pb-0 sm:pr-1">
                 <button
                   *ngFor="let image of product.images; let i = index"
                   (click)="selectImage(i)"
-                  class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all"
+                  class="prod-image-button flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all"
                   [ngClass]="{
                     'border-gray-200': i !== selectedImageIndex,
-                    'border-primary-500': i === selectedImageIndex
+                    'active border-primary-500': i === selectedImageIndex
                   }">
                   <img [src]="image" [alt]="'Product image ' + (i + 1)" class="w-full h-full object-cover" />
                 </button>
               </div>
 
               <!-- Main Image Carousel (Right Side) -->
-              <div class="main-image md:aspect-square h-80 md:h-auto rounded-2xl bg-white md:bg-gray-100 py-6 md:py-0 overflow-hidden relative">
+              <div class="main-image flex-1 aspect-square rounded-2xl bg-gray-100 overflow-hidden relative">
                 <p-carousel
                   [value]="product.images"
                   [numVisible]="1"
@@ -91,26 +89,26 @@
                   [page]="selectedImageIndex"
                   (onPage)="onCarouselPageChange($event)">
                   <ng-template pTemplate="item" let-image>
-                    <div class="w-auto md:w-full h-full flex items-center justify-center">
-                      <img [src]="image" [alt]="product.name" class="w-auto md:w-full h-full aspect-square md:aspect-auto object-cover" loading="lazy" />
+                    <div class="h-full flex items-center justify-center">
+                      <img [src]="image" [alt]="product.name" class="h-full object-cover" loading="lazy" />
                     </div>
                   </ng-template>
                 </p-carousel>
               </div>
             </div>
 
-            <div class="product-info md:flex-[3] flex flex-col">
+            <div class="product-info flex-1 xl:flex-[3] flex flex-col">
               <!-- Price -->
               <div class="flex flex-col border-b border-gray-200 pb-4 gap-3">
                 <div class="flex flex-col gap-1">
-                  <div class="price-info flex md:flex-col items-baseline gap-3 md:gap-0">
+                  <div class="price-info flex flex-col items-baseline">
                     <span class="text-2xl font-bold text-gray-900">{{ formatPrice(selectedVariant?.price || 0) }} {{ getCurrency() }}</span>
                     <span *ngIf="selectedVariant?.oldPrice" class="text-lg text-gray-500 line-through"> {{ formatPrice(selectedVariant.oldPrice) }} {{ getCurrency() }} </span>
                   </div>
                   <div class="text-sm font-medium text-green-600">+ {{ formatPrice(product.bonusPoints) }} {{ getBonusText() }}</div>
                 </div>
 
-                <div class="max-w-88 md:max-w-full bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-2">
+                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-2">
                   <div class="text-orange-600 font-medium text-xs">{{ 'PRODUCTS.PROFITABLE_INSTALLMENT' | translate }}</div>
                   <div class="text-orange-700 text-base font-bold">
                     {{ 'PRODUCTS.FROM' | translate }} {{ formatPrice(selectedInstallmentPlan.monthlyPayment + selectedPaymentProvider.additionalFee) }} {{ getCurrency() }} /
@@ -164,7 +162,7 @@
               </div>
 
               <!-- Action Buttons - Компактные в один ряд -->
-              <div class="flex flex-col gap-4 py-4 max-w-88 md:max-w-full">
+              <div class="flex flex-col gap-4 py-4 max-w-60 sm:max-w-full">
                 <div class="flex items-stretch gap-4">
                   <button
                     (click)="quantity == 0 && addToCart()"
@@ -195,7 +193,7 @@
               <!-- Buy One Click Button -->
 
               <!-- Benefits - Компактные -->
-              <div class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-200">
+              <div class="flex items-center justify-between gap-6 pt-4 border-t border-gray-200">
                 <div class="flex items-center gap-2">
                   <div class="w-6 h-6 bg-green-100 rounded-lg flex items-center justify-center">
                     <i class="text-xs text-primary-600 pi pi-shield"></i>
@@ -215,7 +213,7 @@
         </div>
 
         <!-- Installment Plan Section -->
-        <div class="installment-plan flex flex-col w-full xl:w-88 bg-white rounded-lg md:rounded-3xl shadow-sm p-3 md:p-6">
+        <div class="installment-plan flex-shrink-0 flex flex-col w-88 bg-white rounded-lg md:rounded-3xl shadow-sm p-3 md:p-6">
           <div class="flex items-center gap-2 mb-4">
             <i class="pi pi-info-circle text-blue-500 cursor-pointer" [title]="'PRODUCTS.INSTALLMENT_INFO' | translate"></i>
             <h3 class="text-lg font-semibold text-gray-900">{{ 'PRODUCTS.INSTALLMENT_PAYMENT' | translate }}</h3>
@@ -252,7 +250,7 @@
                 <div class="w-12 h-8 flex items-center justify-center">
                   <img [src]="provider.logo" [alt]="provider.name" class="w-full object-cover" />
                 </div>
-                <div>
+                <div class="flex flex-col items-start">
                   <p class="text-sm font-medium text-gray-900">{{ formatPrice(selectedInstallmentPlan.monthlyPayment + provider.additionalFee) }} {{ getCurrency() }}</p>
                   <p class="text-xs text-gray-500">{{ 'PRODUCTS.PER_MONTH_LOWERCASE' | translate }}</p>
                 </div>
@@ -282,7 +280,7 @@
 
           <!-- Main CTA Button -->
           <button
-            class="max-w-60 xl:max-w-full xl:w-full ml-auto xl:ml-0 mt-4 bg-orange-500 hover:bg-orange-600 text-sm md:text-base text-white py-2 md:py-3 px-4 rounded-lg font-medium transition-colors">
+            class="max-w-60 lg:max-w-full xl:w-full ml-auto xl:ml-0 mt-4 bg-orange-500 hover:bg-orange-600 text-sm md:text-base text-white py-2 md:py-3 px-4 rounded-lg font-medium transition-colors">
             {{ 'PRODUCTS.ORDER_INSTALLMENT' | translate }}
           </button>
         </div>

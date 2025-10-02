@@ -1,0 +1,56 @@
+// Order Info component styles
+.step-card {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply -translate-y-1 shadow-xl;
+  }
+}
+
+.method-card {
+  @apply transition-all duration-300 ease-in-out border-2 border-transparent;
+
+  &:hover {
+    @apply border-green-200 -translate-y-2;
+  }
+}
+
+.step-number {
+  @apply w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg;
+  position: relative;
+
+  &::after {
+    content: '';
+    @apply absolute top-full left-1/2 w-0.5 h-8 bg-green-300 transform -translate-x-1/2;
+  }
+
+  &:last-child::after {
+    @apply hidden;
+  }
+}
+
+.tip-box {
+  @apply bg-green-50 border border-green-200 rounded-2xl p-4 transition-all duration-300;
+
+  &:hover {
+    @apply bg-green-100 border-green-300;
+  }
+}
+
+.feature-list {
+  li {
+    @apply transition-all duration-200;
+
+    &:hover {
+      @apply pl-2;
+    }
+  }
+}
+
+.help-button {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply -translate-y-1 scale-105;
+  }
+}

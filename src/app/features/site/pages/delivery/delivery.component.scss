@@ -1,0 +1,57 @@
+// Delivery component styles
+.zone-card {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+.step-card {
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(to right, #3b82f6, #1e40af);
+    transform: translateY(-50%);
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+}
+
+.delivery-icon {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%,
+  43% {
+    transform: translate3d(0, -10px, 0);
+  }
+  70% {
+    transform: translate3d(0, -5px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+.gradient-border {
+  background: linear-gradient(white, white) padding-box, linear-gradient(45deg, #3b82f6, #1e40af) border-box;
+  border: 2px solid transparent;
+}

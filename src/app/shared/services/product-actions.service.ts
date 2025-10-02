@@ -52,12 +52,11 @@ export class ProductActionsService {
   }
 
   addToCompare(product: Product): void {
-    const success = this.compareService.toggleCompare(product);
-    // Toast notifications are handled by the CompareService
+    this.compareService.toggleCompare(product);
   }
 
   // Method to check if product is in compare
-  isInCompare(productId: number): boolean {
-    return this.compareService.isInCompare(productId);
+  isInCompare(categoryId: number, productId: number): boolean {
+    return this.compareService.isInCompare(categoryId, productId);
   }
 }

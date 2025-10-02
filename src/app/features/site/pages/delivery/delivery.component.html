@@ -1,0 +1,123 @@
+<div class="min-h-screen flex flex-col">
+  <app-header></app-header>
+
+  <div class="flex-1 bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-green-600 to-green-700 text-white">
+      <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div class="text-center">
+          <h1 class="text-2xl md:text-4xl font-bold mb-2 md:mb-4">{{ 'DELIVERY.TITLE' | translate }}</h1>
+          <p class="text-base md:text-xl opacity-90">{{ 'DELIVERY.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <!-- Delivery Information -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-white rounded-2xl md:rounded-3xl shadow-lg p-4 md:p-8">
+          <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">{{ 'DELIVERY.HOW_IT_WORKS' | translate }}</h2>
+
+          <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+            <div *ngFor="let step of deliverySteps" class="text-center">
+              <div
+                class="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"
+                [ngClass]="{
+                  'bg-green-100': step.color === 'green',
+                  'bg-blue-100': step.color === 'blue',
+                  'bg-purple-100': step.color === 'purple'
+                }">
+                <i
+                  [class]="'pi ' + step.icon + ' text-lg md:text-2xl'"
+                  [ngClass]="{
+                    'text-green-600': step.color === 'green',
+                    'text-blue-600': step.color === 'blue',
+                    'text-purple-600': step.color === 'purple'
+                  }"></i>
+              </div>
+              <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-2 md:mb-3">{{ step.titleKey | translate }}</h3>
+              <p class="text-sm md:text-base text-gray-600">{{ step.descriptionKey | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Delivery Zones & Pricing -->
+      <section class="mb-8 md:mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">{{ 'DELIVERY.ZONES_AND_PRICING' | translate }}</h2>
+
+        <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+          <div *ngFor="let zone of deliveryZones" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 border-2 border-transparent hover:border-green-200 transition-all duration-300">
+            <div class="text-center">
+              <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-2 md:mb-3">{{ zone.zone | translate }}</h3>
+              <div class="text-xl md:text-2xl font-bold text-green-600 mb-1 md:mb-2">{{ zone.price }} {{ 'COMMON.CURRENCY' | translate }}</div>
+              <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4">{{ zone.time | translate }}</p>
+              <div class="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                <i class="pi pi-map-marker text-lg md:text-xl text-green-600"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Delivery Terms -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-gradient-to-r from-green-600 to-green-700 rounded-xl md:rounded-2xl p-6 md:p-8 text-white">
+          <h2 class="text-xl md:text-2xl font-bold mb-6 md:mb-8 text-center">{{ 'DELIVERY.TERMS_AND_CONDITIONS' | translate }}</h2>
+
+          <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+            <div>
+              <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">{{ 'DELIVERY.GENERAL_TERMS' | translate }}</h3>
+              <ul class="space-y-2 md:space-y-3">
+                <li *ngFor="let term of generalTerms" class="flex items-start">
+                  <i [class]="'pi ' + term.icon + ' ' + term.iconColor + ' mt-1 mr-3 text-sm'"></i>
+                  <span class="text-sm md:text-base">{{ term.textKey | translate }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">{{ 'DELIVERY.SPECIAL_CONDITIONS' | translate }}</h3>
+              <ul class="space-y-2 md:space-y-3">
+                <li *ngFor="let condition of specialConditions" class="flex items-start">
+                  <i [class]="'pi ' + condition.icon + ' ' + condition.iconColor + ' mt-1 mr-3 text-sm'"></i>
+                  <span class="text-sm md:text-base">{{ condition.textKey | translate }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Information -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-6 md:p-8">
+          <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center">{{ 'DELIVERY.CONTACT_DELIVERY' | translate }}</h2>
+
+          <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+            <div class="text-center">
+              <div class="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                <i class="pi pi-phone text-lg md:text-xl text-green-600"></i>
+              </div>
+              <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-2">{{ 'DELIVERY.PHONE_SUPPORT' | translate }}</h3>
+              <p class="text-gray-600 mb-2 text-sm md:text-base">+998 (71) 123-45-67</p>
+              <p class="text-xs md:text-sm text-gray-500">{{ 'DELIVERY.PHONE_HOURS' | translate }}</p>
+            </div>
+
+            <div class="text-center">
+              <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                <i class="pi pi-send text-lg md:text-xl text-blue-600"></i>
+              </div>
+              <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-2">{{ 'DELIVERY.TELEGRAM_SUPPORT' | translate }}</h3>
+              <p class="text-gray-600 mb-2 text-sm md:text-base">&#64;firstseller_support</p>
+              <p class="text-xs md:text-sm text-gray-500">{{ 'DELIVERY.TELEGRAM_HOURS' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+</div>

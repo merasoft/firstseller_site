@@ -1,0 +1,32 @@
+// Sitemap component styles
+.sitemap-section {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply -translate-y-1 shadow-xl;
+  }
+}
+
+.sitemap-link {
+  @apply transition-all duration-200 ease-in-out;
+
+  &:hover {
+    @apply bg-green-50 text-green-600 translate-x-2;
+  }
+}
+
+.stats-card {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply scale-105;
+  }
+}
+
+.search-input {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:focus {
+    @apply shadow-lg;
+  }
+}

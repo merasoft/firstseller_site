@@ -9,13 +9,13 @@ module.exports = {
           50: '#ecfdf5', // Eng ochiq yashil
           100: '#d1fae5', // Очень светлый
           200: '#a7f3d0', // Ochiq
-          300: '#6ee7b7', // O'rtacha ochiq
-          400: '#34d399', // O'rtacha
-          500: '#10b981', // Asosiy brand rangi
-          600: '#059669', // Quyuqroq
-          700: '#047857', // Quyuq
-          800: '#065f46', // Очень темный
-          900: '#064e3b', // Eng quyuq
+          300: '#9cf2d5', // O'rtacha ochiq
+          400: '#6ee7b7', // O'rtacha
+          500: '#34d399', // Asosiy brand rangi
+          600: '#22c55e', // Quyuqroq
+          700: '#16a34a', // Quyuq
+          800: '#15803d', // Очень темный
+          900: '#166534', // Eng quyuq
         },
 
         // Дополнительные цвета

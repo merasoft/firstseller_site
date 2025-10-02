@@ -13,23 +13,24 @@ export class FooterComponent {
   // Footer links sections
   footerSections = [
     {
-      title: 'FOOTER.QUICK_LINKS',
+      title: 'FOOTER.INFORMATION',
       links: [
-        { name: 'FOOTER.ABOUT', url: '/about' },
-        { name: 'FOOTER.DELIVERY', url: '/delivery' },
-        { name: 'FOOTER.PAYMENT', url: '/payment' },
-        { name: 'FOOTER.WARRANTY', url: '/warranty' },
-        { name: 'FOOTER.CONTACT', url: '/contact' },
+        { name: 'FOOTER.ABOUT', url: '/site/about' },
+        { name: 'FOOTER.DELIVERY', url: '/site/delivery' },
+        { name: 'FOOTER.PAYMENT', url: '/site/payment' },
+        { name: 'FOOTER.WARRANTY', url: '/site/warranty' },
+        { name: 'FOOTER.CONTACT', url: '/site/contact' },
       ],
     },
     {
-      title: 'FOOTER.CATEGORIES',
+      title: 'FOOTER.HELP_FOR_BUYERS',
       links: [
-        { name: 'Телефоны и гаджеты', url: '/catalog/smartphones' },
-        { name: 'Ноутбуки', url: '/catalog/laptops' },
-        { name: 'Телевизоры', url: '/catalog/tv' },
-        { name: 'Бытовая техника', url: '/catalog/appliances' },
-        { name: 'Аксессуары', url: '/catalog/accessories' },
+        { name: 'FOOTER.FAQ', url: '/help/faq' },
+        { name: 'FOOTER.HOW_TO_ORDER', url: '/help/order-info' },
+        { name: 'FOOTER.SERVICES', url: '/help/services' },
+        { name: 'FOOTER.WARRANTY_SERVICE', url: '/help/warranty-service' },
+        { name: 'FOOTER.SITEMAP', url: '/help/sitemap' },
+        { name: 'FOOTER.RETURN_EXCHANGE', url: '/help/return-exchange' },
       ],
     },
   ];

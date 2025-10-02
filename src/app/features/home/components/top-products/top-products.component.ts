@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 interface TopProduct {
   id: number;
   name: string;
-  image: string;
+  images: string[];
   price: number;
   oldPrice?: number;
   monthlyPayment: number;
@@ -29,7 +29,7 @@ export class TopProductsComponent implements OnInit {
     {
       id: 11,
       name: 'Смартфон Samsung Galaxy S25 Ultra 12/256GB Titanium Black',
-      image: 'assets/images/products/samsung-s25-1.webp',
+      images: ['assets/images/products/samsung-s25-1.webp'],
       price: 15999000,
       oldPrice: 17999000,
       monthlyPayment: 1944000,
@@ -41,7 +41,7 @@ export class TopProductsComponent implements OnInit {
     {
       id: 12,
       name: 'Телевизор Samsung QN55Q80C 55" 4K QLED Smart TV',
-      image: 'assets/images/products/samsung-tv.webp',
+      images: ['assets/images/products/samsung-tv.webp'],
       price: 8999000,
       monthlyPayment: 1080000,
       installmentMonths: 12,
@@ -52,7 +52,7 @@ export class TopProductsComponent implements OnInit {
     {
       id: 13,
       name: 'Пылесос Xiaomi Vacuum Cleaner G10 Plus',
-      image: 'assets/images/products/xiaomi-vacuum.webp',
+      images: ['assets/images/products/xiaomi-vacuum.webp'],
       price: 2999000,
       monthlyPayment: 360000,
       installmentMonths: 12,
@@ -63,7 +63,7 @@ export class TopProductsComponent implements OnInit {
     {
       id: 14,
       name: 'Smart TV LG OLED55C3PSA 55" 4K OLED WebOS',
-      image: 'assets/images/products/smart-tv.webp',
+      images: ['assets/images/products/smart-tv.webp'],
       price: 12999000,
       monthlyPayment: 1560000,
       installmentMonths: 12,
@@ -74,7 +74,7 @@ export class TopProductsComponent implements OnInit {
     {
       id: 15,
       name: 'Смартфон Samsung Galaxy S25 12/512GB Titanium Gray',
-      image: 'assets/images/products/samsung-s25-2.webp',
+      images: ['assets/images/products/samsung-s25-2.webp'],
       price: 13999000,
       monthlyPayment: 1680000,
       installmentMonths: 12,
@@ -85,7 +85,7 @@ export class TopProductsComponent implements OnInit {
     {
       id: 16,
       name: 'Смартфон Xiaomi Redmi 14C 8/256GB Starlight Blue',
-      image: 'assets/images/products/xiaomi-redmi14c.webp',
+      images: ['assets/images/products/xiaomi-redmi14c.webp'],
       price: 1899000,
       monthlyPayment: 228000,
       installmentMonths: 12,
@@ -96,7 +96,7 @@ export class TopProductsComponent implements OnInit {
     {
       id: 17,
       name: 'Смартфон Xiaomi Redmi 15C 6/128GB Ocean Blue',
-      image: 'assets/images/products/xiaomi-redmi15c.webp',
+      images: ['assets/images/products/xiaomi-redmi15c.webp'],
       price: 1599000,
       monthlyPayment: 192000,
       installmentMonths: 12,
@@ -107,7 +107,7 @@ export class TopProductsComponent implements OnInit {
     {
       id: 18,
       name: 'Парогенератор Braun CareStyle Compact IS2056',
-      image: 'assets/images/products/braun-shaver.webp',
+      images: ['assets/images/products/braun-shaver.webp'],
       price: 2899000,
       monthlyPayment: 348000,
       installmentMonths: 12,
@@ -118,7 +118,7 @@ export class TopProductsComponent implements OnInit {
     {
       id: 19,
       name: 'Пылесос Dyson V12 Detect Slim Absolute',
-      image: 'assets/images/products/dyson.webp',
+      images: ['assets/images/products/dyson.webp'],
       price: 5999000,
       monthlyPayment: 720000,
       installmentMonths: 12,
@@ -129,7 +129,7 @@ export class TopProductsComponent implements OnInit {
     {
       id: 20,
       name: 'Смартфон Apple iPhone 15 Pro 128GB Natural Titanium',
-      image: 'assets/images/products/iphone.webp',
+      images: ['assets/images/products/iphone.webp'],
       price: 12999000,
       monthlyPayment: 1560000,
       installmentMonths: 12,
@@ -155,7 +155,7 @@ export class TopProductsComponent implements OnInit {
     return {
       id: topProduct.id,
       name: topProduct.name,
-      images: [topProduct.image], // Convert single image to array
+      images: topProduct.images,
       currentImageIndex: 0,
       price: topProduct.price,
       oldPrice: topProduct.oldPrice,
@@ -166,6 +166,7 @@ export class TopProductsComponent implements OnInit {
       badge: 'ТОП', // Always set badge to 'ТОП' for top products
       badgeType: 'top', // Always set badgeType to 'top'
       brand: '', // Default values for required fields
+      ram: '',
       memory: '',
       processor: '',
       inStock: true,

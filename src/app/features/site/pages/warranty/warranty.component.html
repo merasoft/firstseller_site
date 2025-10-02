@@ -1,0 +1,159 @@
+<div class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Main Content -->
+  <div class="flex-1 bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-green-600 to-green-700 text-white">
+      <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div class="text-center">
+          <h1 class="text-2xl md:text-4xl font-bold mb-2 md:mb-4">{{ 'WARRANTY.TITLE' | translate }}</h1>
+          <p class="text-base md:text-xl opacity-90">{{ 'WARRANTY.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <!-- Warranty Types -->
+      <section class="mb-8 md:mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">{{ 'WARRANTY.TYPES_OF_WARRANTY' | translate }}</h2>
+
+        <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+          <div
+            *ngFor="let warranty of warrantyTypes"
+            class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 text-center hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-green-200">
+            <div
+              class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full flex items-center justify-center"
+              [ngClass]="{
+                'bg-blue-100': warranty.color === 'blue',
+                'bg-green-100': warranty.color === 'green',
+                'bg-purple-100': warranty.color === 'purple'
+              }">
+              <i
+                [class]="'pi ' + warranty.icon + ' text-3xl'"
+                [ngClass]="{
+                  'text-blue-600': warranty.color === 'blue',
+                  'text-green-600': warranty.color === 'green',
+                  'text-purple-600': warranty.color === 'purple'
+                }"></i>
+            </div>
+            <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-2 md:mb-3">{{ warranty.type | translate }}</h3>
+            <div class="text-lg md:text-xl font-bold text-green-600 mb-3 md:mb-4">{{ warranty.duration | translate }}</div>
+            <p class="text-sm text-gray-600">{{ warranty.coverage | translate }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Warranty Process -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-6 md:p-8">
+          <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center">{{ 'WARRANTY.HOW_TO_CLAIM' | translate }}</h2>
+
+          <div class="grid md:grid-cols-4 gap-4 md:gap-6">
+            <div *ngFor="let step of claimSteps" class="text-center">
+              <div
+                class="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 relative"
+                [ngClass]="{
+                  'bg-green-100': step.step < 4,
+                  'bg-blue-100': step.step === 4
+                }">
+                <span
+                  class="text-lg md:text-xl font-bold"
+                  [ngClass]="{
+                    'text-green-600': step.step < 4,
+                    'text-blue-600': step.step === 4
+                  }"
+                  >{{ step.step }}</span
+                >
+                <div
+                  class="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center"
+                  [ngClass]="{
+                    'bg-green-600': step.step < 4,
+                    'bg-blue-600': step.step === 4
+                  }">
+                  <i [class]="'pi ' + step.icon + ' text-xs text-white'"></i>
+                </div>
+              </div>
+              <h3 class="text-sm md:text-base font-semibold text-gray-900 mb-2">{{ step.titleKey | translate }}</h3>
+              <p class="text-gray-600 text-xs md:text-sm">{{ step.descriptionKey | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Warranty Terms -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-gradient-to-r from-green-600 to-green-700 rounded-xl md:rounded-2xl p-6 md:p-8 text-white">
+          <h2 class="text-xl md:text-2xl font-bold mb-6 md:mb-8 text-center">{{ 'WARRANTY.TERMS_CONDITIONS' | translate }}</h2>
+
+          <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+            <div>
+              <h3 class="text-base md:text-lg font-semibold mb-4 md:mb-6">{{ 'WARRANTY.COVERED' | translate }}</h3>
+              <ul class="space-y-2 md:space-y-3">
+                <li *ngFor="let item of coveredItems" class="flex items-start covered-item">
+                  <i [class]="'pi ' + item.icon + ' text-green-300 mt-1 mr-3 text-sm'"></i>
+                  <span class="text-sm md:text-base">{{ item.key | translate }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-base md:text-lg font-semibold mb-4 md:mb-6">{{ 'WARRANTY.NOT_COVERED' | translate }}</h3>
+              <ul class="space-y-2 md:space-y-3">
+                <li *ngFor="let item of notCoveredItems" class="flex items-start covered-item">
+                  <i [class]="'pi ' + item.icon + ' text-red-300 mt-1 mr-3 text-sm'"></i>
+                  <span class="text-sm md:text-base">{{ item.key | translate }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Service Centers -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-6 md:p-8">
+          <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center">{{ 'WARRANTY.SERVICE_CENTERS' | translate }}</h2>
+
+          <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+            <div *ngFor="let center of serviceCenters" class="border border-gray-200 rounded-lg md:rounded-xl p-4 md:p-6 service-center-card">
+              <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">{{ center.nameKey | translate }}</h3>
+              <div class="space-y-2 md:space-y-3">
+                <div class="flex items-center">
+                  <i class="pi pi-map-marker text-green-600 mr-3 text-sm"></i>
+                  <span class="text-gray-600 text-sm md:text-base">{{ center.addressKey | translate }}</span>
+                </div>
+                <div class="flex items-center">
+                  <i class="pi pi-phone text-green-600 mr-3 text-sm"></i>
+                  <span class="text-gray-600 text-sm md:text-base">{{ center.phone }}</span>
+                </div>
+                <div class="flex items-center">
+                  <i class="pi pi-clock text-green-600 mr-3 text-sm"></i>
+                  <span class="text-gray-600 text-sm md:text-base">{{ center.workingHoursKey | translate }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Important Information -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg md:rounded-r-xl p-4 md:p-6">
+          <div class="flex items-start">
+            <i class="pi pi-exclamation-triangle text-yellow-600 text-lg md:text-xl mt-1 mr-3 md:mr-4"></i>
+            <div>
+              <h3 class="text-base md:text-lg font-semibold text-yellow-800 mb-2">{{ 'WARRANTY.IMPORTANT_NOTICE' | translate }}</h3>
+              <p class="text-yellow-700 text-sm md:text-base">{{ 'WARRANTY.NOTICE_TEXT' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+</div>

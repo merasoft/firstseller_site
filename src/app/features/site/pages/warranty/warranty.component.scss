@@ -1,0 +1,65 @@
+// Warranty component styles
+.warranty-card {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply -translate-y-2 shadow-2xl;
+  }
+}
+
+.process-step {
+  @apply relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    @apply absolute top-1/2 -right-8 w-16 h-1 bg-gradient-to-r from-green-500 to-green-600 transform -translate-y-1/2;
+
+    @media (max-width: 768px) {
+      @apply hidden;
+    }
+  }
+}
+
+.service-center-card {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply border-green-500 shadow-lg shadow-green-100;
+  }
+}
+
+.covered-item {
+  @apply transition-all duration-200 ease-in-out;
+
+  &:hover {
+    @apply pl-4;
+  }
+}
+
+.warning-notice {
+  @apply bg-gradient-to-br from-yellow-100 to-yellow-200;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    @apply opacity-0 -translate-x-5;
+  }
+  to {
+    @apply opacity-100 translate-x-0;
+  }
+}
+
+.warranty-icon {
+  animation: rotate 3s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  0%,
+  100% {
+    @apply rotate-0;
+  }
+  50% {
+    @apply rotate-1;
+  }
+}

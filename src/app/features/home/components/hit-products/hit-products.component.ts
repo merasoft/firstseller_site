@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 interface HitProduct {
   id: number;
   name: string;
-  image: string;
+  images: string[];
   price: number;
   oldPrice?: number;
   monthlyPayment: number;
@@ -29,7 +29,7 @@ export class HitProductsComponent implements OnInit {
     {
       id: 1,
       name: 'Вместе дешевле! Жить + Японский завтрак',
-      image: 'assets/images/products/books.webp',
+      images: ['assets/images/products/books.webp'],
       price: 99000,
       oldPrice: 129000,
       monthlyPayment: 27500,
@@ -41,7 +41,7 @@ export class HitProductsComponent implements OnInit {
     {
       id: 2,
       name: 'Смартфон Apple iPhone 16 128GB (1 SIM) Nanosim+esim Black',
-      image: 'assets/images/products/iphone.webp',
+      images: ['assets/images/products/iphone.webp'],
       price: 10219000,
       oldPrice: 11089000,
       monthlyPayment: 1243400,
@@ -53,7 +53,7 @@ export class HitProductsComponent implements OnInit {
     {
       id: 3,
       name: 'Пылесос Dyson V15 Detect Absolute',
-      image: 'assets/images/products/dyson.webp',
+      images: ['assets/images/products/dyson.webp'],
       price: 6959000,
       monthlyPayment: 835100,
       installmentMonths: 12,
@@ -64,7 +64,7 @@ export class HitProductsComponent implements OnInit {
     {
       id: 4,
       name: 'Smart TV приставка Xiaomi Mi TV Stick 4K',
-      image: 'assets/images/products/xiaomi-redmi14c.webp',
+      images: ['assets/images/products/xiaomi-redmi14c.webp'],
       price: 679000,
       monthlyPayment: 188500,
       installmentMonths: 4,
@@ -75,7 +75,7 @@ export class HitProductsComponent implements OnInit {
     {
       id: 5,
       name: 'Парогенератор Braun CareStyle 7 Pro IS7286BK',
-      image: 'assets/images/products/braun-shaver.webp',
+      images: ['assets/images/products/braun-shaver.webp'],
       price: 3629000,
       monthlyPayment: 435500,
       installmentMonths: 12,
@@ -86,7 +86,7 @@ export class HitProductsComponent implements OnInit {
     {
       id: 6,
       name: 'Смартфон Xiaomi Redmi Note 14 Pro 8/256GB Midnight Black',
-      image: 'assets/images/products/xiaomi-redmi15c.webp',
+      images: ['assets/images/products/xiaomi-redmi15c.webp'],
       price: 3339000,
       oldPrice: 3999000,
       monthlyPayment: 406300,
@@ -98,7 +98,7 @@ export class HitProductsComponent implements OnInit {
     {
       id: 7,
       name: 'Смартфон HONOR X6c 6/128GB Океанический голубой',
-      image: 'assets/images/products/honor-phone.webp',
+      images: ['assets/images/products/honor-phone.webp'],
       price: 1499000,
       oldPrice: 1739000,
       monthlyPayment: 182400,
@@ -110,7 +110,7 @@ export class HitProductsComponent implements OnInit {
     {
       id: 8,
       name: 'Смартфон Samsung Galaxy A56 5G 8/256 Awesome Graphite',
-      image: 'assets/images/products/samsung-galaxy-a56.webp',
+      images: ['assets/images/products/samsung-galaxy-a56.webp'],
       price: 5009000,
       oldPrice: 5579000,
       monthlyPayment: 609500,
@@ -122,7 +122,7 @@ export class HitProductsComponent implements OnInit {
     {
       id: 9,
       name: 'Solaray, True Herbs, Kelp, водоросли, 550 мг, 100...',
-      image: 'assets/images/products/solaray-herb.webp',
+      images: ['assets/images/products/solaray-herb.webp'],
       price: 239000,
       monthlyPayment: 66400,
       installmentMonths: 4,
@@ -132,7 +132,7 @@ export class HitProductsComponent implements OnInit {
     {
       id: 10,
       name: 'Коллекция "Бестселлеры Asaxiy Books 2024"',
-      image: 'assets/images/products/books.webp',
+      images: ['assets/images/products/books.webp'],
       price: 799000,
       oldPrice: 1099000,
       monthlyPayment: 221800,
@@ -159,7 +159,7 @@ export class HitProductsComponent implements OnInit {
     return {
       id: hitProduct.id,
       name: hitProduct.name,
-      images: [hitProduct.image], // Convert single image to array
+      images: hitProduct.images, // Convert single image to array
       currentImageIndex: 0,
       price: hitProduct.price,
       oldPrice: hitProduct.oldPrice,
@@ -170,6 +170,7 @@ export class HitProductsComponent implements OnInit {
       badge: hitProduct.badge || (hitProduct.isTop ? 'ТОП' : undefined),
       badgeType: hitProduct.badge ? 'discount' : hitProduct.isTop ? 'top' : undefined,
       brand: '', // Default values for required fields
+      ram: '',
       memory: '',
       processor: '',
       inStock: true,

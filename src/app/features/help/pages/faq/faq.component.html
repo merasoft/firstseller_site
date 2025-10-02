@@ -1,0 +1,77 @@
+<div class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Main Content -->
+  <div class="flex-1 bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-green-600 to-green-700 text-white">
+      <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div class="text-center">
+          <h1 class="text-2xl md:text-4xl font-bold mb-2 md:mb-4">{{ 'FAQ.TITLE' | translate }}</h1>
+          <p class="text-base md:text-xl opacity-90">{{ 'FAQ.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <!-- FAQ Categories -->
+      <section class="mb-8 md:mb-12">
+        <div *ngFor="let category of faqCategories; let i = index" class="mb-8 md:mb-12">
+          <!-- Category Header -->
+          <div class="bg-white rounded-t-xl md:rounded-t-2xl shadow-lg p-4 md:p-6 border-b border-gray-200">
+            <div class="flex items-center">
+              <div class="w-8 h-8 md:w-10 md:h-10 bg-green-100 rounded-full flex items-center justify-center mr-3 md:mr-4">
+                <i [class]="'pi ' + category.icon + ' text-lg md:text-xl text-green-600'"></i>
+              </div>
+              <h2 class="text-lg md:text-xl font-bold text-gray-900">{{ category.titleKey | translate }}</h2>
+            </div>
+          </div>
+
+          <!-- FAQ Accordion -->
+          <div class="bg-white rounded-b-xl md:rounded-b-2xl shadow-lg p-4 md:p-6">
+            <p-accordion [multiple]="true" class="custom-accordion" collapseIcon="pi pi-chevron-up" expandIcon="pi pi-chevron-down">
+              <p-accordion-panel *ngFor="let faq of category.faqs; let j = index" [value]="j.toString()">
+                <p-accordion-header>
+                  {{ faq.questionKey | translate }}
+                </p-accordion-header>
+                <p-accordion-content>
+                  <p class="text-gray-600 leading-relaxed m-0 text-sm md:text-base">{{ faq.answerKey | translate }}</p>
+                </p-accordion-content>
+              </p-accordion-panel>
+            </p-accordion>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Support -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-gradient-to-r from-green-600 to-green-700 rounded-xl md:rounded-2xl p-6 md:p-8 text-white text-center">
+          <div class="max-w-2xl mx-auto">
+            <i class="pi pi-question-circle text-3xl md:text-5xl mb-4 md:mb-6 opacity-80"></i>
+            <h2 class="text-xl md:text-2xl font-bold mb-3 md:mb-4">{{ 'FAQ.NEED_MORE_HELP' | translate }}</h2>
+            <p class="text-base md:text-lg mb-6 md:mb-8 opacity-90">{{ 'FAQ.CONTACT_SUPPORT_TEXT' | translate }}</p>
+            <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+              <a
+                href="tel:+998901234567"
+                class="bg-white text-green-600 py-3 px-6 md:py-4 md:px-8 rounded-lg md:rounded-xl font-semibold hover:bg-green-50 transition-colors flex items-center justify-center text-sm md:text-base">
+                <i class="pi pi-phone mr-2 md:mr-3 text-sm"></i>
+                {{ 'FAQ.CALL_SUPPORT' | translate }}
+              </a>
+              <a
+                routerLink="/site/contact"
+                class="bg-green-500 text-white py-3 px-6 md:py-4 md:px-8 rounded-lg md:rounded-xl font-semibold hover:bg-green-400 transition-colors flex items-center justify-center text-sm md:text-base">
+                <i class="pi pi-envelope mr-2 md:mr-3 text-sm"></i>
+                {{ 'FAQ.SEND_MESSAGE' | translate }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+</div>

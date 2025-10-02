@@ -1,0 +1,155 @@
+<div class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Main Content -->
+  <div class="flex-1 bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-green-600 to-green-700 text-white">
+      <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div class="text-center">
+          <h1 class="text-2xl md:text-4xl font-bold mb-2 md:mb-4">{{ 'ORDER_INFO.TITLE' | translate }}</h1>
+          <p class="text-base md:text-xl opacity-90">{{ 'ORDER_INFO.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <!-- How to Order Steps -->
+      <section class="mb-8 md:mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center">{{ 'ORDER_INFO.HOW_TO_ORDER' | translate }}</h2>
+
+        <div class="space-y-6 md:space-y-8">
+          <div *ngFor="let step of orderSteps; let i = index" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-6 md:p-8 step-card">
+            <div class="grid lg:grid-cols-12 gap-6 md:gap-8 items-center">
+              <!-- Step Number and Icon -->
+              <div class="lg:col-span-2 text-center lg:text-left">
+                <div class="relative inline-block">
+                  <div class="w-12 h-12 md:w-16 md:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-3 md:mb-4">
+                    <i [class]="'pi ' + step.icon + ' text-lg md:text-2xl text-green-600'"></i>
+                  </div>
+                  <div class="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-6 h-6 md:w-8 md:h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-xs md:text-sm">
+                    {{ step.step }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step Content -->
+              <div class="lg:col-span-6">
+                <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">{{ step.titleKey | translate }}</h3>
+                <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-4 md:mb-6">{{ step.descriptionKey | translate }}</p>
+              </div>
+
+              <!-- Step Tips -->
+              <div class="lg:col-span-4">
+                <div class="bg-green-50 rounded-lg md:rounded-xl p-4 md:p-6">
+                  <h4 class="text-base md:text-lg font-semibold text-green-800 mb-3 md:mb-4">{{ 'ORDER_INFO.TIPS' | translate }}</h4>
+                  <ul class="space-y-2">
+                    <li *ngFor="let tip of step.tips" class="flex items-start text-green-700">
+                      <i class="pi pi-check text-green-600 mt-1 mr-2 md:mr-3 text-xs md:text-sm"></i>
+                      <span class="text-xs md:text-sm">{{ tip | translate }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Order Methods -->
+      <section class="mb-8 md:mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center">{{ 'ORDER_INFO.ORDER_METHODS' | translate }}</h2>
+
+        <div class="grid lg:grid-cols-3 gap-6 md:gap-8">
+          <div *ngFor="let method of orderMethods" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-6 md:p-8 text-center hover:shadow-xl transition-all duration-300 method-card">
+            <div
+              class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:mb-6 rounded-full flex items-center justify-center"
+              [ngClass]="{
+                'bg-blue-100': method.color === 'blue',
+                'bg-green-100': method.color === 'green',
+                'bg-purple-100': method.color === 'purple'
+              }">
+              <i
+                [class]="'pi ' + method.icon + ' text-xl md:text-2xl'"
+                [ngClass]="{
+                  'text-blue-600': method.color === 'blue',
+                  'text-green-600': method.color === 'green',
+                  'text-purple-600': method.color === 'purple'
+                }"></i>
+            </div>
+
+            <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">{{ method.nameKey | translate }}</h3>
+            <p class="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">{{ method.descriptionKey | translate }}</p>
+
+            <div class="text-left">
+              <h4 class="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">{{ 'ORDER_INFO.FEATURES' | translate }}:</h4>
+              <ul class="space-y-2 md:space-y-3">
+                <li *ngFor="let feature of method.features" class="flex items-start">
+                  <i
+                    class="pi pi-check mt-1 mr-2 md:mr-3 text-xs md:text-sm"
+                    [ngClass]="{
+                      'text-blue-600': method.color === 'blue',
+                      'text-green-600': method.color === 'green',
+                      'text-purple-600': method.color === 'purple'
+                    }"></i>
+                  <span class="text-gray-600 text-xs md:text-sm">{{ feature | translate }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Important Information -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg md:rounded-r-xl p-6 md:p-8">
+          <div class="flex items-start">
+            <i class="pi pi-exclamation-triangle text-yellow-600 text-lg md:text-xl mt-1 mr-3 md:mr-4"></i>
+            <div>
+              <h3 class="text-base md:text-lg font-semibold text-yellow-800 mb-3 md:mb-4">{{ 'ORDER_INFO.IMPORTANT_INFO' | translate }}</h3>
+              <ul class="space-y-2 text-yellow-700 text-sm md:text-base">
+                <li>• {{ 'ORDER_INFO.INFO_1' | translate }}</li>
+                <li>• {{ 'ORDER_INFO.INFO_2' | translate }}</li>
+                <li>• {{ 'ORDER_INFO.INFO_3' | translate }}</li>
+                <li>• {{ 'ORDER_INFO.INFO_4' | translate }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Need Help -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-gradient-to-r from-green-600 to-green-700 rounded-xl md:rounded-2xl p-6 md:p-8 text-white text-center">
+          <h2 class="text-xl md:text-2xl font-bold mb-3 md:mb-4">{{ 'ORDER_INFO.NEED_HELP' | translate }}</h2>
+          <p class="text-base md:text-lg mb-6 md:mb-8 opacity-90">{{ 'ORDER_INFO.CONTACT_TEXT' | translate }}</p>
+          <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+            <a
+              href="tel:+998901234567"
+              class="bg-white text-green-600 py-3 px-4 md:py-4 md:px-6 rounded-lg md:rounded-xl font-semibold hover:bg-green-50 transition-colors flex items-center justify-center text-sm md:text-base">
+              <i class="pi pi-phone mr-2 md:mr-3 text-sm"></i>
+              {{ 'ORDER_INFO.CALL_US' | translate }}
+            </a>
+            <a
+              href="https://t.me/firstseller"
+              class="bg-green-500 text-white py-3 px-4 md:py-4 md:px-6 rounded-lg md:rounded-xl font-semibold hover:bg-green-400 transition-colors flex items-center justify-center text-sm md:text-base">
+              <i class="pi pi-send mr-2 md:mr-3 text-sm"></i>
+              {{ 'ORDER_INFO.TELEGRAM' | translate }}
+            </a>
+            <a
+              routerLink="/faq"
+              class="bg-green-500 text-white py-3 px-4 md:py-4 md:px-6 rounded-lg md:rounded-xl font-semibold hover:bg-green-400 transition-colors flex items-center justify-center text-sm md:text-base">
+              <i class="pi pi-question-circle mr-2 md:mr-3 text-sm"></i>
+              {{ 'ORDER_INFO.VIEW_FAQ' | translate }}
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+</div>

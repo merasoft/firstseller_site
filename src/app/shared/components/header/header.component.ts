@@ -240,7 +240,7 @@ export class HeaderComponent implements OnInit {
       name: 'about',
       title: 'О нас',
       count: 0,
-      link: '/',
+      link: '/site/about',
       main: false,
       hamburger: true,
       footer: false,

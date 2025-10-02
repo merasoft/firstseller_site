@@ -1,7 +1,6 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ContentChild, Input, OnDestroy, TemplateRef } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductActionsService } from '../../services/product-actions.service';
-import { Carousel } from 'primeng/carousel';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -10,18 +9,45 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements OnDestroy {
   @Input() product!: Product;
-  @ViewChild('imageCarousel', { static: false }) imageCarousel!: Carousel;
+  @Input() showReviews = true;
+  @Input() showBadge = true;
+  @Input() showPrice = true;
+  @Input() showOldPrice = true;
+  @Input() showMonthlyPayment = true;
+  @ContentChild('action', { static: false }) actionTemplate!: TemplateRef<any>;
+
+  // Image cycling properties
+  currentImageIndex = 0;
+  private imageInterval: any;
+  private readonly imageChangeInterval = 1000; // Change image every 1 second
 
   // Cached stars array to prevent recreation on every change detection
   private _cachedStars: Map<number, ('full' | 'empty' | 'half')[]> = new Map();
 
   constructor(private productActions: ProductActionsService, private translate: TranslateService) {}
 
-  // Handle carousel page change event
-  onCarouselPageChange(event: any): void {
-    this.product.currentImageIndex = event.page;
+  ngOnDestroy(): void {
+    this.stopImageCycling();
+  }
+
+  // Image cycling methods
+  startImageCycling(): void {
+    if (!this.product.images || this.product.images.length < 2) return;
+
+    this.currentImageIndex = 0;
+    this.imageInterval = setInterval(() => {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.product.images.length;
+    }, this.imageChangeInterval);
+  }
+
+  stopImageCycling(): void {
+    if (this.imageInterval) {
+      clearInterval(this.imageInterval);
+      this.imageInterval = null;
+    }
+    this.currentImageIndex = 0;
   }
 
   // Product actions - now handled by service
@@ -48,7 +74,7 @@ export class ProductCardComponent {
 
   // Check if product is in compare list
   isInCompare(): boolean {
-    return this.productActions.isInCompare(this.product.id);
+    return this.productActions.isInCompare(this.product.categoryId, this.product.id);
   }
 
   // Utility functions

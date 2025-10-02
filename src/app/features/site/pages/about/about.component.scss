@@ -1,0 +1,84 @@
+// About component styles
+.hero-pattern {
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%), linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.1) 75%), linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.1) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+.stats-animation {
+  animation: countUp 2s ease-out;
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.team-card {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+    img {
+      transform: scale(1.05);
+    }
+  }
+
+  img {
+    transition: transform 0.3s ease;
+  }
+}
+
+// Team Carousel Styles
+::ng-deep .team-carousel {
+  @apply h-full;
+
+  .p-carousel {
+    &,
+    &-content-container,
+    &-content,
+    &-viewport,
+    &-item-list {
+      @apply h-full;
+    }
+
+    &-prev-button,
+    &-next-button {
+      @apply w-10 h-10 absolute bg-primary-600 hover:bg-primary-600 rounded-full text-white transition-all duration-300;
+      @apply flex items-center justify-center;
+      border: none;
+      z-index: 1;
+    }
+
+    .carousel-prev-icon,
+    .carousel-next-icon {
+      @apply text-white text-base;
+    }
+
+    &-prev-button {
+      @apply -left-2;
+    }
+
+    &-next-button {
+      @apply -right-2;
+    }
+  }
+}

@@ -1,0 +1,206 @@
+<div class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Main Content -->
+  <div class="flex-1 bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-green-600 to-green-700 text-white">
+      <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div class="text-center">
+          <h1 class="text-2xl md:text-4xl font-bold mb-2 md:mb-4">{{ 'RETURN_EXCHANGE.TITLE' | translate }}</h1>
+          <p class="text-base md:text-xl opacity-90">{{ 'RETURN_EXCHANGE.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <!-- Return Policy Overview -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-white rounded-2xl md:rounded-3xl shadow-lg p-4 md:p-8">
+          <div class="flex items-center mb-4 md:mb-6">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center mr-3 md:mr-4">
+              <i class="pi pi-refresh text-lg md:text-2xl text-green-600"></i>
+            </div>
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900">{{ 'RETURN_EXCHANGE.OVERVIEW_TITLE' | translate }}</h2>
+          </div>
+          <p class="text-sm md:text-base text-gray-700 mb-4 md:mb-6 leading-relaxed">{{ 'RETURN_EXCHANGE.OVERVIEW_TEXT' | translate }}</p>
+          <div class="bg-green-50 border-l-4 border-green-500 p-3 md:p-4 rounded-r-xl">
+            <p class="text-green-800 font-medium text-sm md:text-base">{{ 'RETURN_EXCHANGE.RETURN_PERIOD' | translate }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Return Process -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-white rounded-2xl md:rounded-3xl shadow-lg p-4 md:p-8">
+          <div class="flex items-center mb-4 md:mb-6">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-full flex items-center justify-center mr-3 md:mr-4">
+              <i class="pi pi-cog text-lg md:text-2xl text-blue-600"></i>
+            </div>
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900">{{ 'RETURN_EXCHANGE.PROCESS_TITLE' | translate }}</h2>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+            <div class="text-center">
+              <div class="w-12 h-12 md:w-14 md:h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-lg md:text-xl font-bold text-blue-600">1</span>
+              </div>
+              <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-2">{{ 'RETURN_EXCHANGE.STEP1_TITLE' | translate }}</h3>
+              <p class="text-sm md:text-base text-gray-600">{{ 'RETURN_EXCHANGE.STEP1_DESC' | translate }}</p>
+            </div>
+
+            <div class="text-center">
+              <div class="w-12 h-12 md:w-14 md:h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-lg md:text-xl font-bold text-blue-600">2</span>
+              </div>
+              <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-2">{{ 'RETURN_EXCHANGE.STEP2_TITLE' | translate }}</h3>
+              <p class="text-sm md:text-base text-gray-600">{{ 'RETURN_EXCHANGE.STEP2_DESC' | translate }}</p>
+            </div>
+
+            <div class="text-center">
+              <div class="w-12 h-12 md:w-14 md:h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-lg md:text-xl font-bold text-blue-600">3</span>
+              </div>
+              <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-2">{{ 'RETURN_EXCHANGE.STEP3_TITLE' | translate }}</h3>
+              <p class="text-sm md:text-base text-gray-600">{{ 'RETURN_EXCHANGE.STEP3_DESC' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Required Documents -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-white rounded-2xl md:rounded-3xl shadow-lg p-4 md:p-8">
+          <div class="flex items-center mb-4 md:mb-6">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3 md:mr-4">
+              <i class="pi pi-file text-lg md:text-2xl text-purple-600"></i>
+            </div>
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900">{{ 'RETURN_EXCHANGE.DOCUMENTS_TITLE' | translate }}</h2>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+            <div>
+              <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-3">{{ 'RETURN_EXCHANGE.REQUIRED_DOCS' | translate }}</h3>
+              <ul class="space-y-2">
+                <li class="flex items-center">
+                  <i class="pi pi-check-circle text-green-600 mr-2 text-sm"></i>
+                  <span class="text-sm md:text-base text-gray-700">{{ 'RETURN_EXCHANGE.DOC1' | translate }}</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="pi pi-check-circle text-green-600 mr-2 text-sm"></i>
+                  <span class="text-sm md:text-base text-gray-700">{{ 'RETURN_EXCHANGE.DOC2' | translate }}</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="pi pi-check-circle text-green-600 mr-2 text-sm"></i>
+                  <span class="text-sm md:text-base text-gray-700">{{ 'RETURN_EXCHANGE.DOC3' | translate }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-base md:text-lg font-semibold text-gray-900 mb-3">{{ 'RETURN_EXCHANGE.PRODUCT_CONDITIONS' | translate }}</h3>
+              <ul class="space-y-2">
+                <li class="flex items-center">
+                  <i class="pi pi-check-circle text-green-600 mr-2 text-sm"></i>
+                  <span class="text-sm md:text-base text-gray-700">{{ 'RETURN_EXCHANGE.CONDITION1' | translate }}</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="pi pi-check-circle text-green-600 mr-2 text-sm"></i>
+                  <span class="text-sm md:text-base text-gray-700">{{ 'RETURN_EXCHANGE.CONDITION2' | translate }}</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="pi pi-check-circle text-green-600 mr-2 text-sm"></i>
+                  <span class="text-sm md:text-base text-gray-700">{{ 'RETURN_EXCHANGE.CONDITION3' | translate }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Non-Returnable Items -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-white rounded-2xl md:rounded-3xl shadow-lg p-4 md:p-8">
+          <div class="flex items-center mb-4 md:mb-6">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-red-100 rounded-full flex items-center justify-center mr-3 md:mr-4">
+              <i class="pi pi-times-circle text-lg md:text-2xl text-red-600"></i>
+            </div>
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900">{{ 'RETURN_EXCHANGE.NON_RETURNABLE_TITLE' | translate }}</h2>
+          </div>
+
+          <p class="text-sm md:text-base text-gray-700 mb-4 md:mb-6">{{ 'RETURN_EXCHANGE.NON_RETURNABLE_DESC' | translate }}</p>
+
+          <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+            <div class="bg-red-50 border border-red-200 rounded-xl p-4 md:p-6">
+              <h3 class="text-base md:text-lg font-semibold text-red-900 mb-3">{{ 'RETURN_EXCHANGE.HYGIENE_CATEGORY' | translate }}</h3>
+              <ul class="space-y-2">
+                <li class="flex items-center text-red-800">
+                  <i class="pi pi-times text-red-600 mr-2 text-xs"></i>
+                  <span class="text-sm md:text-base">{{ 'RETURN_EXCHANGE.HYGIENE1' | translate }}</span>
+                </li>
+                <li class="flex items-center text-red-800">
+                  <i class="pi pi-times text-red-600 mr-2 text-xs"></i>
+                  <span class="text-sm md:text-base">{{ 'RETURN_EXCHANGE.HYGIENE2' | translate }}</span>
+                </li>
+                <li class="flex items-center text-red-800">
+                  <i class="pi pi-times text-red-600 mr-2 text-xs"></i>
+                  <span class="text-sm md:text-base">{{ 'RETURN_EXCHANGE.HYGIENE3' | translate }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-red-50 border border-red-200 rounded-xl p-4 md:p-6">
+              <h3 class="text-base md:text-lg font-semibold text-red-900 mb-3">{{ 'RETURN_EXCHANGE.TECHNICAL_CATEGORY' | translate }}</h3>
+              <ul class="space-y-2">
+                <li class="flex items-center text-red-800">
+                  <i class="pi pi-times text-red-600 mr-2 text-xs"></i>
+                  <span class="text-sm md:text-base">{{ 'RETURN_EXCHANGE.TECHNICAL1' | translate }}</span>
+                </li>
+                <li class="flex items-center text-red-800">
+                  <i class="pi pi-times text-red-600 mr-2 text-xs"></i>
+                  <span class="text-sm md:text-base">{{ 'RETURN_EXCHANGE.TECHNICAL2' | translate }}</span>
+                </li>
+                <li class="flex items-center text-red-800">
+                  <i class="pi pi-times text-red-600 mr-2 text-xs"></i>
+                  <span class="text-sm md:text-base">{{ 'RETURN_EXCHANGE.TECHNICAL3' | translate }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Information -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl md:rounded-3xl p-4 md:p-8 text-white">
+          <div class="text-center mb-4 md:mb-6">
+            <i class="pi pi-phone text-3xl md:text-4xl mb-3 md:mb-4 opacity-80"></i>
+            <h2 class="text-xl md:text-2xl font-bold mb-2">{{ 'RETURN_EXCHANGE.CONTACT_TITLE' | translate }}</h2>
+            <p class="text-sm md:text-base opacity-90">{{ 'RETURN_EXCHANGE.CONTACT_DESC' | translate }}</p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 md:gap-6 text-center">
+            <div class="bg-white bg-opacity-10 rounded-xl md:rounded-2xl p-4 md:p-6">
+              <i class="pi pi-phone text-xl md:text-2xl mb-2 md:mb-3"></i>
+              <h3 class="text-base md:text-lg font-semibold mb-1 md:mb-2">{{ 'RETURN_EXCHANGE.PHONE_TITLE' | translate }}</h3>
+              <p class="text-sm md:text-base">{{ 'RETURN_EXCHANGE.PHONE_NUMBER' | translate }}</p>
+              <p class="text-xs md:text-sm opacity-80 mt-1">{{ 'RETURN_EXCHANGE.PHONE_HOURS' | translate }}</p>
+            </div>
+
+            <div class="bg-white bg-opacity-10 rounded-xl md:rounded-2xl p-4 md:p-6">
+              <i class="pi pi-envelope text-xl md:text-2xl mb-2 md:mb-3"></i>
+              <h3 class="text-base md:text-lg font-semibold mb-1 md:mb-2">{{ 'RETURN_EXCHANGE.EMAIL_TITLE' | translate }}</h3>
+              <p class="text-sm md:text-base">{{ 'RETURN_EXCHANGE.EMAIL_ADDRESS' | translate }}</p>
+              <p class="text-xs md:text-sm opacity-80 mt-1">{{ 'RETURN_EXCHANGE.EMAIL_RESPONSE' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+</div>
