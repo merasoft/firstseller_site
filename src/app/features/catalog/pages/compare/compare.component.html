@@ -55,16 +55,11 @@
           </button>
         </div>
 
-        <div
-          *ngIf="compareProducts.length > 0 && !(carousel._page == 0 && (carousel._page + 1) * carousel._numScroll > compareProducts.length - carousel._numVisible)"
-          class="flex items-center justify-end gap-2 mb-2">
-          <button class="w-9 h-9 rounded-full bg-white/50 backdrop-blur-lg border border-gray-200 disabled:opacity-60" (click)="onPrevPageClick($event)" [disabled]="carousel._page == 0">
+        <div *ngIf="compareProducts.length > 0 && showNavigationButtons" class="flex items-center justify-end gap-2 mb-2">
+          <button class="w-9 h-9 rounded-full bg-white/50 backdrop-blur-lg border border-gray-200 disabled:opacity-60" (click)="onPrevPageClick($event)" [disabled]="!canGoPrev">
             <i class="text-sm text-gray-700 pi pi-chevron-left"></i>
           </button>
-          <button
-            class="w-9 h-9 rounded-full bg-white border border-gray-200 disabled:opacity-60"
-            (click)="onNextPageClick($event)"
-            [disabled]="(carousel._page + 1) * carousel._numScroll > compareProducts.length - carousel._numVisible">
+          <button class="w-9 h-9 rounded-full bg-white border border-gray-200 disabled:opacity-60" (click)="onNextPageClick($event)" [disabled]="!canGoNext">
             <i class="text-sm text-gray-700 pi pi-chevron-right"></i>
           </button>
         </div>
@@ -74,12 +69,13 @@
             <p-carousel
               #carousel
               [value]="compareProducts"
-              [numVisible]="compareProducts.length"
+              [numVisible]="getCarouselVisibleItems()"
               [numScroll]="1"
               [responsiveOptions]="responsiveOptions"
               [showNavigators]="false"
               [showIndicators]="false"
-              [ngStyle]="{ '--item-count': compareProducts.length }">
+              [ngStyle]="{ '--item-count': compareProducts.length }"
+              (onPage)="onCarouselPageChange($event)">
               <ng-template let-product #item>
                 <div class="flex flex-col gap-2 px-2 pt-1.5">
                   <button

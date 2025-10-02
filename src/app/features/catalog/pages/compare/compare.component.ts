@@ -1,5 +1,5 @@
 // src/app/features/catalog/pages/compare/compare.component.ts
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, HostListener, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Carousel } from 'primeng/carousel';
@@ -16,10 +16,10 @@ import { ProductActionsService } from '../../../../shared/services/product-actio
   templateUrl: './compare.component.html',
   styleUrls: ['./compare.component.scss'],
 })
-export class CompareComponent implements OnInit, OnDestroy {
+export class CompareComponent implements OnInit, AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private _cachedStars: Map<number, ('full' | 'empty' | 'half')[]> = new Map();
-  @ViewChild('carousel') carousel: Carousel = {} as Carousel;
+  @ViewChild('carousel') carousel?: Carousel;
 
   pageTitle = '';
   compare: CompareList = { items: [], totalItems: 0, lastUpdated: new Date() };
@@ -27,6 +27,10 @@ export class CompareComponent implements OnInit, OnDestroy {
   maxCompareItems = 4;
   categories: any = [];
   activeCategoryId = 0;
+  showNavigationButtons = false;
+  currentPage = 0;
+  canGoPrev = false;
+  canGoNext = false;
 
   responsiveOptions = [
     {
@@ -76,6 +80,15 @@ export class CompareComponent implements OnInit, OnDestroy {
         memory: item.product.memory || '',
         processor: item.product.processor || '',
       }));
+
+      this.updateNavigationVisibility();
+      setTimeout(() => {
+        if (this.carousel) {
+          this.carousel.page = 0;
+          this.currentPage = 0;
+          this.updateNavigationState();
+        }
+      }, 100);
     });
   }
 
@@ -88,14 +101,55 @@ export class CompareComponent implements OnInit, OnDestroy {
       memory: item.product.memory || '',
       processor: item.product.processor || '',
     }));
+
+    this.updateNavigationVisibility();
+    setTimeout(() => {
+      if (this.carousel) {
+        this.carousel.page = 0;
+        this.currentPage = 0;
+        this.updateNavigationState();
+      }
+    }, 100);
+  }
+
+  private updateNavigationVisibility(): void {
+    setTimeout(() => {
+      const visibleItems = this.getVisibleItems();
+      this.showNavigationButtons = this.compareProducts.length > visibleItems;
+      this.updateNavigationState();
+    });
+  }
+
+  private updateNavigationState(): void {
+    if (!this.carousel) return;
+
+    const visibleItems = this.getVisibleItems();
+    const totalItems = this.compareProducts.length;
+
+    // Update current page from carousel
+    this.currentPage = this.carousel.page || 0;
+
+    // Calculate if we can navigate
+    this.canGoPrev = this.currentPage > 0;
+    this.canGoNext = (this.currentPage + 1) * this.carousel.numScroll <= totalItems - visibleItems + this.carousel.numScroll;
+  }
+
+  private getVisibleItems(): number {
+    if (window.innerWidth <= 730) return 2;
+    if (window.innerWidth <= 950) return 3;
+    return Math.min(4, this.compareProducts.length); // Cap at 4 items max
+  }
+
+  getCarouselVisibleItems(): number {
+    return this.getVisibleItems();
   }
 
   hasMemorySpecs(): boolean {
-    return this.compare.items[this.activeCategoryId].some((item) => item.product.memory);
+    return this.compare.items[this.activeCategoryId]?.some((item) => item.product.memory) || false;
   }
 
   hasProcessorSpecs(): boolean {
-    return this.compare.items[this.activeCategoryId].some((item) => item.product.processor);
+    return this.compare.items[this.activeCategoryId]?.some((item) => item.product.processor) || false;
   }
 
   removeFromCompare(product: Product): void {
@@ -171,11 +225,36 @@ export class CompareComponent implements OnInit, OnDestroy {
     return this._cachedStars.get(rating)!;
   }
 
-  onPrevPageClick(event: any) {
-    this.carousel.navBackward(event);
+  onPrevPageClick(event: any): void {
+    if (this.carousel && this.canGoPrev) {
+      this.carousel.navBackward(event);
+      setTimeout(() => this.updateNavigationState(), 100);
+    }
   }
-  onNextPageClick(event: any) {
-    this.carousel.navForward(event);
+
+  onNextPageClick(event: any): void {
+    if (this.carousel && this.canGoNext) {
+      this.carousel.navForward(event);
+      setTimeout(() => this.updateNavigationState(), 100);
+    }
+  }
+
+  onCarouselPageChange(event: any): void {
+    this.currentPage = event.page;
+    this.updateNavigationState();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    this.updateNavigationVisibility();
+    // Reset carousel page on resize to prevent layout issues
+    setTimeout(() => {
+      if (this.carousel) {
+        this.carousel.page = 0;
+        this.currentPage = 0;
+        this.updateNavigationState();
+      }
+    }, 100);
   }
 
   ngOnInit(): void {
@@ -183,6 +262,14 @@ export class CompareComponent implements OnInit, OnDestroy {
     this.maxCompareItems = this.compareService.getMaxItems();
     this.loadCompareData();
     this.subscribeToLanguageChanges();
+    this.updateNavigationVisibility();
+  }
+
+  ngAfterViewInit(): void {
+    // Initialize navigation state after view is ready
+    setTimeout(() => {
+      this.updateNavigationState();
+    }, 100);
   }
 
   ngOnDestroy(): void {
