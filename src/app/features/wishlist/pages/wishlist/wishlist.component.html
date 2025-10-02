@@ -5,14 +5,14 @@
 
   <!-- Main Content -->
   <main class="flex-1 bg-gray-50">
-    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
       <!-- Page Header -->
       <div class="mb-8">
-        <div class="flex items-center justify-between">
+        <div class="flex items-start justify-between">
           <div>
             <h1 class="text-3xl font-bold text-gray-900">{{ pageTitle }}</h1>
             <p class="mt-2 text-gray-600" *ngIf="wishlist.totalItems > 0">
-              {{ wishlist.totalItems }} товар{{ wishlist.totalItems === 1 ? '' : wishlist.totalItems < 5 ? 'а' : 'ов' }} {{ 'WISHLIST.ITEMS_IN_WISHLIST' | translate }}
+              {{ wishlist.totalItems }} {{ (wishlist.totalItems === 1 ? 'WISHLIST.ITEM_SINGULAR' : 'WISHLIST.ITEMS_PLURAL') | translate }} {{ 'WISHLIST.ITEMS_IN_WISHLIST' | translate }}
             </p>
           </div>
 
