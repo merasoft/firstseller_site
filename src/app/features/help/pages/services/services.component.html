@@ -1,0 +1,108 @@
+<div class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Main Content -->
+  <div class="flex-1 bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-green-600 to-green-700 text-white">
+      <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div class="text-center">
+          <h1 class="text-2xl md:text-4xl font-bold mb-2 md:mb-4">{{ 'SERVICES.TITLE' | translate }}</h1>
+          <p class="text-base md:text-xl opacity-90">{{ 'SERVICES.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <!-- Service Categories -->
+      <div *ngFor="let category of serviceCategories; let i = index" class="mb-8 md:mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center">{{ category.titleKey | translate }}</h2>
+
+        <div class="grid lg:grid-cols-2 gap-6 md:gap-8">
+          <div *ngFor="let service of category.services" class="bg-white rounded-xl md:rounded-2xl shadow-lg p-6 md:p-8 hover:shadow-xl transition-all duration-300 service-card">
+            <div class="text-center mb-6 md:mb-8">
+              <div
+                class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:mb-6 rounded-full flex items-center justify-center"
+                [ngClass]="{
+                  'bg-red-100': service.color === 'red',
+                  'bg-blue-100': service.color === 'blue',
+                  'bg-green-100': service.color === 'green',
+                  'bg-purple-100': service.color === 'purple'
+                }">
+                <i
+                  [class]="'pi ' + service.icon + ' text-xl md:text-2xl'"
+                  [ngClass]="{
+                    'text-red-600': service.color === 'red',
+                    'text-blue-600': service.color === 'blue',
+                    'text-green-600': service.color === 'green',
+                    'text-purple-600': service.color === 'purple'
+                  }"></i>
+              </div>
+              <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">{{ service.nameKey | translate }}</h3>
+              <p class="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">{{ service.descriptionKey | translate }}</p>
+            </div>
+
+            <div class="mb-6 md:mb-8">
+              <h4 class="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">{{ 'SERVICES.FEATURES' | translate }}:</h4>
+              <ul class="space-y-2 md:space-y-3">
+                <li *ngFor="let feature of service.features" class="flex items-start">
+                  <i
+                    class="pi pi-check mt-1 mr-3 text-sm"
+                    [ngClass]="{
+                      'text-red-600': service.color === 'red',
+                      'text-blue-600': service.color === 'blue',
+                      'text-green-600': service.color === 'green',
+                      'text-purple-600': service.color === 'purple'
+                    }"></i>
+                  <span class="text-gray-600 text-sm md:text-base">{{ feature | translate }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="text-center">
+              <div
+                class="text-xl md:text-2xl font-bold mb-3 md:mb-4"
+                [ngClass]="{
+                  'text-red-600': service.color === 'red',
+                  'text-blue-600': service.color === 'blue',
+                  'text-green-600': service.color === 'green',
+                  'text-purple-600': service.color === 'purple'
+                }">
+                {{ service.price || 'SERVICES.CONTACT_FOR_PRICE' | translate }}
+              </div>
+              <button
+                class="w-full py-2 px-4 md:py-3 md:px-6 rounded-lg md:rounded-xl text-white font-semibold transition-colors text-sm md:text-base"
+                [ngClass]="{
+                  'bg-red-600 hover:bg-red-700': service.color === 'red',
+                  'bg-blue-600 hover:bg-blue-700': service.color === 'blue',
+                  'bg-green-600 hover:bg-green-700': service.color === 'green',
+                  'bg-purple-600 hover:bg-purple-700': service.color === 'purple'
+                }">
+                {{ 'SERVICES.ORDER_SERVICE' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <section class="mb-8 md:mb-12">
+        <div class="bg-gradient-to-r from-green-600 to-green-700 rounded-xl md:rounded-2xl p-6 md:p-8 text-white text-center">
+          <h2 class="text-xl md:text-2xl font-bold mb-3 md:mb-4">{{ 'SERVICES.NEED_CUSTOM_SERVICE' | translate }}</h2>
+          <p class="text-base md:text-lg mb-6 md:mb-8 opacity-90">{{ 'SERVICES.CONTACT_TEXT' | translate }}</p>
+          <a
+            href="tel:+998901234567"
+            class="inline-flex items-center bg-white text-green-600 py-3 px-6 md:py-4 md:px-8 rounded-lg md:rounded-xl font-semibold hover:bg-green-50 transition-colors text-sm md:text-base">
+            <i class="pi pi-phone mr-2 md:mr-3 text-sm"></i>
+            {{ 'SERVICES.CALL_US' | translate }}
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+</div>

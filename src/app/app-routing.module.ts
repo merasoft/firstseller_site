@@ -20,6 +20,14 @@ const routes: Routes = [
     loadChildren: () => import('./features/wishlist/wishlist.module').then((m) => m.WishlistModule),
   },
   {
+    path: 'site',
+    loadChildren: () => import('./features/site/site.module').then((m) => m.SiteModule),
+  },
+  {
+    path: 'help',
+    loadChildren: () => import('./features/help/help.module').then((m) => m.HelpModule),
+  },
+  {
     path: '**',
     redirectTo: '/home',
   },

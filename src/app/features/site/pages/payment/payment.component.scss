@@ -1,0 +1,98 @@
+// Payment component styles
+.payment-method-card {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+// Custom accordion styles
+::ng-deep .custom-accordion {
+  .p-accordionpanel {
+    @apply border-b border-gray-200;
+
+    &:last-child {
+      @apply border-b-0;
+    }
+  }
+
+  .p-accordionheader {
+    @apply rounded-none mb-0 border-0 bg-transparent;
+    @apply px-6 pt-4 pb-0 font-semibold text-lg text-gray-700 rounded-none bg-transparent;
+
+    &:hover {
+      @apply bg-transparent;
+    }
+
+    &.p-highlight {
+      @apply bg-transparent;
+    }
+  }
+
+  .p-accordioncontent-content {
+    @apply border-0 rounded-none bg-transparent mt-0;
+    @apply px-6 py-4 rounded-none bg-transparent;
+  }
+
+  .p-accordion-toggle-icon {
+    color: #16a34a !important;
+    font-size: 1.2rem !important;
+  }
+}
+
+.installment-card {
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.step-indicator {
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(to right, #a855f7, #7c3aed);
+    transform: translateY(-50%);
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+}
+
+.faq-item {
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #f8fafc;
+    padding: 1rem;
+    margin: -1rem;
+    border-radius: 0.5rem;
+  }
+}
+
+.security-icon {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}

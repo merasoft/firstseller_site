@@ -1,0 +1,58 @@
+// FAQ component styles
+.search-input {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:focus {
+    @apply -translate-y-1 shadow-lg shadow-green-100;
+  }
+}
+
+.category-card {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply -translate-y-1 shadow-xl;
+  }
+}
+
+// Custom accordion styles
+::ng-deep .custom-accordion {
+  .p-accordionpanel {
+    @apply border-b border-gray-200;
+
+    &:last-child {
+      @apply border-b-0;
+    }
+  }
+
+  .p-accordionheader {
+    @apply rounded-none mb-0 border-0 bg-transparent;
+    @apply px-4 pt-3 pb-0 font-semibold text-base text-gray-700 rounded-none bg-transparent;
+
+    &:hover {
+      @apply bg-transparent;
+    }
+
+    &.p-highlight {
+      @apply bg-transparent;
+    }
+  }
+
+  .p-accordioncontent-content {
+    @apply border-0 rounded-none bg-transparent mt-0;
+    @apply px-4 py-3 rounded-none bg-transparent;
+  }
+
+  .p-accordion-toggle-icon {
+    color: #16a34a !important;
+    font-size: 1.2rem !important;
+  }
+}
+
+.support-button {
+  @apply transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply -translate-y-1 scale-105;
+  }
+}
