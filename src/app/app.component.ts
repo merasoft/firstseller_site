@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Carousel } from 'primeng/carousel';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
   standalone: false,
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'firstseller-site';
 
   constructor(private translate: TranslateService) {
@@ -19,9 +20,15 @@ export class AppComponent implements OnInit {
     const browserLang = translate.getBrowserLang();
     const lang = browserLang && ['ru', 'en', 'uz'].includes(browserLang) ? browserLang : 'ru';
     translate.use(lang);
-  }
 
-  ngOnInit(): void {
-    // Additional initialization if needed
+    Carousel.prototype.onTouchMove = function (event: TouchEvent) {
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - this.startPos.x;
+      const deltaY = touch.clientY - this.startPos.y;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY) && event.cancelable) {
+        event.preventDefault();
+      }
+    };
   }
 }

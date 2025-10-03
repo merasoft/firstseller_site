@@ -64,7 +64,7 @@
             <i class="text-xs transition-transform duration-200" [class]="isAccordionPanelOpen(cat.id) ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"></i>
           </button>
           <div class="overflow-hidden transition-all duration-300 ease-in-out" [class]="isAccordionPanelOpen(cat.id) ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'">
-            <div class="flex flex-col gap-2 ml-1 pl-5 pt-2 border-l-2 border-l-primary-500">
+            <div class="flex flex-col gap-4 ml-1 pl-5 pt-4 border-l-2 border-l-primary-500">
               <a
                 [routerLink]="['/catalog', cat.slug]"
                 (click)="closeDrawer()"

@@ -3,11 +3,13 @@
   <app-header></app-header>
 
   <main class="flex-1 bg-gray-50">
-    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
       <!-- Page Header -->
       <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-900">{{ 'CART.TITLE' | translate }}</h1>
-        <p class="mt-2 text-gray-600" *ngIf="cart.totalItems > 0"> {{ cart.totalItems }} товар{{ cart.totalItems === 1 ? '' : cart.totalItems < 5 ? 'а' : 'ов' }} в корзине </p>
+        <p class="mt-2 text-gray-600" *ngIf="cart.totalItems > 0">
+          {{ cart.totalItems }} {{ (cart.totalItems === 1 ? 'CART.ITEM_SINGULAR' : 'CART.ITEMS_PLURAL') | translate }} {{ 'CART.ITEMS_IN_CART_TEXT' | translate }}
+        </p>
       </div>
 
       <!-- Cart Content -->
@@ -63,8 +65,8 @@
 
                         <!-- Price -->
                         <div class="flex items-center gap-2 mt-2">
-                          <span class="text-lg font-bold text-gray-900">{{ formatPrice(item.price) }} сум</span>
-                          <span *ngIf="item.oldPrice" class="text-sm text-gray-500 line-through">{{ formatPrice(item.oldPrice) }} сум</span>
+                          <span class="text-lg font-bold text-gray-900">{{ formatPrice(item.price) }} {{ 'COMMON.CURRENCY' | translate }}</span>
+                          <span *ngIf="item.oldPrice" class="text-sm text-gray-500 line-through">{{ formatPrice(item.oldPrice) }} {{ 'COMMON.CURRENCY' | translate }}</span>
                         </div>
 
                         <!-- Stock Status -->
@@ -120,7 +122,7 @@
 
                       <!-- Item Total -->
                       <div class="text-right">
-                        <div class="text-lg font-bold text-gray-900">{{ formatPrice(item.price * item.quantity) }} сум</div>
+                        <div class="text-lg font-bold text-gray-900">{{ formatPrice(item.price * item.quantity) }} {{ 'COMMON.CURRENCY' | translate }}</div>
                       </div>
                     </div>
                   </div>
@@ -139,21 +141,21 @@
             <div class="space-y-3 mb-6">
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">{{ 'CART.SUBTOTAL' | translate }} ({{ cart.totalItems }})</span>
-                <span class="font-medium">{{ formatPrice(cart.subtotal) }} сум</span>
+                <span class="font-medium">{{ formatPrice(cart.subtotal) }} {{ 'COMMON.CURRENCY' | translate }}</span>
               </div>
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">{{ 'CART.SHIPPING' | translate }}</span>
                 <span class="font-medium text-green-600" *ngIf="cart.shipping === 0">{{ 'CART.FREE' | translate }}</span>
-                <span class="font-medium" *ngIf="cart.shipping > 0">{{ formatPrice(cart.shipping) }} сум</span>
+                <span class="font-medium" *ngIf="cart.shipping > 0">{{ formatPrice(cart.shipping) }} {{ 'COMMON.CURRENCY' | translate }}</span>
               </div>
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">{{ 'CART.TAX' | translate }}</span>
-                <span class="font-medium">{{ formatPrice(cart.tax) }} сум</span>
+                <span class="font-medium">{{ formatPrice(cart.tax) }} {{ 'COMMON.CURRENCY' | translate }}</span>
               </div>
               <div class="border-t border-gray-200 pt-3">
                 <div class="flex justify-between">
                   <span class="text-base font-semibold text-gray-900">{{ 'CART.TOTAL' | translate }}</span>
-                  <span class="text-xl font-bold text-gray-900">{{ formatPrice(cart.total) }} сум</span>
+                  <span class="text-xl font-bold text-gray-900">{{ formatPrice(cart.total) }} {{ 'COMMON.CURRENCY' | translate }}</span>
                 </div>
               </div>
             </div>

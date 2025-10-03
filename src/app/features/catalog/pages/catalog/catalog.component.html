@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
       <!-- Breadcrumbs -->
       <div class="transition-all duration-300" [ngClass]="{ 'animate-pulse': isLoading }">
         <p-breadcrumb [model]="breadcrumbItems" [home]="home" styleClass="mb-6" />
@@ -141,7 +141,9 @@
               </div>
 
               <div class="flex items-center flex-wrap gap-2">
-                <p class="text-sm text-gray-600 mr-2">{{ totalProducts }} {{ 'CATALOG.PRODUCTS_IN_STOCK' | translate }}</p>
+                <p class="text-sm text-gray-600 mr-2">
+                  {{ totalProducts }} {{ (totalProducts === 1 ? 'CATALOG.PRODUCT_SINGULAR' : 'CATALOG.PRODUCTS_PLURAL') | translate }} {{ 'CATALOG.IN_STOCK_TEXT' | translate }}
+                </p>
                 <button *ngIf="selectedFilters.length > 0" (click)="clearFilters()" class="px-2 py-1 text-xs text-gray-900 font-semibold bg-primary-50 rounded-full border border-primary-700">{{
                   'CATALOG.RESET_FILTERS' | translate
                 }}</button>
